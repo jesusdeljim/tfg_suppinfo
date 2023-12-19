@@ -1,0 +1,66 @@
+/* inicio.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+header {
+  text-align: left;
+  background-color: #333;
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+nav {
+  position: fixed;
+  float: left;
+  padding-left: 20px; /* Añade espacio a la izquierda para separar del contenido */
+}
+
+nav dl {
+  margin: 0;
+  padding: 0;
+}
+
+nav dd {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #ffcc00;
+}
+
+section {
+  margin: 20px;
+  clear: left; /* Asegura que la sección se muestre debajo del nav */
+}
+
+section dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+section img {
+  width: 100%;
+  height: auto;
+}
+
+section dt {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+section p {
+  margin: 5px 0;
+}

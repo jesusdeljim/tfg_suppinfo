@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% block encabezado %}
+<h1> Listado de Productos Agrupados por su Categoria </h1>
+{% endblock %}
+
+{% block contenido %}
+<form method="get" action='/filter_by_category'>
+    <label for="category">Selecciona una categoría:</label>
+    <select name="category" id="category">
+        <option value="" {% if not selected_category %}selected{% endif %}>Todos</option>
+        {% for category in categories %}
+            <option value="{{ category.nombre }}" {% if selected_category == category.nombre %}selected{% endif %}>{{ category.nombre }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+<div class="product-grid">
+    {% regroup productos by categoria as grouped %}
+    {% for group in grouped %}
+        <div class="category-group">
+            <h3>Categoria: {{ group.grouper }} ({{ group.list|length }} productos)</h3>
+            <div class="product-grid-row">
+                {% for row in group.list %}
+                    <div class="product-item">
+                        <img src="{{ row.imagen.url }}" alt="{{ row.nombre }}" width="200" height="200">
+                        <div>{{ row.nombre }}</div>
+                        <div>{{ row.precio }}</div>
+                        {% if row.stock %}
+                            <p>EN STOCK</p>
+                        {% else %}
+                            <p>FUERA DE STOCK</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

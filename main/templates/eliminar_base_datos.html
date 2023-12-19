@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block encabezado %}
+  <h1>SuppInfo</h1>
+{% endblock %}
+
+{% block contenido %}
+  <h2>Eliminar Base de Datos</h2>
+  <p>Esta acción eliminará por completo la base de datos. Por favor, confirma ingresando "eliminar" en el siguiente campo:</p>
+  <form method="post">
+    {% csrf_token %}
+    <label for="confirmacion">Confirmación:</label>
+    <input type="text" name="confirmacion" required>
+    <button type="submit">Eliminar Base de Datos</button>
+  </form>
+  <a href='/inicio'>Cancelar</a>
+{% endblock %}

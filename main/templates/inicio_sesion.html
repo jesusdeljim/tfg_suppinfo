@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block encabezado %}
+  <h1>SuppInfo</h1>
+{% endblock %}
+
+{% block contenido %}
+  <h2>Iniciar Sesión</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Iniciar Sesión</button>
+    <a href='/registro'>¿No tienes una cuenta? Regístrate</a>
+  </form>
+  
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block encabezado %}
+<h1>Listado de Productos Agrupados por Marca</h1>
+{% endblock %}
+
+{% block contenido %}
+<form method="get" action='/filter_by_brand'>
+    <label for="brand">Selecciona una marca:</label>
+    <select name="brand" id="brand">
+        <option value="" {% if not selected_brand %}selected{% endif %}>Todas</option>
+        {% for brand in brands %}
+            <option value="{{ brand.nombre }}" {% if selected_brand == brand.nombre %}selected{% endif %}>{{ brand.nombre }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
+
+<div class="product-grid">
+    {% for product in productos %}
+        <div class="product-item">
+            <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}" width="200" height="200">
+            <div>{{ product.nombre }}</div>
+            <div>{{ product.precio }}</div>
+            {% if product.stock %}
+                <p>EN STOCK</p>
+            {% else %}
+                <p>FUERA DE STOCK</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

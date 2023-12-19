@@ -1,0 +1,26 @@
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.category-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.product-grid-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    width: 400px;
+    margin: 50px;
+    text-align: center;
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+}
