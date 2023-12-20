@@ -32,4 +32,6 @@ urlpatterns = [
     path('inicio_sesion/', views.inicio_sesion),
     path('cerrar_sesion/', views.cerrar_sesion),
     path('eliminar_base_datos/', views.eliminar_base_datos),
+    path('user_profile/', views.user_profile),
+    path('admin_profile/', views.admin_profile),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

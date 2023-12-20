@@ -21,11 +21,12 @@ from django.http.response import HttpResponseRedirect
 from django.db import connection
 
 
-# Create your views here.
+#----------------VIEWS FOR BD LOAD AND DELETE---------------------------
 
 def carga(request):
     populate()
     return HttpResponseRedirect('/inicio.html')
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def eliminar_base_datos(request):
@@ -64,9 +65,7 @@ def eliminar_base_datos(request):
     
     return render(request, 'eliminar_base_datos.html')
 
-def inicio(request):
-    productos=Producto.objects.all()
-    return render(request,'inicio.html', {'productos':productos})
+#----------------VIEWS FOR USER MANAGEMENT---------------------------
 
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -100,6 +99,23 @@ def registro(request):
     else:
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
+
+@login_required
+def user_profile(request):
+    usuario = request.user
+    return render(request, 'user_profile.html', {'usuario': usuario})
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_profile(request):
+    usuario = request.user
+    return render(request, 'admin_profile.html', {'usuario': usuario})
+
+
+#----------------VIEWS FOR PRODUCTS MANAGEMENT---------------------------
+
+def inicio(request):
+    productos=Producto.objects.all()
+    return render(request,'inicio.html', {'productos':productos})
 
 def filter_by_category(request):
     categories = Categoria.objects.all()

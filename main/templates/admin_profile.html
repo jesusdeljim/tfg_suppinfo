@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block contenido %}
+  <section class="admin-panel">
+    <h2>Panel de Administración</h2>
+    <p>Bienvenido, {{ usuario.username }}.</p>
+    <div>
+      <!-- Agrega aquí cualquier información específica del panel de administración -->
+      <a href='/carga'>Cargar Base de Datos</a>
+      <a href='/eliminar_base_datos'>Eliminar Base de Datos</a>
+    </div>
+  </section>
+{% endblock %}

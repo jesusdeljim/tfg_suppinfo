@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block contenido %}
+  <section class="user-profile">
+    <h2>Perfil de Usuario</h2>
+    <p><strong>Nombre de Usuario:</strong> {{ usuario.username }}</p>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
+    <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+    <p><strong>Ciudad:</strong> {{ usuario.ciudad }}</p>
+    <p><strong>País:</strong> {{ usuario.pais }}</p>
+    <p><strong>Código Postal:</strong> {{ usuario.codigo_postal }}</p>
+    <!-- Otros campos del usuario según tu modelo -->
+  </section>
+{% endblock %}

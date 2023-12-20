@@ -8,6 +8,8 @@
   <link rel="stylesheet" type="text/css" href="{% static 'styles/inicio.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/registro.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/filter_by_category.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/admin_profile.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/user_profile.css' %}">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
@@ -28,9 +30,9 @@
         <dd><a href='/filter_by_brand'>Filtrar por Marca</a></dd>
         {% if user.is_authenticated %}
           {% if user.is_superuser %}
-            <dd><a href='/carga'>Cargar Base de Datos</a></dd>
-            <dd><a href='/eliminar_base_datos'>Eliminar Base de Datos</a></dd>
+            <dd><a href='/admin_profile'>Panel de administración</a></dd>
           {% endif %}
+          <dd><a href='/user_profile'>Mi perfil</a></dd>
           <dd><a href='/cerrar_sesion'>Cerrar Sesión</a></dd>
         {% else %}
           <dd><a href='/inicio_sesion'>Iniciar Sesión</a></dd>
