@@ -1,8 +1,7 @@
-
 {% extends 'index.html' %}
 
 {% block encabezado %}
-<h1>SuppInfo</h1>
+  <h1>SuppInfo</h1>
 {% endblock %}
 
 {% block contenido %}
@@ -13,12 +12,10 @@
       <dt>{{ p.nombre }}</dt>
       <p><a>Mejor precio actual: </a>{{ p.precio }}<a>€</a></p>
       {% if p.stock %}
-        <p>EN STOCK</p>
+        <a href="{{ p.url }}" class="btn-comprar">Comprar ahora</a>
       {% else %}
         <p>FUERA DE STOCK</p>
       {% endif %}
-
-
     {% endfor %}
   </dl>
 {% endblock %}

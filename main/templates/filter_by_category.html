@@ -28,7 +28,7 @@
                         <div>{{ row.nombre }}</div>
                         <div>{{ row.precio }}</div>
                         {% if row.stock %}
-                            <p>EN STOCK</p>
+                            <a href="{{ row.url }}" class="btn-comprar">Comprar ahora</a>
                         {% else %}
                             <p>FUERA DE STOCK</p>
                         {% endif %}
