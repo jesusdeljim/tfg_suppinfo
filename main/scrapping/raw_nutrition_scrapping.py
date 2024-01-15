@@ -32,7 +32,7 @@ def raw_scrap_pre_workout(driver):
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-        
+        #TENGO QUE COGER EL RATING DEL PRODUCTO AÚN
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -96,7 +96,7 @@ def raw_scrap_pre_workout(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -206,7 +206,7 @@ def raw_scrap_protein(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -293,7 +293,7 @@ def raw_scrap_intra(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -381,7 +381,7 @@ def raw_scrap_recovery(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -469,7 +469,7 @@ def raw_scrap_fat_burners(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -556,7 +556,7 @@ def raw_scrap_test_boosters(driver):
                 
                 p.sabor.set(lista_sabores)
                 p.ingrediente.set(lista_ingredientes)
-                
+                print(f"Registro introducido en la BD: {nombre}")
             else:
                 print(f"Registro duplicado: {nombre}")
         except IntegrityError as e:
@@ -567,7 +567,6 @@ def raw_scrap_test_boosters(driver):
 
 
 def raw_scrap():
-    #raw_scrap_categorias()
     driver = getGeckoDriver()
     raw_scrap_protein(driver)
     raw_scrap_recovery(driver)

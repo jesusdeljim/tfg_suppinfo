@@ -95,6 +95,7 @@ def registro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, '¡Registro exitoso! Bienvenido.')
             return HttpResponseRedirect('/inicio.html')  
     else:
         form = RegistroForm()

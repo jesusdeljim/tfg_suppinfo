@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import bs4
 import urllib.request
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 import lxml
 import re
 import ssl

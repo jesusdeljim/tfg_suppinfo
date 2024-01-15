@@ -16,7 +16,7 @@ header {
 }
 
 nav {
-  position: fixed;
+  position: absolute;
   float: left;
   padding-left: 20px; /* Añade espacio a la izquierda para separar del contenido */
 }
