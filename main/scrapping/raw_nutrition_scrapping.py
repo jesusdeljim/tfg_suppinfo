@@ -1,18 +1,11 @@
-from .imports import *
+from ..utils.imports import *
+from ..utils.utils import *
 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
 getattr(ssl, '_create_unverified_context', None)):
     ssl._create_default_https_context = ssl._create_unverified_context
 
 url_raw = "https://getrawnutrition.com"
-
-def get_imagen_raw(url, driver):
-    driver.get(url)
-    url_imagen = driver.find_element(By.XPATH, "//a[@class='show-gallery']").get_attribute('href')
-    response = urlopen(url_imagen)
-    imagen_temp = open('temp.jpg', 'wb')
-    imagen_temp.write(response.read())
-    imagen_temp.close()
 
 def raw_scrap_pre_workout(driver):    
     url_preworkout = str(url_raw)+"/collections/pre-workout"
@@ -22,6 +15,7 @@ def raw_scrap_pre_workout(driver):
     prewList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for e in prewList:
         
         url = e.find("a")['href']
@@ -29,10 +23,17 @@ def raw_scrap_pre_workout(driver):
         s = BeautifulSoup(f, "lxml")
         
         nombre = s.find("div", class_="title-row").text
+
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
+
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-        #TENGO QUE COGER EL RATING DEL PRODUCTO AÚN
+
+        rating = s.find("div", class_="loox-rating")['data-rating']
+        
+        descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+        descripcion_final = "".join(str(e.text) for e in descripcion)
+
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -64,6 +65,8 @@ def raw_scrap_pre_workout(driver):
         
         get_imagen_raw(url_raw+str(url), driver)
 
+        reviews_list = get_reviews_raw(url_producto, driver)
+        reviews = "|writer_split|".join(str(e) for e in reviews_list)
         #almacenamos en la BD
         
         lista_ingredientes = []
@@ -82,14 +85,14 @@ def raw_scrap_pre_workout(driver):
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
                                             marca = brand,
-                                            descripcion = None,
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,                                       
                                         )
-                #producto_id = p.id
-                
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
                 os.remove('temp.jpg')
@@ -103,6 +106,8 @@ def raw_scrap_pre_workout(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
 
 
@@ -114,6 +119,7 @@ def raw_scrap_protein(driver):
     proteinList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for p in proteinList:
         url = p.find("a")['href']
         try:
@@ -125,6 +131,11 @@ def raw_scrap_protein(driver):
             brand = Marca.objects.get_or_create(nombre = marca)[0]
             precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
 
+            rating = s.find("div", class_="loox-rating")['data-rating']
+            
+            descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+            descripcion_final = "".join(str(e.text) for e in descripcion)
+            
             stock = True
             stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
         
@@ -153,6 +164,9 @@ def raw_scrap_protein(driver):
             url_producto = str(url_raw)+str(url)
 
             get_imagen_raw(url_raw+str(url), driver)
+
+            reviews_list = get_reviews_raw(url_producto, driver)
+            reviews = "|writer_split|".join(str(e) for e in reviews_list)
         except HTTPError as e:
             if e.code == 404:
                 # Manejar el error 404 aquí (por ejemplo, imprimir un mensaje)
@@ -192,14 +206,14 @@ def raw_scrap_protein(driver):
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
                                             marca = brand,
-                                            descripcion = None,
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,
                                         )
-                #producto_id = p.id
-                
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
                 os.remove('temp.jpg')
@@ -213,6 +227,8 @@ def raw_scrap_protein(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
     
 def raw_scrap_intra(driver):
@@ -223,6 +239,7 @@ def raw_scrap_intra(driver):
     intraList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -231,7 +248,10 @@ def raw_scrap_intra(driver):
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-
+        rating = s.find("div", class_="loox-rating")['data-rating']
+        
+        descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+        descripcion_final = "".join(str(e.text) for e in descripcion)
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -261,6 +281,8 @@ def raw_scrap_intra(driver):
 
         get_imagen_raw(url_raw+str(url), driver)
 
+        reviews_list = get_reviews_raw(url_producto, driver)
+        reviews = "|writer_split|".join(str(e) for e in reviews_list)
         #almacenamos en la BD
         
         lista_ingredientes = []
@@ -279,13 +301,14 @@ def raw_scrap_intra(driver):
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
                                             marca = brand,
-                                            descripcion = None,
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,
                                         )
-                #producto_id = p.id
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
@@ -300,6 +323,8 @@ def raw_scrap_intra(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
 
@@ -310,6 +335,7 @@ def raw_scrap_recovery(driver):
     recoveryList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for r in recoveryList:
         url = r.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -318,7 +344,10 @@ def raw_scrap_recovery(driver):
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-
+        rating = s.find("div", class_="loox-rating")['data-rating']
+        
+        descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+        descripcion_final = "".join(str(e.text) for e in descripcion)
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -349,6 +378,8 @@ def raw_scrap_recovery(driver):
 
         get_imagen_raw(url_raw+str(url), driver)
 
+        reviews_list = get_reviews_raw(url_producto, driver)
+        reviews = "|writer_split|".join(str(e) for e in reviews_list)
         #almacenamos en la BD
         
         lista_ingredientes = []
@@ -366,14 +397,15 @@ def raw_scrap_recovery(driver):
             existe_registro = Producto.objects.filter(url=url_producto).exists()
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
-                                            marca = brand,
-                                            descripcion = None,
+                                            marca = brand,                                           
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,
                                         )
-                #producto_id = p.id
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
@@ -388,6 +420,8 @@ def raw_scrap_recovery(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
         
@@ -398,6 +432,7 @@ def raw_scrap_fat_burners(driver):
     fatList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for f in fatList:
         url = f.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -406,7 +441,10 @@ def raw_scrap_fat_burners(driver):
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-
+        rating = s.find("div", class_="loox-rating")['data-rating']
+        
+        descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+        descripcion_final = "".join(str(e.text) for e in descripcion)
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -437,6 +475,8 @@ def raw_scrap_fat_burners(driver):
 
         get_imagen_raw(url_raw+str(url), driver)
 
+        reviews_list = get_reviews_raw(url_producto, driver)
+        reviews = "|writer_split|".join(str(e) for e in reviews_list)
         #almacenamos en la BD
         
         lista_ingredientes = []
@@ -455,13 +495,14 @@ def raw_scrap_fat_burners(driver):
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
                                             marca=brand,
-                                            descripcion = None,
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,
                                         )
-                #producto_id = p.id
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
@@ -476,6 +517,8 @@ def raw_scrap_fat_burners(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
 
@@ -486,6 +529,7 @@ def raw_scrap_test_boosters(driver):
     intraList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
     cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
     categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -494,7 +538,10 @@ def raw_scrap_test_boosters(driver):
         marca = "RAW Nutrition"
         brand = Marca.objects.get_or_create(nombre = marca)[0]
         precio = s.find("div", class_="price-area").find("span").text.replace("$", "")
-
+        rating = s.find("div", class_="loox-rating")['data-rating']
+        
+        descripcion = s.find("div", class_="product-description rte cf").find_all("p")
+        descripcion_final = "".join(str(e.text) for e in descripcion)
         stock = True
         stock_div = s.find("div", class_="quantity-submit-row__submit input-row")
     
@@ -525,6 +572,8 @@ def raw_scrap_test_boosters(driver):
 
         get_imagen_raw(url_raw+str(url), driver)
 
+        reviews_list = get_reviews_raw(url_producto, driver)
+        reviews = "|writer_split|".join(str(e) for e in reviews_list)
         #almacenamos en la BD
         
         lista_ingredientes = []
@@ -542,13 +591,14 @@ def raw_scrap_test_boosters(driver):
             if not existe_registro:
                 p = Producto.objects.create(nombre = nombre,
                                             marca=brand,
-                                            descripcion = None,
                                             precio = precio,
                                         categoria = categoria,
                                         stock = stock,
                                         url = url_producto,
+                                        rating_original = rating,
                                         )
-                #producto_id = p.id
+                producto_id = p.id
+                writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
                 
                 with open('temp.jpg', 'rb') as imagen_file:
                             p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
@@ -563,14 +613,16 @@ def raw_scrap_test_boosters(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
+    writer.commit()
+    print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
 
 
 def raw_scrap():
     driver = getGeckoDriver()
+    raw_scrap_pre_workout(driver)
     raw_scrap_protein(driver)
     raw_scrap_recovery(driver)
     raw_scrap_intra(driver)
-    raw_scrap_pre_workout(driver)
     raw_scrap_fat_burners(driver)
     raw_scrap_test_boosters(driver)

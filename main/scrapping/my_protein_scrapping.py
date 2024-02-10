@@ -1,4 +1,4 @@
-from .imports import *
+from ..utils.imports import *
 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
 getattr(ssl, '_create_unverified_context', None)):

@@ -11,7 +11,14 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
-    
+
+class Subcategoria(models.Model):
+    nombre = models.CharField(max_length=100)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre
+
 class Sabor(models.Model):
     sabor = models.CharField(max_length=30)
     def __str__(self):
@@ -31,14 +38,16 @@ class Marca(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=120)
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-    descripcion = models.TextField(null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    subcategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE)
     sabor = models.ManyToManyField(Sabor)
     ingrediente = models.ManyToManyField(Ingrediente)
     stock = models.BooleanField(default=True)
     url = models.URLField()
     imagen = models.ImageField(upload_to='static', verbose_name='Imagen')
+    rating_original = models.DecimalField(max_digits=10, decimal_places=1)
+    rating = models.DecimalField(null = True, max_digits=10, decimal_places=1)
 
     def __str__(self):
         return self.nombre

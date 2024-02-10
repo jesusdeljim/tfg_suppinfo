@@ -1,13 +1,13 @@
-from .imports import *
-
-
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+from ..utils.imports import *
+from ..utils.utils import *
 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
 getattr(ssl, '_create_unverified_context', None)):
     ssl._create_default_https_context = ssl._create_unverified_context
 
 url_hsn= "https://www.hsnstore.com/nutricion-deportiva"
+
+
 
 def hsn_scrap_aminoacids(driver):
     url_amino = str(url_hsn)+"/aminoacidos"
@@ -43,11 +43,11 @@ def hsn_scrap_aminoacids(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
                            
@@ -71,7 +71,7 @@ def hsn_scrap_aminoacids(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -91,7 +91,7 @@ def hsn_scrap_aminoacids(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()
 
 def hsn_scrap_natural_anabolics(driver):
@@ -128,11 +128,11 @@ def hsn_scrap_natural_anabolics(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -156,7 +156,7 @@ def hsn_scrap_natural_anabolics(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -176,7 +176,7 @@ def hsn_scrap_natural_anabolics(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()
 
 def hsn_scrap_carbs(driver):
@@ -213,11 +213,11 @@ def hsn_scrap_carbs(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -241,7 +241,7 @@ def hsn_scrap_carbs(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -261,7 +261,7 @@ def hsn_scrap_carbs(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()
 
 def hsn_scrap_weight_control(driver):
@@ -298,11 +298,11 @@ def hsn_scrap_weight_control(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -326,7 +326,7 @@ def hsn_scrap_weight_control(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -346,7 +346,7 @@ def hsn_scrap_weight_control(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()
 
 def hsn_scrap_minerals(driver):
@@ -383,11 +383,11 @@ def hsn_scrap_minerals(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -411,7 +411,7 @@ def hsn_scrap_minerals(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -431,7 +431,7 @@ def hsn_scrap_minerals(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()  
 
 def hsn_scrap_multivitamins(driver):
@@ -468,11 +468,11 @@ def hsn_scrap_multivitamins(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -496,7 +496,7 @@ def hsn_scrap_multivitamins(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -516,7 +516,7 @@ def hsn_scrap_multivitamins(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()    
 
 def hsn_scrap_recovery(driver):
@@ -552,11 +552,11 @@ def hsn_scrap_recovery(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -580,7 +580,7 @@ def hsn_scrap_recovery(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -600,7 +600,7 @@ def hsn_scrap_recovery(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count()   
 
 def hsn_scrap_pre_workout(driver):
@@ -636,11 +636,11 @@ def hsn_scrap_pre_workout(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -664,7 +664,7 @@ def hsn_scrap_pre_workout(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -684,7 +684,7 @@ def hsn_scrap_pre_workout(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count() 
 
 def hsn_scrap_protein(driver):
@@ -720,11 +720,11 @@ def hsn_scrap_protein(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -748,7 +748,7 @@ def hsn_scrap_protein(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                               
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -768,7 +768,7 @@ def hsn_scrap_protein(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count() 
 
 def hsn_scrap_vitamins(driver):
@@ -804,11 +804,11 @@ def hsn_scrap_vitamins(driver):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes(ingredientes_aux)
+                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes(ingredientes_aux)
+                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -832,7 +832,7 @@ def hsn_scrap_vitamins(driver):
                 if not existe_registro:
                     p = Producto.objects.create(nombre = nombre,
                                                 marca = brand,
-                                                descripcion = None,
+                                                
                                                 precio = precio,
                                             categoria = categoria,
                                             stock = stock,
@@ -852,47 +852,20 @@ def hsn_scrap_vitamins(driver):
             except IntegrityError as e:
                 print(f"Se ha producido un error: {e}")
                 print(f"Error al guardar el registro: {nombre}")
-            time.sleep(8)
+            time.sleep(10)
     return Producto.objects.count() 
-
-def get_imagen_hsn(url):
-    req = Request(url = url, headers=headers)
-    response = urlopen(req)
-    imagen_temp = open('temp.jpg', 'wb')
-    imagen_temp.write(response.read())
-    imagen_temp.close()
-
-def get_sabores_hsn(url, driver):
-    driver.get(url)
-    sabores = []
-    try:
-        sabores_aux = driver.find_element(By.CLASS_NAME, "product_view_Sabor")
-        for s in sabores_aux.find_elements(By.TAG_NAME, "option"):
-            sabores.append(s.text.strip())
-    except:
-        sabores.append("Sin sabor") 
-    time.sleep(2)
-    return sabores
-    
-def parse_ingredientes(ingredientes):
-    # Utilizar una expresión regular para encontrar elementos fuera de paréntesis
-    elementos_fuera = re.findall(r'[^,(]+(?:\([^)]*\)[^,(]*)*', ingredientes)
-    # Dividir cada elemento encontrado por comas
-    resultado = [elemento.strip() for elemento in elementos_fuera if elemento.strip()]
-
-    return resultado
 
 def hsn_scrap():
     
     driver = getGeckoDriver()
-    #hsn_scrap_aminoacids(driver)
-    #hsn_scrap_carbs(driver)
-    #hsn_scrap_minerals(driver)
-    #hsn_scrap_multivitamins(driver)
-    #hsn_scrap_natural_anabolics(driver)
-    #hsn_scrap_pre_workout(driver)
-    #hsn_scrap_protein(driver)
-    #hsn_scrap_weight_control(driver)
+    hsn_scrap_aminoacids(driver)
+    hsn_scrap_carbs(driver)
+    hsn_scrap_minerals(driver)
+    hsn_scrap_multivitamins(driver)
+    hsn_scrap_natural_anabolics(driver)
+    hsn_scrap_pre_workout(driver)
+    hsn_scrap_protein(driver)
+    hsn_scrap_weight_control(driver)
     hsn_scrap_recovery(driver)
     hsn_scrap_vitamins(driver)
 
