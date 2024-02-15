@@ -7,7 +7,7 @@
 {% block contenido %}
   <p>Actualmente tenemos registrados {{ productos|length }} productos:</p>
   <dl>
-    {% for p in productos %}
+    {% for p in productos  %}
       <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" width="100" height="100">
       <dt>{{ p.nombre }}</dt>
       <p><a>Mejor precio actual: </a>{{ p.precio }}<a>€</a></p>

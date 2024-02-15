@@ -52,8 +52,11 @@ def eliminar_base_datos(request):
             # Eliminar el contenido de la carpeta static/images
             images_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static', 'images'))
             shutil.rmtree(images_folder)
-
+            # Eliminar todo el contenido creado con Whoosh en el directorio index
+            index_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Index'))
+            shutil.rmtree(index_folder)
             # Crear la carpeta nuevamente
+            os.makedirs(index_folder)
             os.makedirs(images_folder)
             # Generar archivos de migración
             subprocess.run(["python", "manage.py", "makemigrations"])
@@ -116,7 +119,7 @@ def admin_profile(request):
 
 def inicio(request):
     productos=Producto.objects.all()
-    return render(request,'inicio.html', {'productos':productos})
+    return render(request,'inicio.html', {'productos': productos})
 
 def filter_by_category(request):
     categories = Categoria.objects.all()

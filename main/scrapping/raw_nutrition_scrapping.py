@@ -13,8 +13,12 @@ def raw_scrap_pre_workout(driver):
     f = urllib.request.urlopen(url_preworkout)
     s = BeautifulSoup(f, "lxml")
     prewList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
+    
     writer = ix.writer()
     for e in prewList:
         
@@ -47,7 +51,7 @@ def raw_scrap_pre_workout(driver):
             stock = False
         else:
             stock = True
-
+    
         ingredientes_aux = s.find("div", class_="collapsible-tabs").find_all("div", class_="collapsible-tabs__block")
         ingredientes = []
         for i in ingredientes_aux:
@@ -87,6 +91,7 @@ def raw_scrap_pre_workout(driver):
                                             marca = brand,
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,                                       
@@ -117,8 +122,11 @@ def raw_scrap_protein(driver):
     f = urllib.request.urlopen(url_protein)
     s = BeautifulSoup(f, "lxml")
     proteinList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
     writer = ix.writer()
     for p in proteinList:
         url = p.find("a")['href']
@@ -208,6 +216,7 @@ def raw_scrap_protein(driver):
                                             marca = brand,
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,
@@ -233,12 +242,15 @@ def raw_scrap_protein(driver):
     
 def raw_scrap_intra(driver):
 
-    url_intra = str(url_raw)+"/collections/intra-workout"
+    url_intra = str(url_raw)+"/collections/pump"
     f = urllib.request.urlopen(url_intra)
     s = BeautifulSoup(f, "lxml")
     intraList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
     writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
@@ -303,6 +315,7 @@ def raw_scrap_intra(driver):
                                             marca = brand,
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,
@@ -333,8 +346,11 @@ def raw_scrap_recovery(driver):
     f = urllib.request.urlopen(url_recovery)
     s = BeautifulSoup(f, "lxml")
     recoveryList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
     writer = ix.writer()
     for r in recoveryList:
         url = r.find("a")['href']
@@ -400,6 +416,7 @@ def raw_scrap_recovery(driver):
                                             marca = brand,                                           
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,
@@ -430,8 +447,11 @@ def raw_scrap_fat_burners(driver):
     f = urllib.request.urlopen(url_fat)
     s = BeautifulSoup(f, "lxml")
     fatList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
     writer = ix.writer()
     for f in fatList:
         url = f.find("a")['href']
@@ -497,6 +517,7 @@ def raw_scrap_fat_burners(driver):
                                             marca=brand,
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,
@@ -527,8 +548,11 @@ def raw_scrap_test_boosters(driver):
     f = urllib.request.urlopen(url_test)
     s = BeautifulSoup(f, "lxml")
     intraList = s.find("div", class_="filters-adjacent collection-listing").find_all("div", class_="block-inner-inner")
-    cat = s.find("h1", class_="overlay-text__title super-large-text").text.strip
-    categoria = Categoria.objects.get_or_create(nombre = cat)[0]
+    subcategoria_scrapeada = s.find("h1", class_="overlay-text__title super-large-text").text.strip()
+    subcat = asignar_subcategoria(subcategoria_scrapeada)
+    cat = asignar_categoria(subcat)
+    categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+    subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
     writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
@@ -593,6 +617,7 @@ def raw_scrap_test_boosters(driver):
                                             marca=brand,
                                             precio = precio,
                                         categoria = categoria,
+                                        subcategoria = subcategoria,
                                         stock = stock,
                                         url = url_producto,
                                         rating_original = rating,

@@ -8,5 +8,5 @@ from .utils.utils import *
 def populate():
     populate_categorias()
     raw_nutrition_scrapping.raw_scrap()
-   #hsn_store_scrapping.hsn_scrap()
+    #hsn_store_scrapping.hsn_scrap()
     
