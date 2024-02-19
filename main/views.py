@@ -19,6 +19,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.db import connection
+from django.core.management import call_command
 
 
 #----------------VIEWS FOR BD LOAD AND DELETE---------------------------
@@ -47,7 +48,7 @@ def eliminar_base_datos(request):
                     table_name = table[0]
                     if table_name.startswith('main_') and table_name not in tables_to_keep:
                         cursor.execute(f"DELETE FROM {table_name};")
-
+                        cursor.execute(f"DELETE FROM sqlite_sequence WHERE name='{table_name}';")
                 cursor.execute("PRAGMA foreign_keys=on;")
             # Eliminar el contenido de la carpeta static/images
             images_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static', 'images'))

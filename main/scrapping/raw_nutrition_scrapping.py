@@ -7,7 +7,7 @@ getattr(ssl, '_create_unverified_context', None)):
 
 url_raw = "https://getrawnutrition.com"
 
-def raw_scrap_pre_workout(driver):    
+def raw_scrap_pre_workout(driver, writer):    
     url_preworkout = str(url_raw)+"/collections/pre-workout"
 
     f = urllib.request.urlopen(url_preworkout)
@@ -18,8 +18,6 @@ def raw_scrap_pre_workout(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    
-    writer = ix.writer()
     for e in prewList:
         
         url = e.find("a")['href']
@@ -111,13 +109,12 @@ def raw_scrap_pre_workout(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
 
 
 
-def raw_scrap_protein(driver):
+def raw_scrap_protein(driver, writer):
     url_protein = str(url_raw)+"/collections/protein"
     f = urllib.request.urlopen(url_protein)
     s = BeautifulSoup(f, "lxml")
@@ -127,7 +124,6 @@ def raw_scrap_protein(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    writer = ix.writer()
     for p in proteinList:
         url = p.find("a")['href']
         try:
@@ -236,11 +232,10 @@ def raw_scrap_protein(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
     
-def raw_scrap_intra(driver):
+def raw_scrap_intra(driver, writer):
 
     url_intra = str(url_raw)+"/collections/pump"
     f = urllib.request.urlopen(url_intra)
@@ -251,7 +246,6 @@ def raw_scrap_intra(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -336,12 +330,11 @@ def raw_scrap_intra(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
 
-def raw_scrap_recovery(driver):
+def raw_scrap_recovery(driver, writer):
     url_recovery = str(url_raw)+"/collections/recovery"
     f = urllib.request.urlopen(url_recovery)
     s = BeautifulSoup(f, "lxml")
@@ -351,7 +344,6 @@ def raw_scrap_recovery(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    writer = ix.writer()
     for r in recoveryList:
         url = r.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -437,12 +429,11 @@ def raw_scrap_recovery(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
         
-def raw_scrap_fat_burners(driver):
+def raw_scrap_fat_burners(driver, writer):
     url_fat = str(url_raw)+"/collections/fat-burners"
     f = urllib.request.urlopen(url_fat)
     s = BeautifulSoup(f, "lxml")
@@ -452,7 +443,6 @@ def raw_scrap_fat_burners(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    writer = ix.writer()
     for f in fatList:
         url = f.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -538,12 +528,11 @@ def raw_scrap_fat_burners(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
         
 
-def raw_scrap_test_boosters(driver):
+def raw_scrap_test_boosters(driver, writer):
     url_test = str(url_raw)+"/collections/test-boosters"
     f = urllib.request.urlopen(url_test)
     s = BeautifulSoup(f, "lxml")
@@ -553,7 +542,6 @@ def raw_scrap_test_boosters(driver):
     cat = asignar_categoria(subcat)
     categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
     subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-    writer = ix.writer()
     for i in intraList:
         url = i.find("a")['href']
         f = urllib.request.urlopen(url_raw+str(url))
@@ -590,7 +578,7 @@ def raw_scrap_test_boosters(driver):
             for s in sabores_aux.find_all("li"):
                 sabores.append(s.text.strip())
         else:
-            sabores.append("Sin sabor")
+            sabores.append("Sabor único")
 
         url_producto = str(url_raw)+str(url)
 
@@ -638,16 +626,16 @@ def raw_scrap_test_boosters(driver):
             print(f"Se ha producido un error: {e}")
             print(f"Error al guardar el registro: {nombre}")
         time.sleep(1)
-    writer.commit()
     print("Se han cargado " +str(ix.searcher().doc_count()) + "descripciones y reviews")
     return Producto.objects.count()
 
 
-def raw_scrap():
-    driver = getGeckoDriver()
-    raw_scrap_pre_workout(driver)
-    raw_scrap_protein(driver)
-    raw_scrap_recovery(driver)
-    raw_scrap_intra(driver)
-    raw_scrap_fat_burners(driver)
-    raw_scrap_test_boosters(driver)
+def raw_scrap(driver, writer):
+    print("RAW Nutrition scraping started")
+    raw_scrap_pre_workout(driver, writer)
+    raw_scrap_protein(driver, writer)
+    raw_scrap_recovery(driver, writer)
+    raw_scrap_intra(driver, writer)
+    raw_scrap_fat_burners(driver, writer)
+    raw_scrap_test_boosters(driver, writer)
+    print("RAW Nutrition scraping finished successfully")

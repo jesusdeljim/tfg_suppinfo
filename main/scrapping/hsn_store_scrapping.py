@@ -60,7 +60,7 @@ def hsn_scrap_isolated_aminoacids(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -72,11 +72,11 @@ def hsn_scrap_isolated_aminoacids(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
                            
@@ -171,7 +171,7 @@ def hsn_scrap_bcaa_aminoacids(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -182,11 +182,11 @@ def hsn_scrap_bcaa_aminoacids(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
                         
@@ -280,7 +280,7 @@ def hsn_scrap_eaa_aminoacids(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -291,11 +291,11 @@ def hsn_scrap_eaa_aminoacids(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
                         
@@ -390,7 +390,7 @@ def hsn_scrap_glutamine_aminoacids(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -401,11 +401,11 @@ def hsn_scrap_glutamine_aminoacids(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
                         
@@ -498,7 +498,7 @@ def hsn_scrap_hmb_aminoacids(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -509,11 +509,11 @@ def hsn_scrap_hmb_aminoacids(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -609,7 +609,7 @@ def hsn_scrap_natural_anabolics_cortisol(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -620,11 +620,11 @@ def hsn_scrap_natural_anabolics_cortisol(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -718,7 +718,7 @@ def hsn_scrap_natural_anabolics_estrogenos(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -729,11 +729,11 @@ def hsn_scrap_natural_anabolics_estrogenos(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -827,7 +827,7 @@ def hsn_scrap_natural_anabolics_pro_hormona_crecimiento(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -838,11 +838,11 @@ def hsn_scrap_natural_anabolics_pro_hormona_crecimiento(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -941,7 +941,7 @@ def hsn_scrap_natural_anabolics_testosterone(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -952,11 +952,11 @@ def hsn_scrap_natural_anabolics_testosterone(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -1051,7 +1051,7 @@ def hsn_scrap_natural_anabolics_zma(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1062,11 +1062,11 @@ def hsn_scrap_natural_anabolics_zma(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1159,7 +1159,7 @@ def hsn_scrap_protein_bars(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1170,11 +1170,11 @@ def hsn_scrap_protein_bars(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1268,7 +1268,7 @@ def hsn_scrap_energetic_bars(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1279,11 +1279,11 @@ def hsn_scrap_energetic_bars(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1377,7 +1377,7 @@ def hsn_scrap_bars_meal_sustitutive(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1388,11 +1388,11 @@ def hsn_scrap_bars_meal_sustitutive(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1493,7 +1493,7 @@ def hsn_scrap_carbs(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -1504,11 +1504,11 @@ def hsn_scrap_carbs(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -1605,7 +1605,7 @@ def hsn_scrap_weight_control_fat_block(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1616,11 +1616,11 @@ def hsn_scrap_weight_control_fat_block(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1719,7 +1719,7 @@ def hsn_scrap_weight_control_hunger_control(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -1730,11 +1730,11 @@ def hsn_scrap_weight_control_hunger_control(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -1829,7 +1829,7 @@ def hsn_scrap_weight_control_reduction(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -1840,11 +1840,11 @@ def hsn_scrap_weight_control_reduction(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -1943,7 +1943,7 @@ def hsn_scrap_weight_control_diuretics(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -1954,11 +1954,11 @@ def hsn_scrap_weight_control_diuretics(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2058,7 +2058,7 @@ def hsn_scrap_weight_control_termogenics(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2069,11 +2069,11 @@ def hsn_scrap_weight_control_termogenics(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2173,7 +2173,7 @@ def hsn_scrap_weight_control_termo_no_stim(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2184,11 +2184,11 @@ def hsn_scrap_weight_control_termo_no_stim(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2285,7 +2285,7 @@ def hsn_scrap_creatine(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -2296,11 +2296,11 @@ def hsn_scrap_creatine(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -2394,7 +2394,7 @@ def hsn_scrap_mass_gainer(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -2405,11 +2405,11 @@ def hsn_scrap_mass_gainer(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -2505,7 +2505,7 @@ def hsn_scrap_intra(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -2516,11 +2516,11 @@ def hsn_scrap_intra(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -2621,7 +2621,7 @@ def hsn_scrap_minerals(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2632,11 +2632,11 @@ def hsn_scrap_minerals(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2736,7 +2736,7 @@ def hsn_scrap_multivitamins(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2747,11 +2747,11 @@ def hsn_scrap_multivitamins(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2850,7 +2850,7 @@ def hsn_scrap_recovery(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2861,11 +2861,11 @@ def hsn_scrap_recovery(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -2964,7 +2964,7 @@ def hsn_scrap_pre_workout(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -2975,11 +2975,11 @@ def hsn_scrap_pre_workout(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -3075,7 +3075,7 @@ def hsn_scrap_protein_casein(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3086,11 +3086,11 @@ def hsn_scrap_protein_casein(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3184,7 +3184,7 @@ def hsn_scrap_protein_huevo(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3195,11 +3195,11 @@ def hsn_scrap_protein_huevo(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3293,7 +3293,7 @@ def hsn_scrap_protein_carne(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3304,11 +3304,11 @@ def hsn_scrap_protein_carne(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3402,7 +3402,7 @@ def hsn_scrap_protein_secuencial(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3413,11 +3413,11 @@ def hsn_scrap_protein_secuencial(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3511,7 +3511,7 @@ def hsn_scrap_protein_vegetal(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3522,11 +3522,11 @@ def hsn_scrap_protein_vegetal(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3620,7 +3620,7 @@ def hsn_scrap_protein_whey_iso(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3631,11 +3631,11 @@ def hsn_scrap_protein_whey_iso(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3729,7 +3729,7 @@ def hsn_scrap_protein_whey_concentrated(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3740,11 +3740,11 @@ def hsn_scrap_protein_whey_concentrated(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3838,7 +3838,7 @@ def hsn_scrap_protein_whey_hydro(driver, writer):
             for r in reviews_divs:
                 reviews_list.append(r.find("p", class_="content-review").text)
         except:
-            reviews.append("No hay reviews")
+            reviews_list.append("No hay reviews")
         reviews = "|writer_split|".join(str(e) for e in reviews_list)
         stock = True
         stock_div = s.find("div", class_="no-stock-block")
@@ -3849,11 +3849,11 @@ def hsn_scrap_protein_whey_hydro(driver, writer):
 
         try:
             ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-            ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+            ingredientes = parse_ingredientes(ingredientes_aux)
         except:
             ingredientes_aux = s.find("div", class_="table_ingredientes")
             try:
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes = [nombre.split(" ")[0]]
 
@@ -3952,7 +3952,7 @@ def hsn_scrap_vitamins(driver, writer):
                 for r in reviews_divs:
                     reviews_list.append(r.find("p", class_="content-review").text)
             except:
-                reviews.append("No hay reviews")
+                reviews_list.append("No hay reviews")
             reviews = "|writer_split|".join(str(e) for e in reviews_list)
             stock = True
             stock_div = s.find("div", class_="no-stock-block")
@@ -3963,11 +3963,11 @@ def hsn_scrap_vitamins(driver, writer):
 
             try:
                 ingredientes_aux = s.find("div", class_="table_ingredientes").find_all("p")[1].text.split(".")[0]
-                ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                ingredientes = parse_ingredientes(ingredientes_aux)
             except:
                 ingredientes_aux = s.find("div", class_="table_ingredientes")
                 try:
-                    ingredientes = parse_ingredientes_hsn(ingredientes_aux)
+                    ingredientes = parse_ingredientes(ingredientes_aux)
                 except:
                     ingredientes = [nombre.split(" ")[0]]
 
@@ -4019,9 +4019,8 @@ def hsn_scrap_vitamins(driver, writer):
 
 
 
-def hsn_scrap():
-    writer = ix.writer()
-    driver = getGeckoDriver()
+def hsn_scrap(driver, writer):
+    print("HSN Scrapping started")
     hsn_scrap_isolated_aminoacids(driver, writer)
     hsn_scrap_bcaa_aminoacids(driver, writer)
     hsn_scrap_eaa_aminoacids(driver, writer)
@@ -4058,4 +4057,4 @@ def hsn_scrap():
     hsn_scrap_protein_whey_concentrated(driver, writer)
     hsn_scrap_protein_whey_hydro(driver, writer)
     hsn_scrap_vitamins(driver, writer)
-    writer.commit()
+    print("HSN Scrapping finished successfully")
