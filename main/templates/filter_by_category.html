@@ -9,7 +9,7 @@
     <label for="category">Selecciona una categoría:</label>
     <select name="category" id="category">
         <option value="" {% if not selected_category %}selected{% endif %}>Todos</option>
-        {% for category in categories %}
+        {% for category in categorias %}
             <option value="{{ category.nombre }}" {% if selected_category == category.nombre %}selected{% endif %}>{{ category.nombre }}</option>
         {% endfor %}
     </select>

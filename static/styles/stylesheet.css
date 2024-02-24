@@ -1,0 +1,136 @@
+.index-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .logo {
+    width: 50px;
+    margin-right: 10px;
+  }
+  
+  .site-name {
+    font-size: 24px;
+  }
+  
+  .search-container {
+    position: relative;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 8px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    height: 40px;
+  }
+  
+  .user-controls {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+  
+  .admin-panel-icon,
+  .user-profile-icon,
+  .logout-icon,
+  .login-icon,
+  .register-icon {
+    margin-left: 10px;
+  }
+  
+  .username {
+    margin-left: 5px;
+  }
+
+  .menu-container {
+    position: relative;
+    text-align: center;
+    margin-top: 10px; /* Ajusta según sea necesario */
+  }
+  .menu-icon {
+    cursor: pointer;
+    width: 30px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+    display: inline-block; /* O cualquier otro estilo que necesites para alinear la imagen correctamente */
+    margin-top: 10px; /* Ajusta según sea necesario */
+  }
+  .categories-nav {
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    top: 100%; /* Posiciona el menú debajo del botón */
+    left: 50%; /* Centra el menú horizontalmente */
+    transform: translateX(-50%); /* Desplaza el menú hacia la izquierda para centrarlo */
+  }
+  
+  .categories-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .categories-nav li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .categories-nav li:last-child {
+    border-bottom: none;
+  }
+  
+  .categories-nav a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+
+  .productos-recomendados-container {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .producto-recomendado {
+    flex: 0 0 auto;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .producto-recomendado-imagen {
+    width: 100px;
+    height: auto;
+  }
+  
+  .producto-recomendado-info {
+    margin-top: 5px;
+  }
+  
+  .producto-recomendado-nombre {
+    display: block;
+  }
+  
+  .producto-recomendado-precio {
+    display: block;
+    font-weight: bold;
+  }

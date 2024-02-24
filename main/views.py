@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+import random
 
 from django.conf import settings
 from django.contrib import messages
@@ -120,18 +121,28 @@ def admin_profile(request):
 #----------------VIEWS FOR PRODUCTS MANAGEMENT---------------------------
 
 def inicio(request):
+    # Define la cantidad de productos recomendados que deseas mostrar
+    cantidad_recomendados = 5
+    
+    # Obtén los productos con mayor rating_original
+    productos_con_alto_rating = Producto.objects.filter(rating_original__isnull=False).order_by('-rating_original')
     productos=Producto.objects.all()
-    return render(request,'inicio.html', {'productos': productos})
+    categorias = Categoria.objects.all()
+    # Selecciona una muestra aleatoria de productos recomendados
+    productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
+    
+    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias})
+
 
 def filter_by_category(request):
-    categories = Categoria.objects.all()
+    categorias = Categoria.objects.all()
     productos = Producto.objects.all().order_by('categoria')
 
     selected_category = request.GET.get('category', None)
     if selected_category:
         productos = productos.filter(categoria__nombre=selected_category)
 
-    return render(request, 'filter_by_category.html', {'productos': productos, 'categories': categories, 'selected_category': selected_category})
+    return render(request, 'filter_by_category.html', {'productos': productos, 'categorias': categorias, 'selected_category': selected_category})
 
 def filter_by_brand(request):
     brands = Marca.objects.all()

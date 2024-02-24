@@ -5,60 +5,61 @@
 
 <head>
   <meta charset='utf-8'>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/inicio.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/registro.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/filter_by_category.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/admin_profile.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/user_profile.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/stylesheet.css' %}">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
-
-  
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-
-
+  <script src="{% static 'js/displayNav.js' %}"></script>
   <title>SuppInfo - Suplementación deportiva</title>
 
 </head>
 
 <body>
 
-  <header class="index_header">
-    {% block encabezado %}
-    <h1>SuppInfo</h1>
-    {% endblock %}
-    <nav class="navBar">
-      <dl>
-        <dd><a href='/'>Inicio</a></dd>
-        <dd><a href='/filter_by_category'>Filtrar por categoría</a></dd>
-        <dd><a href='/filter_by_brand'>Filtrar por Marca</a></dd>
+  <header class="index-header">
+    <div class="header-content">
+      <div class="logo-container">
+        <a href="/" class="logo-link">
+          <img src="{% static 'icons/logo.png' %}" alt="Logo" class="logo">
+        </a>
+      </div>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Buscar productos..." class="search-input" oninput="searchProducts()">
+        <div id="search-results" class="search-results"></div>
+      </div>
+      <div class="user-controls">
         {% if user.is_authenticated %}
-        {% if user.is_superuser %}
-        <dd><a href='/admin_profile'>Panel de administración</a></dd>
-        {% endif %}
-        <dd><a href='/user_profile'>Mi perfil</a></dd>
-        <dd><a href='/cerrar_sesion'>Cerrar Sesión</a></dd>
+          {% if user.is_superuser %}
+            <a href="/admin_profile" class="admin-panel-icon">
+              <img src="{% static 'icons/admin-icon.png' %}" alt="Admin">
+            </a>
+          {% endif %}
+          <a href="/user_profile" class="user-profile-icon">
+            <img src="{% static 'icons/user-icon.png' %}" alt="Perfil">
+          </a>
+          <a href="/cerrar_sesion" class="logout-icon">
+            <img src="{% static 'icons/logout-icon.png' %}" alt="Cerrar Sesión">
+          </a>
         {% else %}
-        <dd><a href='/inicio_sesion'>Iniciar Sesión</a></dd>
-        <dd><a href='/registro'>Regístrate</a></dd>
+          <a href="/inicio_sesion" class="login-icon">
+            <img src="{% static 'icons/login-icon.png' %}" alt="Iniciar Sesión">
+          </a>
+          <a href="/registro" class="register-icon">
+            <img src="{% static 'icons/register-icon.png' %}" alt="Regístrate">
+          </a>
         {% endif %}
-      </dl>
-    </nav>
+      </div>
+    </div>
+    <div class="menu-container">
+      <img src="{% static 'icons/menu-icon.png' %}" alt="Menú" class="menu-icon"">
+      <nav class="categories-nav" id="categoriesMenu" style="display: none;">
+        <ul>
+          {% for categoria in categorias %}
+          <li><a href='/filter_by_category'>{{ categoria.nombre }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <section>
@@ -66,7 +67,5 @@
   </section>
 
   {% block pie %}{% endblock %}
-
-  <!--<script src="{% static 'js/sticky-header.js' %}"></script>-->
 </body>
 </html>
