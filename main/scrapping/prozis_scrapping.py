@@ -1,46 +1,5 @@
-#from ..utils.imports import *
-#from ..utils.utils import *
-
-import os
-import random
-import sys
-from bs4 import BeautifulSoup
-import bs4
-import urllib.request
-from urllib.error import HTTPError
-from urllib.request import urlopen, Request
-import lxml
-import re
-import ssl
-import time
-from datetime import datetime
-
-from whoosh.index import create_in,open_dir
-from whoosh.fields import Schema, TEXT, DATETIME, KEYWORD, ID
-from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
-from whoosh.query import And
-
-from django.db import IntegrityError
-from django.core.files import File
-
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.common.exceptions import ElementClickInterceptedException
-
-def getGeckoDriver():
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0"
-    firefox_options = Options()
-    #firefox_options.add_argument("--headless")
-    firefox_options.set_preference('general.useragent.override', user_agent)
-    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=firefox_options)
-
-    return driver
+from main.utils.imports import *
+from main.utils.utils import *
 
 prozis_headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
@@ -60,102 +19,163 @@ getattr(ssl, '_create_unverified_context', None)):
     ssl._create_default_https_context = ssl._create_unverified_context
 
 
-def prozis_scrap(driver):
+def prozis_scrap_complete(driver,writer):
     driver.get(url_prozis)   
     time.sleep(2)
     driver.find_element(By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click() 
     num_pags = driver.find_elements(By.CLASS_NAME, "pagination-button")[-2].text
     urls_productos = []
-    for pag in range(1, 2): #int(num_pags)+1
+    for pag in range(1,int(num_pags)+1): 
         driver.get(url_prozis + f"/q/page/{pag}")
-        time.sleep(2)
+        time.sleep(4)
         productos = driver.find_element(By.CLASS_NAME, "row.list-container").find_elements(By.CLASS_NAME, "col.list-item")
         for producto in productos:
             url_producto = producto.find_element(By.TAG_NAME, "a").get_attribute("href")
             urls_productos.append(url_producto)
-    
     for url_producto in urls_productos:
-        driver.get(url_producto)
-        time.sleep(2)
-        subcategoria_scrapeada = driver.find_element(By.ID, "breadcrumbs").find_elements(By.TAG_NAME, "a")[-2].text
-        #subcat = asignar_subcategoria(subcategoria_scrapeada)
-        #if subcat == "No subcategoria asignada":
-        #    continue
-        #cat = asignar_categoria(subcat)
-        #categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
-        #subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
-        nombre = driver.find_element(By.ID, "breadcrumbs").find_elements(By.TAG_NAME, "a")[-1].text
-        precio = driver.find_element(By.XPATH, "//p[@class='final-price']").get_attribute("data-qa").replace("€", "").replace(",",".").strip()
-        marca = "PROZIS"
-        #brand = Marca.objects.get_or_create(nombre = marca)[0]
-        rating = driver.find_element(By.CLASS_NAME, "prz-blk-content-rating").find_element(By.TAG_NAME, "span").text.split("/")[0].strip()
-        stock = True
-        stock_div = driver.find_element(By.CLASS_NAME, "stock-info").text.strip()
-        if "No disponible" in stock_div:
-            stock = False
-        else:
-            stock = True
-        
-        url_imagen = driver.find_element(By.CLASS_NAME, "first-column").find_element(By.TAG_NAME, "img").get_attribute("src")
-        #get_imagen_prozis(url_imagen)
-
-        sabores = []
-        ingredientes = []
-        driver.find_element(By.CLASS_NAME, "prz-blk-content").click() #Abre menu info nutricional para coger sabores e ingredientes.
-        time.sleep(2)
         try:
-            driver.find_element(By.CLASS_NAME, "nut-tbl-select-box").click()
-            for sabor in driver.find_elements(By.TAG_NAME, "li"):
-                sabores.append(sabor.text)
+            driver.get(url_producto)
+            time.sleep(4)
+            try:
+                driver.find_element(By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click() 
+            except:
+                pass
+            subcategoria_scrapeada = driver.find_element(By.ID, "breadcrumbs").find_elements(By.TAG_NAME, "a")[-2].text.strip()
+            subcat = asignar_subcategoria(subcategoria_scrapeada)
+            if subcat == "No subcategoria asignada":
+                continue
+            cat = asignar_categoria(subcat)
+            categoria = Categoria.objects.get_or_create(nombre = cat)[0] 
+            subcategoria = Subcategoria.objects.get_or_create(nombre = subcat, categoria = categoria)[0]
+            nombre = driver.find_element(By.ID, "breadcrumbs").find_elements(By.TAG_NAME, "a")[-1].text.strip()
+            print("Intentando scraping producto: ", nombre)
+            precio = driver.find_element(By.XPATH, "//p[@class='final-price']").get_attribute("data-qa").replace("€", "").replace(",",".").strip()
+            marca = "PROZIS"
+            brand = Marca.objects.get_or_create(nombre = marca)[0]
+            rating = driver.find_element(By.CLASS_NAME, "prz-blk-content-rating").find_element(By.TAG_NAME, "span").text.split("/")[0].strip()
+            stock = True
+            stock_div = driver.find_element(By.CLASS_NAME, "stock-info").text.strip()
+            if "No disponible" in stock_div:
+                stock = False
+            else:
+                stock = True
             
-        except NoSuchElementException:
-            sabores.append("Sabor único")
-        sabores = list(filter(None, sabores))
-        ingredientes_text = driver.find_element(By.CLASS_NAME, "nut-other-ingredients").find_element(By.CLASS_NAME, "list").text
-        ingredientes_text = ingredientes_text[:-1]
-        ingredientes = parse_ingredientes(ingredientes_text)
-        driver.find_element(By.ID, "contentCloseBtn").click() #Cierra menu info nutricional
-        time.sleep(1)
-        #Buscamos de nuevo el elemento "prz-blk-content", pero en vez de coger el primero cogemos el siguiente, que sera el de las reviews
-        driver.find_elements(By.CLASS_NAME, "prz-blk-content")[1].click()
-        time.sleep(2)
-        reviews_divs = driver.find_element(By.CLASS_NAME, "reviews-section.customer-reviews").find_elements(By.CLASS_NAME, "review-detailed")
-        reviews_list=[]
-        for review in reviews_divs:
-            reviews_list.append(review.find_element(By.CLASS_NAME, "review-content").text)
+            url_imagen = driver.find_element(By.CLASS_NAME, "first-column").find_element(By.TAG_NAME, "img").get_attribute("src")
+            get_imagen_prozis(url_imagen)
 
-        reviews = "|writer_split|".join(str(e) for e in reviews_list)
+            sabores = []
+            ingredientes = []
+            elements = driver.find_elements(By.CLASS_NAME, "prz-blk-content")
+            for element in elements:
+                # Verifica si el elemento contiene un <i> con la clase 'prz-fullscreen'
+                if not element.find_elements(By.CSS_SELECTOR, "i.prz-fullscreen"):
+                    # Si no lo contiene, verifica si tiene un <span> con el texto 'Información Nutricional'
+                    if element.find_elements(By.XPATH, ".//span[contains(text(), 'Información Nutricional')]") or element.find_elements(By.XPATH, ".//span[contains(text(), 'Información del producto')]"):
+                        element.click()
+                        break
+            time.sleep(2)
+            try:
+                driver.find_element(By.CLASS_NAME, "nut-tbl-select-box").click()
+                for sabor in driver.find_elements(By.TAG_NAME, "li"):
+                    sabores.append(sabor.text)
+                
+            except NoSuchElementException:
+                sabores.append("Sabor único")
+            sabores = list(filter(None, sabores))
+            try:
+                ingredientes_text = driver.find_element(By.CLASS_NAME, "nut-other-ingredients").find_element(By.CLASS_NAME, "list").text
+                ingredientes_text = ingredientes_text[:-1]
+                ingredientes = parse_ingredientes(ingredientes_text)
+            except:
+                ingredientes.append("Sin ingredientes")
+            driver.find_element(By.ID, "contentCloseBtn").click() #Cierra menu info nutricional
+            time.sleep(1)
+
+            #Buscamos de nuevo el elemento "prz-blk-content", pero en vez de coger el primero cogemos el siguiente, que sera el de las reviews
+            elements = driver.find_elements(By.CLASS_NAME, "prz-blk-content")
+            for element in elements:
+                # Verifica si el elemento contiene un <i> con la clase 'prz-fullscreen'
+                if not element.find_elements(By.CSS_SELECTOR, "i.prz-fullscreen"):
+                    # Si no lo contiene, verifica si tiene un <span> con el texto 'Opiniones generales'
+                    if element.find_elements(By.XPATH, ".//span[contains(text(), 'Opiniones generales')]"):
+                        element.click()
+                        break
+            time.sleep(2)
+            try:
+                reviews_divs = driver.find_element(By.CLASS_NAME, "reviews-section.customer-reviews").find_elements(By.CLASS_NAME, "review-detailed")
+                reviews_list=[]
+                for review in reviews_divs:
+                    reviews_list.append(review.find_element(By.CLASS_NAME, "review-content").text)
+
+                reviews = "|writer_split|".join(str(e) for e in reviews_list)
+            except:
+                reviews = "No hay reviews"
+            
+            driver.find_element(By.ID, "contentCloseBtn").click() #Cierra menu reviews
+            time.sleep(2)
+            try:
+                driver.find_element(By.CLASS_NAME, "prz-blk-content.pdp-block-horizontal.prz-blk-content-with-img").click() #Abre menu descripciones
+                time.sleep(2)
+                descripcion = ""
+                table_descripciones = driver.find_element(By.CLASS_NAME, "p-0").find_elements(By.TAG_NAME, "p")
+
+                for p in table_descripciones:
+                    if p.text.startswith("*"):
+                        continue
+                    descripcion += p.text + "\n"
+
+                descripcion_final = descripcion
+            except:
+                descripcion_final = "No hay descripción"
+
+            #almacenamos en la BD
         
-        driver.find_element(By.ID, "contentCloseBtn").click() #Cierra menu reviews
-        time.sleep(2)
-        driver.find_element(By.CLASS_NAME, "prz-blk-content.pdp-block-horizontal.prz-blk-content-with-img").click() #Abre menu descripciones
-        time.sleep(2)
-        
-        
-        print("NUEVO PRODUCTO:\n")
-        print(nombre, url_producto, subcategoria_scrapeada, precio, marca, rating, stock)
-        print(sabores)
-        print(ingredientes)
-        print(reviews)
-        print("---------------------------------------------------------------\n")
+            lista_ingredientes = []
+            lista_sabores = []
+            
+            for i in ingredientes:
+                i = i.strip()
+                ingrediente_obj = Ingrediente.objects.get_or_create(ingrediente=i)[0]
+                lista_ingredientes.append(ingrediente_obj)
+            for s in sabores:
+                s = s.strip()
+                sabor_obj = Sabor.objects.get_or_create(sabor=s)[0]
+                lista_sabores.append(sabor_obj)
+            try:
+                existe_registro = Producto.objects.filter(url=url_producto).exists()
+                if not existe_registro:
+                    p = Producto.objects.create(nombre=nombre,
+                                                marca=brand,
+                                                precio=precio,
+                                                categoria=categoria,
+                                                subcategoria=subcategoria,
+                                                stock=stock,
+                                                url=url_producto,
+                                                rating_original = rating,
+                                            )
+                    producto_id = p.id
+                    writer.add_document(id_producto = str(producto_id),nombre=nombre, descripcion=descripcion_final, reviews = reviews)
+                    
+                    with open('temp.jpg', 'rb') as imagen_file:
+                        p.imagen.save("images/"+nombre.strip()+'.jpg', File(imagen_file), save=True)
+                    os.remove('temp.jpg')
+                    
+                    p.sabor.set(lista_sabores)
+                    p.ingrediente.set(lista_ingredientes)
+                    print(f"Registro introducido en la BD: {nombre}")
+                else:
+                    print(f"Registro duplicado: {nombre}")
+            except IntegrityError as e:
+                print(f"Se ha producido un error: {e}")
+                print(f"Error al guardar el registro: {nombre}")
+            time.sleep(10)
+        except Exception as e:
+            print(f"Se ha producido un error al scrapear el producto: {nombre}")
+            print(f"Error: {e}")
+            continue
+    return Producto.objects.count()
 
-    
-def parse_ingredientes(ingredientes):
-    # Utilizar una expresión regular para encontrar elementos fuera de paréntesis
-    elementos_fuera = re.findall(r'[^,(]+(?:\([^)]*\)[^,(]*)*', ingredientes)
-    # Dividir cada elemento encontrado por comas
-    resultado = [elemento.strip() for elemento in elementos_fuera if elemento.strip()]
-    resultado_limpio = []
-    for elemento in resultado:
-        soup = BeautifulSoup(elemento, 'html.parser')
-        texto_limpio = soup.get_text()
-        resultado_limpio.append(texto_limpio)
-
-    return resultado_limpio
-
-if __name__ == '__main__':
-    driver = getGeckoDriver()
-    prozis_scrap(driver)
-    driver.close()
+def prozis_scrap(driver, writer):
+    print("Prozis Scraping started")
+    prozis_scrap_complete(driver, writer)
     print("Prozis Scraping finished")
-    print("Indexing finished")

@@ -1,25 +1,26 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from main.models import Marca, Producto, Sabor, Ingrediente, Proteina, Vitamina, Snack, Categoria
-from main.populateDB import populate
-from .forms import RegistroForm
-from main.forms import *
-from whoosh.index import create_in,open_dir
-from whoosh.fields import Schema, TEXT, DATETIME, KEYWORD, ID
-from whoosh.qparser import QueryParser, MultifieldParser, OrGroup
-from whoosh.query import And
-import shutil
 import os
+import shutil
 import subprocess
 
-from django.contrib.auth import login
 from django.conf import settings
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.http.response import HttpResponseRedirect
-from django.db import connection
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.management import call_command
+from django.db import connection
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+
+from main.forms import *
+from main.models import (Categoria, Ingrediente, Marca, Producto, Proteina,
+                         Sabor, Snack, Vitamina)
+from main.populateDB import populate
+
+from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
+from whoosh.index import create_in, open_dir
+from whoosh.qparser import MultifieldParser, OrGroup, QueryParser
+from whoosh.query import And
 
 
 #----------------VIEWS FOR BD LOAD AND DELETE---------------------------

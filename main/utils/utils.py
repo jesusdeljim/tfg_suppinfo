@@ -2,7 +2,7 @@ from .imports import *
 
 mapeo_subcategorias = {
         "Preentrenamiento y Óxido Nítrico": ["Pre-Workout", "Pre-entreno", "Preentrenamiento", "Preentrenamiento y Óxido Nítrico", "óxido nítrico", "Pre-Entrenamiento", "Suplementos Pre-Entreno", "Pre-entrenos"],
-        "Proteína Whey" : ["Proteína Whey","Protein", "Proteínas", "Batidos de proteínas en Polvo", "Proteínas Aisladas de Suero", "Proteínas Concentradas de Suero"],
+        "Proteína Whey" : ["Proteína Whey","Protein", "Proteínas", "Batidos de proteínas en Polvo", "Proteínas Aisladas de Suero", "Proteínas Concentradas de Suero", " Proteína Whey "],
         "Aislado de Whey y Whey Nativa" : ["Aislado de Whey y Whey Nativa","Protein", "Proteínas", "Batidos de proteínas en Polvo", "Proteínas Aisladas de Suero", "Proteínas Concentradas de Suero"],
         "Hidrolizado de Proteína Whey" : ["Hidrolizado de Proteína Whey","Proteínas Hidrolizadas"],
         "Caseína e Proteína de liberación lenta" : ["Caseína e Proteína de liberación lenta","Caseínas", "Proteínas Liberación Secuencial"],
@@ -69,16 +69,14 @@ def asignar_categoria(subcategoria):
     for categoria, subcategorias in mapeo_categorias.items():
         if subcategoria in subcategorias:
             return categoria
-        else:
-            return "No categoria asignada"
+    return "No categoria asignada"
 
 
 def asignar_subcategoria(subcategoria_scrapeada):
     for subcategoria, equivalentes in mapeo_subcategorias.items():
         if subcategoria_scrapeada in equivalentes:
-            return subcategoria
-        else:
-            return "No subcategoria asignada"
+            return subcategoria  
+    return "No subcategoria asignada"
 
 def get_imagen_hsn(url):
     req = Request(url = url, headers=headers)
@@ -182,7 +180,9 @@ def get_ingredientes_big(url, driver):
         try:
             info_nutricional = driver.find_element(By.XPATH, "//li[contains(@class, 'tab') and contains(.,'Info. Nutricional')]")
         except NoSuchElementException:
-            return ingredientes.append("Sin ingredientes")
+            ingredientes.append("Sin ingredientes")
+            return ingredientes
+    
     driver.execute_script("arguments[0].click();", info_nutricional)
     time.sleep(3)
     try:
@@ -197,9 +197,9 @@ def get_ingredientes_big(url, driver):
             ingredientes = ingredientes[1:].strip()
         
     except NoSuchElementException:
-        return ingredientes.append("Sin ingredientes")
+        ingredientes.append("Sin ingredientes")
+        return ingredientes
 
-    
     ingredientes = parse_ingredientes(ingredientes)
     return ingredientes
 
@@ -234,25 +234,8 @@ def get_rating_big(url, driver):
     try:
         rating = driver.find_element(By.CLASS_NAME, "sr-only").text.split(" ")[0]
     except:
-        rating = 0
+        rating = 0.0
     return rating
-
-def get_sabores_big_proteinas(url, driver):
-    driver.get(url)
-    sabores = []
-    try:
-        sabores_aux = driver.find_element(By.ID, "option-sabor")
-    except NoSuchElementException:
-        try:
-            sabores_aux = driver.find_element(By.ID, "option-flavour")
-        except NoSuchElementException:
-            sabores.append("Sabor único")
-            return sabores
-    for s in sabores_aux.find_elements(By.TAG_NAME, "option"):
-        if s.text.strip():  # Esto evitará agregar opciones vacías
-            sabores.append(s.text.strip())
-    time.sleep(2)
-    return sabores
 
 def get_imagen_prozis(url):
     req = Request(url = url, headers=headers)
