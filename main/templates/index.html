@@ -5,6 +5,7 @@
 
 <head>
   <meta charset='utf-8'>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'styles/stylesheet.css' %}">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
@@ -52,13 +53,25 @@
     </div>
     <div class="menu-container">
       <img src="{% static 'icons/menu-icon.png' %}" alt="Menú" class="menu-icon"">
-      <nav class="categories-nav" id="categoriesMenu" style="display: none;">
-        <ul>
+      <div class="categories-container has-transition menu-cat-flexbox" id="categoriesMenu">
+        <span class="categories-title">CATEGORÍAS</span>
+        <ul class="categories-menu-displayed">
           {% for categoria in categorias %}
-          <li><a href='/filter_by_category'>{{ categoria.nombre }}</a></li>
+          <li class="category-item">
+            <a href="">{{ categoria.nombre }}</a>
+            <ul class="subcategory-nav">
+              {% for subcategoria in subcategorias %}
+              {% if subcategoria.categoria.id == categoria.id %}
+                <li>
+                  <a class="subcategory-item" href="">{{ subcategoria.nombre }}</a>
+                </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
           {% endfor %}
         </ul>
-      </nav>
+      </div>
     </div>
   </header>
 

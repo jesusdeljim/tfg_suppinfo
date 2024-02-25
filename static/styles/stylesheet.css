@@ -73,39 +73,100 @@
     display: inline-block; /* O cualquier otro estilo que necesites para alinear la imagen correctamente */
     margin-top: 10px; /* Ajusta según sea necesario */
   }
-  .categories-nav {
-    text-align: center;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    position: absolute;
+  .categories-container {
     width: 100%;
-    z-index: 1000;
-    top: 100%; /* Posiciona el menú debajo del botón */
-    left: 50%; /* Centra el menú horizontalmente */
-    transform: translateX(-50%); /* Desplaza el menú hacia la izquierda para centrarlo */
+    visibility: hidden; /* Inicialmente oculto */
+    opacity: 0; /* Inicialmente transparente */
+    max-height: 0; /* Inicialmente sin altura */
+    overflow: hidden; /* Oculta el contenido que exceda la altura máxima */
+    transition: visibility 0s, opacity 0.5s linear, max-height 0.5s ease-in-out; /* Transición suave */
+    z-index: 1000; /* Asegúrate de que el menú esté por encima de otros elementos */
   }
-  
-  .categories-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .categories-nav li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .categories-nav li:last-child {
-    border-bottom: none;
-  }
-  
-  .categories-nav a {
-    text-decoration: none;
-    color: #333;
-    display: block;
+  .categories-container.visible {
+    visibility: visible;
+    opacity: 1;
+    max-height: 500px; /* Altura máxima suficiente para mostrar todo el contenido del menú */
   }
 
+  .categories-title {
+    display: block;
+    text-align: center;
+    font-size: 24px; /* Ajusta el tamaño de la fuente según necesites */
+    font-family: 'Black Ops One', cursive;
+    margin: 10px 0; /* Añade un margen arriba y abajo */
+    color: #333; /* Color del texto del título */
+  }
+  
+  .categories-menu-displayed {
+    display: flex; /* Usa flexbox para alinear las categorías horizontalmente */
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Elimina los estilos de lista por defecto */
+  }
+
+  .has-trasition {
+    transition-duration: 1s;
+    transition-property: all;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+  }
+
+  .category-item {
+    margin: 5px; /* Espacio entre categorías */
+    list-style-type: none;
+    
+  }
+  
+  .categories-container a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgb(14, 3, 3); /* Color del texto para las categorías */
+    font-family: 'Black Ops One', cursive;
+    padding: 10px; /* Espacio alrededor del texto */
+    border-radius: 5px; /* Bordes redondeados para los enlaces */
+    text-align: center;
+    font-size: large;
+  }
+
+  .categories-container a:hover {
+    color: rgb(87, 209, 240); /* Color del texto al pasar el ratón por encima */
+  }  
+  .category-item:hover > .subcategory-nav li {
+    display: block; /* Muestra el submenú cuando se pasa el ratón sobre la categoría */
+  }
+  
+  
+.category-item > a {
+  padding-left: 20px; /* Asume que este es el padding aplicado a los enlaces de categoría */
+  /* ... otros estilos de los enlaces de categoría ... */
+}
+
+  .subcategory-nav {
+    position: static; /* Para que el submenú sea parte del flujo normal del documento */
+    width: 100%; /* Asegúrate de que el submenú se extienda a lo ancho de la ventana */
+    z-index: 1001; /* Asegúrate de que el submenú esté por encima del menú de categorías */
+  }
+  
+  .subcategory-nav ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Elimina los estilos de lista por defecto */
+  }
+  
+  .subcategory-nav li {
+    display: none; /* Inicialmente oculto */
+  }
+  .subcategory-nav li a {
+    text-align: left; /* Alinea el texto a la izquierda */
+    padding-left: 20px; /* Añade un poco de padding a la izquierda para que el texto no esté pegado al borde */
+    padding: 10px; /* Espacio alrededor del texto */
+    text-decoration: none;
+    color: #333; /* Color del texto para las subcategorías */
+  }
+  
+  .subcategory-nav li a:hover {
+    color: rgb(87, 209, 240);
+  }
   .productos-recomendados-container {
     display: flex;
     overflow-x: auto;

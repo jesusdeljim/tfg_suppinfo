@@ -1,4 +1,5 @@
 import os
+from re import sub
 import shutil
 import subprocess
 import random
@@ -14,7 +15,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 
 from main.forms import *
-from main.models import (Categoria, Ingrediente, Marca, Producto, Proteina,
+from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Proteina,
                          Sabor, Snack, Vitamina)
 from main.populateDB import populate
 
@@ -128,10 +129,11 @@ def inicio(request):
     productos_con_alto_rating = Producto.objects.filter(rating_original__isnull=False).order_by('-rating_original')
     productos=Producto.objects.all()
     categorias = Categoria.objects.all()
+    subcategorias = Subcategoria.objects.all()
     # Selecciona una muestra aleatoria de productos recomendados
     productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
     
-    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias})
+    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 
 def filter_by_category(request):
