@@ -123,7 +123,7 @@ def admin_profile(request):
 
 def inicio(request):
     # Define la cantidad de productos recomendados que deseas mostrar
-    cantidad_recomendados = 5
+    cantidad_recomendados = 15
     
     # Obtén los productos con mayor rating_original
     productos_con_alto_rating = Producto.objects.filter(rating_original__isnull=False).order_by('-rating_original')

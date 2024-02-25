@@ -104,13 +104,6 @@
     list-style-type: none; /* Elimina los estilos de lista por defecto */
   }
 
-  .has-trasition {
-    transition-duration: 1s;
-    transition-property: all;
-    transition-timing-function: ease;
-    transition-delay: 0s;
-  }
-
   .category-item {
     margin: 5px; /* Espacio entre categorías */
     list-style-type: none;
@@ -167,31 +160,88 @@
   .subcategory-nav li a:hover {
     color: rgb(87, 209, 240);
   }
-  .productos-recomendados-container {
-    display: flex;
-    overflow-x: auto;
+  .productos-recomendados-titulo {
+    font-family: 'Black Ops One', cursive;
+    text-align: center;
+    font-size: 28px; /* Ajusta el tamaño según necesites */
+    margin: 20px 0; /* Espacio arriba y abajo del título */
   }
   
+  .productos-recomendados-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .productos-recomendados-card {
+    display: flex;
+    overflow-x: hidden;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Evita que los productos se ajusten en múltiples líneas */
+    scroll-snap-type: x mandatory;
+  }
+
   .producto-recomendado {
     flex: 0 0 auto;
+    width: 200px; /* Ancho fijo para todas las cajas */
+    height: 300px; /* Altura fija para todas las cajas */
     margin: 10px;
     text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    overflow: hidden; /* Oculta el contenido que exceda el tamaño de la caja */
+    scroll-snap-align: start;
+  }
+  
+  .producto-recomendado-enlace {
+    display: block; /* Asegúrate de que el enlace ocupe todo el espacio de la "caja" */
+    margin: -1px; /* Ajusta el margen para que la imagen no rompa los bordes redondeados */
   }
   
   .producto-recomendado-imagen {
-    width: 100px;
+    width: 100%; /* Ajusta el ancho de la imagen al de la caja */
     height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
   
   .producto-recomendado-info {
     margin-top: 5px;
+    padding: 0 10px; /* Espacio a los lados dentro de la "caja" */
   }
   
   .producto-recomendado-nombre {
     display: block;
+    white-space: nowrap; /* Evita que el nombre se ajuste a una nueva línea */
+    overflow: hidden; /* Oculta el contenido que exceda el ancho del elemento */
+    text-overflow: ellipsis; /* Añade puntos suspensivos al final del contenido recortado */
   }
   
   .producto-recomendado-precio {
     display: block;
     font-weight: bold;
+  }
+
+  .carrusel-container-recommended {
+    position: relative;
+    width: 60%;
+    margin: auto;
+    overflow: hidden; /* Oculta los productos fuera del área visible */
+  }
+  .carrusel-flecha-izquierda,
+  .carrusel-flecha-derecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .carrusel-flecha-izquierda {
+    left: 10px;
+  }
+
+  .carrusel-flecha-derecha {
+    right: 10px;
   }

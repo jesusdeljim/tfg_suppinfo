@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
   <script src="{% static 'js/displayNav.js' %}"></script>
+  <script src="{% static 'js/carruselRecommendedProducts.js' %}"></script>
   <title>SuppInfo - Suplementación deportiva</title>
 
 </head>
@@ -53,7 +54,7 @@
     </div>
     <div class="menu-container">
       <img src="{% static 'icons/menu-icon.png' %}" alt="Menú" class="menu-icon"">
-      <div class="categories-container has-transition menu-cat-flexbox" id="categoriesMenu">
+      <div class="categories-container" id="categoriesMenu">
         <span class="categories-title">CATEGORÍAS</span>
         <ul class="categories-menu-displayed">
           {% for categoria in categorias %}

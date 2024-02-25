@@ -1,19 +1,33 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block encabezado %}
   <h1>SuppInfo</h1>
 {% endblock %}
 
 {% block contenido %}
-  <div class="productos-recomendados-container">
-    {% for p in productos_recomendados %}
-      <div class="producto-recomendado">
-        <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-recomendado-imagen">
-        <div class="producto-recomendado-info">
-          <span class="producto-recomendado-nombre">{{ p.nombre }}</span>
-          <span class="producto-recomendado-precio">{{ p.precio }}€</span>
+  <div class="carrusel-container-recommended">
+    <div class="carrusel-flecha-izquierda">
+      <img src="{% static 'icons/carrusel-izquierda.png' %}" alt="Anterior">
+    </div>
+    <div class="productos-recomendados-container">
+      <h2 class="productos-recomendados-titulo">Productos recomendados</h2>
+      <div class="productos-recomendados-card">
+      {% for p in productos_recomendados %}
+        <div class="producto-recomendado">
+          <a href="{{ p.url }}" class="producto-recomendado-enlace">
+            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-recomendado-imagen">
+          </a>
+          <div class="producto-recomendado-info">
+            <span class="producto-recomendado-nombre">{{ p.nombre }}</span>
+            <span class="producto-recomendado-precio">{{ p.precio }}€</span>
+          </div>
         </div>
+      {% endfor %}
       </div>
-    {% endfor %}
+    </div>
+    <div class="carrusel-flecha-derecha">
+      <img src="{% static 'icons/carrusel-derecha.png' %}" alt="Siguiente">
+    </div>
   </div>
 {% endblock %}
