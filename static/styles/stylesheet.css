@@ -1,3 +1,6 @@
+.page-content {
+  z-index: 1;
+}
 .index-header {
     display: flex;
     flex-direction: column;
@@ -78,9 +81,9 @@
     visibility: hidden; /* Inicialmente oculto */
     opacity: 0; /* Inicialmente transparente */
     max-height: 0; /* Inicialmente sin altura */
-    overflow: hidden; /* Oculta el contenido que exceda la altura máxima */
+    overflow: visible; /* Oculta el contenido que exceda la altura máxima */
     transition: visibility 0s, opacity 0.5s linear, max-height 0.5s ease-in-out; /* Transición suave */
-    z-index: 1000; /* Asegúrate de que el menú esté por encima de otros elementos */
+    z-index: 100; /* Asegúrate de que el menú esté por encima de otros elementos */
   }
   .categories-container.visible {
     visibility: visible;
@@ -107,6 +110,8 @@
   .category-item {
     margin: 5px; /* Espacio entre categorías */
     list-style-type: none;
+    text-align: left;
+    position: relative;
     
   }
   
@@ -118,26 +123,39 @@
     padding: 10px; /* Espacio alrededor del texto */
     border-radius: 5px; /* Bordes redondeados para los enlaces */
     text-align: center;
-    font-size: large;
+    font-size: larger;
   }
 
   .categories-container a:hover {
     color: rgb(87, 209, 240); /* Color del texto al pasar el ratón por encima */
   }  
-  .category-item:hover > .subcategory-nav li {
-    display: block; /* Muestra el submenú cuando se pasa el ratón sobre la categoría */
+  .category-item:hover > .subcategory-nav {
+    visibility: visible; /* Hace visible el submenú */
+    opacity: 1; /* Hace opaco el submenú */
+    transition-delay: 0s; /* Aplica la transición inmediatamente */
   }
   
   
 .category-item > a {
-  padding-left: 20px; /* Asume que este es el padding aplicado a los enlaces de categoría */
+  padding-left: 10px; /* Asume que este es el padding aplicado a los enlaces de categoría */
   /* ... otros estilos de los enlaces de categoría ... */
 }
 
   .subcategory-nav {
-    position: static; /* Para que el submenú sea parte del flujo normal del documento */
-    width: 100%; /* Asegúrate de que el submenú se extienda a lo ancho de la ventana */
-    z-index: 1001; /* Asegúrate de que el submenú esté por encima del menú de categorías */
+    display: block;
+    position: absolute; /* con static empuja el contenido pero hay saltos bruscos */
+    width: auto; /* Asegúrate de que el submenú se extienda a lo ancho de la ventana */
+    z-index: 1002; /* Asegúrate de que el submenú esté por encima del menú de categorías */
+    text-align: left;
+    padding: 0;
+    left: 0;
+    top: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.3s, opacity 0.3s linear; /* Transición suave */
+    background-color: #ffffffbd ; /* Fondo blanco para el submenú */
+    white-space: nowrap;
+    min-width: 100%
   }
   
   .subcategory-nav ul {
@@ -147,7 +165,9 @@
   }
   
   .subcategory-nav li {
-    display: none; /* Inicialmente oculto */
+    list-style-type: none;
+    float: none;
+    font-size: small;
   }
   .subcategory-nav li a {
     text-align: left; /* Alinea el texto a la izquierda */
@@ -155,6 +175,8 @@
     padding: 10px; /* Espacio alrededor del texto */
     text-decoration: none;
     color: #333; /* Color del texto para las subcategorías */
+    display: inline-block;
+    padding-right: 20px;
   }
   
   .subcategory-nav li a:hover {
@@ -171,6 +193,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow: hidden;
+    margin: auto;
   }
   .productos-recomendados-card {
     display: flex;
@@ -201,7 +225,8 @@
   
   .producto-recomendado-imagen {
     width: 100%; /* Ajusta el ancho de la imagen al de la caja */
-    height: auto;
+    height: 220px;
+    object-fit: cover;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
@@ -216,11 +241,13 @@
     white-space: nowrap; /* Evita que el nombre se ajuste a una nueva línea */
     overflow: hidden; /* Oculta el contenido que exceda el ancho del elemento */
     text-overflow: ellipsis; /* Añade puntos suspensivos al final del contenido recortado */
+    font-family: 'Anta', sans-serif;
   }
   
   .producto-recomendado-precio {
     display: block;
     font-weight: bold;
+    font-family: 'Anta', sans-serif;
   }
 
   .carrusel-container-recommended {
@@ -228,6 +255,9 @@
     width: 60%;
     margin: auto;
     overflow: hidden; /* Oculta los productos fuera del área visible */
+    padding: 0 50px;
+    max-width: calc(60% + 100px);
+    z-index: 100;
   }
   .carrusel-flecha-izquierda,
   .carrusel-flecha-derecha {
