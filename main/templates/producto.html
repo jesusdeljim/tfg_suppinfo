@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="product-page">
+  <h1>{{ producto.nombre }}</h1>
+  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+  <p>{{ producto.stock }}</p>
+  <p>Precio: {{ producto.precio }}€</p>
+  <!-- Añade más detalles del producto según sea necesario -->
+</div>
+{% endblock %}

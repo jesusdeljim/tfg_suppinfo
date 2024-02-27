@@ -34,4 +34,6 @@ urlpatterns = [
     path('eliminar_base_datos/', views.eliminar_base_datos),
     path('user_profile/', views.user_profile),
     path('admin_profile/', views.admin_profile),
+    path('search/', views.search_products, name='search_products'),
+    path('producto/<int:id>/', views.producto_detail, name='producto_detail'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

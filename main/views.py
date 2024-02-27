@@ -11,8 +11,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.management import call_command
 from django.db import connection
+from django.db.models import Q
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
 
 from main.forms import *
 from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Proteina,
@@ -134,6 +136,34 @@ def inicio(request):
     productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
     
     return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+
+def search_products(request):
+    search_term = request.GET.get('query', '')
+    if search_term:
+        # Realiza la búsqueda en tu modelo de productos
+        matching_products = Producto.objects.filter(
+            Q(nombre__icontains=search_term) 
+        )
+        total_matches = matching_products.count()  # Cuenta el total de coincidencias
+        products = matching_products.values('id', 'nombre', 'precio', 'imagen')[:10]  # Limita los resultados a 10
+
+        # Prepara la respuesta
+        results = {
+            'products': list(products),  # Convierte el QuerySet en una lista para JSON
+            'total_matches': total_matches  # Incluye el número total de coincidencias
+        }
+    else:
+        results = {'products': [], 'total_matches': 0}
+
+    return JsonResponse(results)  # Devuelve los resultados como JSON
+
+def producto_detail(request, id):
+    producto = Producto.objects.get(pk=id)
+    productos=Producto.objects.all()
+    categorias = Categoria.objects.all()
+    subcategorias = Subcategoria.objects.all()
+
+    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 
 def filter_by_category(request):

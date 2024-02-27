@@ -15,7 +15,7 @@
       <div class="productos-recomendados-card">
       {% for p in productos_recomendados %}
         <div class="producto-recomendado">
-          <a href="{{ p.url }}" class="producto-recomendado-enlace">
+          <a href="{% url 'producto_detail' p.id %}" class="producto-recomendado-enlace">
             <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-recomendado-imagen">
           </a>
           <div class="producto-recomendado-info">

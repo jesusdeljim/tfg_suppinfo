@@ -18,7 +18,6 @@
   .logo-container {
     display: flex;
     align-items: center;
-    flex-grow: 1;
   }
   
   .logo {
@@ -32,7 +31,8 @@
   
   .search-container {
     position: relative;
-    max-width: 400px;
+    max-width: 1000px;
+    flex-grow: 1;
   }
   
   .search-input {
@@ -44,11 +44,79 @@
     outline: none;
     height: 40px;
   }
+
+  .search-results {
+    position: absolute;
+    left: 0; /* Alinea a la izquierda de la ventana */
+    right: 0; /* Alinea a la derecha de la ventana */
+    top: 100%; /* Posiciona justo debajo del campo de búsqueda */
+    background-color: #ffffffcc;
+    white-space: nowrap;
+    font-family: 'Anta', sans-serif;
+    z-index: 1002;
+    max-height: 400px; /* Altura suficiente para mostrar dos productos */
+    overflow-y: auto; /* Permite desplazamiento vertical para ver más resultados */
+    text-decoration: none;
+  }
+
+  .search-results a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Separa visualmente los resultados */
+  }
   
+  .search-result-image {
+    width: 100px; /* Ajusta según el tamaño deseado para las imágenes */
+    height: 100px; /* Ajusta según el tamaño deseado para las imágenes */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+    object-fit: cover; /* Asegura que la imagen mantenga su aspecto */
+  }
+
+  .search-result-item  {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .search-result-item span:hover {
+    color: rgb(87, 209, 240);
+    cursor: pointer;
+  }
+
+  .search-result-price {
+    font-weight: bold;
+    flex-grow: 1;
+  }
+  
+  /* Personalización para navegadores basados en WebKit como Chrome y Safari */
+.search-results::-webkit-scrollbar {
+  width: 12px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Personalización para Firefox */
+.search-results {
+  scrollbar-width: thin; /* "auto" o "thin" */
+  scrollbar-color: #888 #f1f1f1; /* thumb y track */
+}
+
   .user-controls {
     display: flex;
     align-items: center;
-    flex-grow: 1;
     justify-content: flex-end;
   }
   
@@ -153,7 +221,7 @@
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s linear 0.3s, opacity 0.3s linear; /* Transición suave */
-    background-color: #ffffffbd ; /* Fondo blanco para el submenú */
+    background-color: #ffffffcc ; /* Fondo blanco para el submenú */
     white-space: nowrap;
     min-width: 100%
   }
@@ -232,7 +300,7 @@
   }
   
   .producto-recomendado-info {
-    margin-top: 5px;
+    margin-top: 20px;
     padding: 0 10px; /* Espacio a los lados dentro de la "caja" */
   }
   
