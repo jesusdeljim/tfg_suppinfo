@@ -3,6 +3,7 @@ from re import sub
 import shutil
 import subprocess
 import random
+import requests
 
 from django.conf import settings
 from django.contrib import messages
@@ -78,10 +79,10 @@ def eliminar_base_datos(request):
 
 def inicio_sesion(request):
     if request.method == 'POST':
-        form = InicioSesionForm(request, request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+        login_form = InicioSesionForm(request, request.POST)
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -90,25 +91,28 @@ def inicio_sesion(request):
             else:
                 messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo.')
     else:
-        form = InicioSesionForm()
+        login_form = InicioSesionForm()
     
-    return render(request, 'inicio_sesion.html', {'form': form})
+    return render(request, 'inicio_sesion.html', {'login_form': login_form})
 
 def cerrar_sesion(request):
     logout(request)
     return HttpResponseRedirect('/inicio.html')
 
 def registro(request):
+    response = requests.get('https://restcountries.com/v3.1/all')
+    countries = response.json()
+    country_names = [country['name']['common'] for country in countries]
     if request.method == 'POST':
-        form = RegistroForm(request.POST)
-        if form.is_valid():
-            user = form.save()
+        register_form = RegistroForm(request.POST)
+        if register_form.is_valid():
+            user = register_form.save()
             login(request, user)
             messages.success(request, '¡Registro exitoso! Bienvenido.')
             return HttpResponseRedirect('/inicio.html')  
     else:
-        form = RegistroForm()
-    return render(request, 'registro.html', {'form': form})
+        register_form = RegistroForm()
+    return render(request, 'registro.html', {'register_form': register_form, 'countries': country_names})
 
 @login_required
 def user_profile(request):

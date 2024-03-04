@@ -47,15 +47,15 @@
 
   .search-results {
     position: absolute;
-    left: 0; /* Alinea a la izquierda de la ventana */
-    right: 0; /* Alinea a la derecha de la ventana */
-    top: 100%; /* Posiciona justo debajo del campo de búsqueda */
+    left: 0; 
+    right: 0; 
+    top: 100%; 
     background-color: #ffffffcc;
     white-space: nowrap;
     font-family: 'Anta', sans-serif;
     z-index: 1002;
-    max-height: 400px; /* Altura suficiente para mostrar dos productos */
-    overflow-y: auto; /* Permite desplazamiento vertical para ver más resultados */
+    max-height: 400px; 
+    overflow-y: auto; 
     text-decoration: none;
   }
 
@@ -63,14 +63,14 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ccc; /* Separa visualmente los resultados */
+    border-bottom: 1px solid #ccc; 
   }
   
   .search-result-image {
-    width: 100px; /* Ajusta según el tamaño deseado para las imágenes */
-    height: 100px; /* Ajusta según el tamaño deseado para las imágenes */
-    margin-right: 10px; /* Espacio entre la imagen y el texto */
-    object-fit: cover; /* Asegura que la imagen mantenga su aspecto */
+    width: 100px; 
+    height: 100px; 
+    margin-right: 10px; 
+    object-fit: cover; 
   }
 
   .search-result-item  {
@@ -91,7 +91,7 @@
     flex-grow: 1;
   }
   
-  /* Personalización para navegadores basados en WebKit como Chrome y Safari */
+  
 .search-results::-webkit-scrollbar {
   width: 12px;
 }
@@ -108,10 +108,10 @@
   background: #555;
 }
 
-/* Personalización para Firefox */
+
 .search-results {
-  scrollbar-width: thin; /* "auto" o "thin" */
-  scrollbar-color: #888 #f1f1f1; /* thumb y track */
+  scrollbar-width: thin; 
+  scrollbar-color: #888 #f1f1f1; 
 }
 
   .user-controls {
@@ -135,48 +135,48 @@
   .menu-container {
     position: relative;
     text-align: center;
-    margin-top: 10px; /* Ajusta según sea necesario */
+    margin-top: 10px; 
   }
   .menu-icon {
     cursor: pointer;
-    width: 30px; /* Ajusta el tamaño según tus necesidades */
+    width: 30px; 
     height: auto;
-    display: inline-block; /* O cualquier otro estilo que necesites para alinear la imagen correctamente */
-    margin-top: 10px; /* Ajusta según sea necesario */
+    display: inline-block; 
+    margin-top: 10px; 
   }
   .categories-container {
     width: 100%;
-    visibility: hidden; /* Inicialmente oculto */
-    opacity: 0; /* Inicialmente transparente */
-    max-height: 0; /* Inicialmente sin altura */
-    overflow: visible; /* Oculta el contenido que exceda la altura máxima */
-    transition: visibility 0s, opacity 0.5s linear, max-height 0.5s ease-in-out; /* Transición suave */
-    z-index: 100; /* Asegúrate de que el menú esté por encima de otros elementos */
+    visibility: hidden; 
+    opacity: 0; 
+    max-height: 0; 
+    overflow: visible; 
+    transition: visibility 0s, opacity 0.5s linear, max-height 0.5s ease-in-out; 
+    z-index: 100; 
   }
   .categories-container.visible {
     visibility: visible;
     opacity: 1;
-    max-height: 500px; /* Altura máxima suficiente para mostrar todo el contenido del menú */
+    max-height: 500px; 
   }
 
   .categories-title {
     display: block;
     text-align: center;
-    font-size: 24px; /* Ajusta el tamaño de la fuente según necesites */
+    font-size: 24px; 
     font-family: 'Black Ops One', cursive;
-    margin: 10px 0; /* Añade un margen arriba y abajo */
-    color: #333; /* Color del texto del título */
+    margin: 10px 0; 
+    color: #333; 
   }
   
   .categories-menu-displayed {
-    display: flex; /* Usa flexbox para alinear las categorías horizontalmente */
+    display: flex; 
     padding: 0;
     margin: 0;
-    list-style-type: none; /* Elimina los estilos de lista por defecto */
+    list-style-type: none; 
   }
 
   .category-item {
-    margin: 5px; /* Espacio entre categorías */
+    margin: 5px; 
     list-style-type: none;
     text-align: left;
     position: relative;
@@ -186,42 +186,42 @@
   .categories-container a {
     text-transform: uppercase;
     text-decoration: none;
-    color: rgb(14, 3, 3); /* Color del texto para las categorías */
+    color: rgb(14, 3, 3); 
     font-family: 'Black Ops One', cursive;
-    padding: 10px; /* Espacio alrededor del texto */
-    border-radius: 5px; /* Bordes redondeados para los enlaces */
+    padding: 10px; 
+    border-radius: 5px; 
     text-align: center;
     font-size: larger;
   }
 
   .categories-container a:hover {
-    color: rgb(87, 209, 240); /* Color del texto al pasar el ratón por encima */
+    color: rgb(87, 209, 240); 
   }  
   .category-item:hover > .subcategory-nav {
-    visibility: visible; /* Hace visible el submenú */
-    opacity: 1; /* Hace opaco el submenú */
-    transition-delay: 0s; /* Aplica la transición inmediatamente */
+    visibility: visible; 
+    opacity: 1; 
+    transition-delay: 0s; 
   }
   
   
 .category-item > a {
-  padding-left: 10px; /* Asume que este es el padding aplicado a los enlaces de categoría */
-  /* ... otros estilos de los enlaces de categoría ... */
+  padding-left: 10px; 
+  
 }
 
   .subcategory-nav {
     display: block;
-    position: absolute; /* con static empuja el contenido pero hay saltos bruscos */
-    width: auto; /* Asegúrate de que el submenú se extienda a lo ancho de la ventana */
-    z-index: 1002; /* Asegúrate de que el submenú esté por encima del menú de categorías */
+    position: absolute; 
+    width: auto; 
+    z-index: 1002; 
     text-align: left;
     padding: 0;
     left: 0;
     top: 100%;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s linear 0.3s, opacity 0.3s linear; /* Transición suave */
-    background-color: #ffffffcc ; /* Fondo blanco para el submenú */
+    transition: visibility 0s linear 0.3s, opacity 0.3s linear; 
+    background-color: #ffffffcc ; 
     white-space: nowrap;
     min-width: 100%
   }
@@ -229,7 +229,7 @@
   .subcategory-nav ul {
     padding: 0;
     margin: 0;
-    list-style-type: none; /* Elimina los estilos de lista por defecto */
+    list-style-type: none; 
   }
   
   .subcategory-nav li {
@@ -238,11 +238,11 @@
     font-size: small;
   }
   .subcategory-nav li a {
-    text-align: left; /* Alinea el texto a la izquierda */
-    padding-left: 20px; /* Añade un poco de padding a la izquierda para que el texto no esté pegado al borde */
-    padding: 10px; /* Espacio alrededor del texto */
+    text-align: left; 
+    padding-left: 20px; 
+    padding: 10px; 
     text-decoration: none;
-    color: #333; /* Color del texto para las subcategorías */
+    color: #333; 
     display: inline-block;
     padding-right: 20px;
   }
@@ -253,8 +253,8 @@
   .productos-recomendados-titulo {
     font-family: 'Black Ops One', cursive;
     text-align: center;
-    font-size: 28px; /* Ajusta el tamaño según necesites */
-    margin: 20px 0; /* Espacio arriba y abajo del título */
+    font-size: 28px; 
+    margin: 20px 0; 
   }
   
   .productos-recomendados-container {
@@ -268,31 +268,31 @@
     display: flex;
     overflow-x: hidden;
     flex-direction: row;
-    flex-wrap: nowrap; /* Evita que los productos se ajusten en múltiples líneas */
+    flex-wrap: nowrap; 
     scroll-snap-type: x mandatory;
   }
 
   .producto-recomendado {
     flex: 0 0 auto;
-    width: 200px; /* Ancho fijo para todas las cajas */
-    height: 300px; /* Altura fija para todas las cajas */
+    width: 200px; 
+    height: 300px; 
     margin: 10px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     background-color: #fff;
-    overflow: hidden; /* Oculta el contenido que exceda el tamaño de la caja */
+    overflow: hidden; 
     scroll-snap-align: start;
   }
   
   .producto-recomendado-enlace {
-    display: block; /* Asegúrate de que el enlace ocupe todo el espacio de la "caja" */
-    margin: -1px; /* Ajusta el margen para que la imagen no rompa los bordes redondeados */
+    display: block; 
+    margin: -1px;
   }
   
   .producto-recomendado-imagen {
-    width: 100%; /* Ajusta el ancho de la imagen al de la caja */
+    width: 100%; 
     height: 220px;
     object-fit: cover;
     border-top-left-radius: 10px;
@@ -301,14 +301,14 @@
   
   .producto-recomendado-info {
     margin-top: 20px;
-    padding: 0 10px; /* Espacio a los lados dentro de la "caja" */
+    padding: 0 10px; 
   }
   
   .producto-recomendado-nombre {
     display: block;
-    white-space: nowrap; /* Evita que el nombre se ajuste a una nueva línea */
-    overflow: hidden; /* Oculta el contenido que exceda el ancho del elemento */
-    text-overflow: ellipsis; /* Añade puntos suspensivos al final del contenido recortado */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
     font-family: 'Anta', sans-serif;
   }
   
@@ -322,7 +322,7 @@
     position: relative;
     width: 60%;
     margin: auto;
-    overflow: hidden; /* Oculta los productos fuera del área visible */
+    overflow: hidden; 
     padding: 0 50px;
     max-width: calc(60% + 100px);
     z-index: 100;
@@ -343,3 +343,183 @@
   .carrusel-flecha-derecha {
     right: 10px;
   }
+  
+  .header-content-forms {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .forms-logo {
+    width: 150px; /* Ajusta según el tamaño de tu logo */
+  }
+  
+  .login_container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    min-height: calc(100vh - 150px);
+    padding-top: 20px;
+  }
+  
+  .login-info {
+    max-width: 32.25rem;
+    padding: 2.5rem;
+    padding-right: 3.75rem;
+    border-right: 1px solid #CCCCCC; /* Línea separadora */
+    flex: 1;
+  }
+  
+  .login-info-box {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  .login-info-text {
+    flex: 1;
+  }
+  
+  .login-info-box h4 {
+    color: #333333;
+    font-size: 1.0625rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    font-family: 'Black Ops One', cursive;
+    }
+  
+  .login-info-box span {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    font-family: 'Anta', sans-serif;
+  }
+  
+  .login-form {
+    max-width: 32.25rem;
+    padding: 2rem 1rem;
+    flex: 1;
+    padding-left: 3.75rem;
+    padding-right: 3rem;
+  }
+  
+  .login-form h4 {
+    color: #333333;
+    font-size: 1.0625rem;
+    line-height: 1.5rem;
+    font-weight: 700;
+    font-family: 'Black Ops One', cursive;
+  }
+  
+  .login-form form {
+    margin-bottom: 10px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    font-family: 'Anta', sans-serif;
+  }
+  
+  
+  
+  .login-form a {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-form a:hover {
+    text-decoration: underline;
+  }
+
+  .google-sign-in {
+    background-color: #ffffff;
+    color: #757575;
+    border: 1px solid #757575;
+    padding: 10px 20px;
+    margin-bottom: 20px; /* Espacio entre el botón de Google y el separador */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .google-sign-in:hover {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.25);
+  }
+  
+  .google-logo {
+    margin-right: 10px;
+    width: 18px; /* Ajusta según sea necesario */
+    height: 18px; /* Ajusta según sea necesario */
+  }
+
+  .separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    margin-bottom: 20px; /* Espacio entre el separador y los campos de formulario */
+    margin-left: 0;
+    margin-right: auto;
+    width: 70%;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 15px; /* Espacio entre los campos de formulario */
+    max-width: 20rem;
+  }
+  
+.input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.input-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+  
+  .forgot-password {
+    display: block;
+    margin-bottom: 20px; /* Espacio entre el enlace de contraseña olvidada y el botón de inicio de sesión */
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  

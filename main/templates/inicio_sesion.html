@@ -1,16 +1,63 @@
-{% extends 'index.html' %}
+{% load static %}
 
-{% block encabezado %}
-  <h1>SuppInfo</h1>
-{% endblock %}
-
-{% block contenido %}
-  <h2>Iniciar Sesión</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Iniciar Sesión</button>
-    <a href='/registro'>¿No tienes una cuenta? Regístrate</a>
-  </form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset='utf-8'>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/stylesheet.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <title>SuppInfo - Iniciar sesión</title>
+</head>
+<body>
   
-{% endblock %}
+    <header class="header-content-forms" id="login-form">
+      <a href="/" class="logo-link">
+        <img src="{% static 'icons/logo.png' %}" alt="Logo" class="forms-logo">
+      </a>
+    </header>
+    <main class="login_container">
+        <section class="login-info">
+          <div class="login-info-box">
+            <svg></svg>
+            <div class="login-info-text">
+              <h4>Lista de deseos</h4>
+              <span>Guarda tus productos favoritos en las listas de deseos personalizadas.</span>
+            </div>
+          </div>
+
+          <div class="login-info-box">
+            <svg></svg>
+            <div class="login-info-text">
+              <h4>Recomendaciones basadas en el usuario</h4>
+              <span>Descubre las mejores recomendaciones basadas en tus gustos personales.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="login-form">
+          <h4>Iniciar Sesión</h4>
+          <button class="google-sign-in">
+            <img src="{% static 'icons/google_logo.png' %}" alt="Google logo" class="google-logo">
+            Iniciar sesión con Google
+          </button>
+          <hr class="separator" />
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-container">
+              <input type="text" name="username" placeholder="Usuario" required />
+            </div>
+            <div class="input-container">
+              <input type="password" name="password" placeholder="Contraseña" required />
+            </div>
+            <a href='/inicio_sesion' class="forgot-password">He olvidado mi contraseña</a>
+            <button type="submit" class="submit-btn">Iniciar Sesión</button>
+          </form>
+          <hr class="separator" />
+          <a href='/registro'>¿No tienes una cuenta? Regístrate</a>
+        </section>
+      
+    </main>
+  
+</body>
+</html>

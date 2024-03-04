@@ -1,18 +1,85 @@
-{% extends 'index.html' %}
+{% load static %}
 
-{% block contenido %}
-  <h2>Registro</h2>
-  {% if messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ messages }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  {% endif %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrarse</button>
-  </form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset='utf-8'>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/stylesheet.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <title>SuppInfo - Registro</title>
+</head>
+<body>
+  
+    <header class="header-content-forms" id="register-form">
+      <a href="/" class="logo-link">
+        <img src="{% static 'icons/logo.png' %}" alt="Logo" class="forms-logo">
+      </a>
+    </header>
+    <main class="login_container">
+        <section class="login-info">
+          <div class="login-info-box">
+            <svg></svg>
+            <div class="login-info-text">
+              <h4>Lista de deseos</h4>
+              <span>Guarda tus productos favoritos en las listas de deseos personalizadas.</span>
+            </div>
+          </div>
+
+          <div class="login-info-box">
+            <svg></svg>
+            <div class="login-info-text">
+              <h4>Recomendaciones basadas en el usuario</h4>
+              <span>Descubre las mejores recomendaciones basadas en tus gustos personales.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="login-form">
+          <h4>Registro</h4>
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-container">
+              <input type="text" name="username" placeholder="Nombre de usuario" required>
+            </div>
+            <div class="input-container">
+              <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-container">
+              <input type="text" name="nombre" placeholder="Nombre" required>
+            </div>
+            <div class="input-container">
+              <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento" required>
+            </div>
+            <div class="input-container">
+              <input type="text" name="direccion" placeholder="Dirección" required>
+            </div>
+            <div class="input-container">
+              <select name="pais" required>
+                {% for country_name in countries %}
+                  <option value="{{ country_name }}">{{ country_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-container">
+              <input type="text" name="ciudad" placeholder="Ciudad" required>
+            </div>
+            <div class="input-container">
+              <input type="text" name="codigo_postal" placeholder="Código postal" required>
+            </div>
+            <div class="input-container">
+              <input type="password" name="password1" placeholder="Contraseña" required>
+            </div>
+            <div class="input-container">
+              <input type="password" name="password2" placeholder="Confirmar contraseña" required>
+            </div>
+            <button type="submit" class="submit-btn">Registrarse</button>
+          </form>
+          <hr class="separator" />
+          <a href='/inicio_sesion'>¿Ya tienes una cuenta? Inicia sesión</a>
+        </section>
+      
+    </main>
+  
+</body>
+</html>
