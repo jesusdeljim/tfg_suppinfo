@@ -522,4 +522,10 @@
   .submit-btn:hover {
     background-color: #0056b3;
   }
+
+  .error-messages {
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 5px;
+  }
   
