@@ -1,3 +1,45 @@
+/* Media query para tablets */
+@media (max-width: 768px) {
+  .login_container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-info,
+  .login-form {
+    max-width: 100%;
+    padding: 1rem;
+    border-right: none;
+  }
+
+  /* Ajusta otros estilos según sea necesario */
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 480px) {
+  .header-content-forms {
+    padding: 10px 0;
+  }
+
+  .forms-logo {
+    width: 120px; /* Ajusta el tamaño del logo para dispositivos móviles */
+  }
+
+  .login-info,
+  .login-form {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .input-container,
+  .input-container select,
+  .input-container input {
+    max-width: 100%;
+  }
+
+  /* Ajusta otros estilos según sea necesario */
+}
+
 .page-content {
   z-index: 1;
 }
@@ -528,4 +570,6 @@
     font-size: 0.75rem;
     margin-top: 5px;
   }
+
+
   
