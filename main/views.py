@@ -171,12 +171,26 @@ def producto_detail(request, id):
     return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 def categoria_search(request, categoria_slug):
+
     categoria = Categoria.objects.get(slug=categoria_slug)
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
     productos = Producto.objects.all()
     if categoria:
         productos = productos.filter(categoria__nombre=categoria)
+
+    order = request.GET.get('order')
+    if order == 'asc':
+        productos= productos.order_by('precio')
+    elif order == 'desc':
+        productos = productos.order_by('-precio')
+    #elif order == 'relevant':
+        # Define cómo quieres ordenar por relevancia
+    elif order == 'new':
+        productos = productos.order_by('-id')  
+    elif order == 'rating':
+        productos = productos.order_by('-rating_original')
+
     paginator = Paginator(productos, 18)  # Muestra 20 productos por página
 
     page_number = request.GET.get('page')
@@ -195,10 +209,24 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
     if subcategoria:
         productos = productos.filter(subcategoria__nombre=subcategoria)
 
+    order = request.GET.get('order')
+    if order == 'asc':
+        productos= productos.order_by('precio')
+    elif order == 'desc':
+        productos = productos.order_by('-precio')
+    #elif order == 'relevant':
+        # Define cómo quieres ordenar por relevancia
+    elif order == 'new':
+        productos = productos.order_by('-id')  
+    elif order == 'rating':
+        productos = productos.order_by('-rating_original')
+
     paginator = Paginator(productos, 18)  # Muestra 20 productos por página
 
     page_number = request.GET.get('page')
     productos = paginator.get_page(page_number)
+
+    
 
     return render(request, 'subcategorias.html', {'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 

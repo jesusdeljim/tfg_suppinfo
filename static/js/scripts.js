@@ -93,3 +93,12 @@ function searchProducts() {
     searchResultsContainer.style.display = 'none'; // Oculta los resultados si el campo de búsqueda está vacío
   }
 }
+
+function orderProducts(orderBy) {
+  // Construye la URL con el parámetro de ordenación
+  const url = new URL(window.location);
+  url.searchParams.set('order', orderBy);
+  
+  // Redirige a la URL con el parámetro de ordenación
+  window.location.href = url.href;
+}
