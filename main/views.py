@@ -171,7 +171,6 @@ def producto_detail(request, id):
     return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 def categoria_search(request, categoria_slug):
-    # Aquí obtienes los objetos de la categoría y los productos relacionados
     categoria = Categoria.objects.get(slug=categoria_slug)
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
@@ -187,7 +186,6 @@ def categoria_search(request, categoria_slug):
     return render(request, 'categorias.html', {'categoria': categoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 def subcategoria_search(request,categoria_slug, subcategoria_slug):
-    # Aquí obtienes los objetos de la subcategoría y los productos relacionados
     categoria = Categoria.objects.get(slug=categoria_slug)
     subcategoria = Subcategoria.objects.get(slug=subcategoria_slug)
     subcategorias = Subcategoria.objects.all()
@@ -196,6 +194,11 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
 
     if subcategoria:
         productos = productos.filter(subcategoria__nombre=subcategoria)
+
+    paginator = Paginator(productos, 18)  # Muestra 20 productos por página
+
+    page_number = request.GET.get('page')
+    productos = paginator.get_page(page_number)
 
     return render(request, 'subcategorias.html', {'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 

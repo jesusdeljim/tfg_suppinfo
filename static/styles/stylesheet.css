@@ -674,7 +674,7 @@
 
 .step-links {
     display: inline-block;
-    font-family: Black Ops One, cursive;
+    font-family: 'Black Ops One', cursive;
 }
 
 .step-links a {
@@ -682,7 +682,7 @@
     margin: 0 5px;
     border: 1px solid #ddd;
     text-decoration: none;
-    font-family: Black Ops One, cursive;
+    font-family: 'Black Ops One', cursive;
 }
 
 .step-links a:hover {
@@ -691,13 +691,13 @@
 
 .first-page-btn, .last-page-btn {
     font-weight: bold;
-    font-family: Black Ops One, cursive;
+    font-family: 'Black Ops One', cursive;
     border-radius: 4px;
 }
 
 .previous-page-btn, .next-page-btn {
     font-size: 1.2em;
-    font-family: Black Ops One, cursive;
+    font-family: 'Black Ops One', cursive;
     border-radius: 4px;
 }
 
@@ -705,5 +705,12 @@
     padding: 5px 10px;
     margin: 0 5px;
     border: 1px solid #ddd;
-    font-family: Black Ops One, cursive;
+    font-family: 'Black Ops One', cursive;
+}
+
+.no-products-message {
+    font-family: 'Black Ops One', cursive;
+    font-size: 24px;
+    text-align: left;
+    margin: 20px 0;
 }

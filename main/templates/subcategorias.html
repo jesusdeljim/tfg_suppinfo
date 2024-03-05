@@ -2,16 +2,72 @@
 {% load static %}
 
 {% block contenido %}
-<div class="subcategoria-container">
-  <h1>{{ subcategoria.nombre }}</h1>
-  <!-- Aquí puedes incluir más detalles de la subcategoría si lo deseas -->
-  <div class="productos-container">
-    {% for producto in productos %}
-      <div class="producto">
-        <h2>{{ producto.nombre }}</h2>
-        <!-- Más detalles del producto aquí -->
-      </div>
-    {% endfor %}
-  </div>
+<div class="content-container">
+    <div class="category-header">
+        <h1 class="category-title">{{ subcategoria.nombre }}</h1>
+        <div class="search-filters-buttons">
+            <button class="order-button" id="order-asc" onclick="orderProducts('asc')">Precio más bajo</button>
+            <button class="order-button" id="order-desc" onclick="orderProducts('desc')">Precio más alto</button>
+            <button class="order-button" id="relevant" onclick="orderProducts('relevant')">Relevancia</button>
+            <button class="order-button" id="new" onclick="orderProducts('new')">Novedades</button>
+            <button class="order-button" id="rating" onclick="orderProducts('rating')">Mejor valorados</button>
+        </div>
+    </div>
+    <div class="subcontent-container">
+      {% if productos %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if productos.has_previous %}
+                    <a href="?page=1" class="first-page-btn">1</a>
+                    <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                {% endif %}
+        
+                <span class="current-page">
+                    {{ productos.number }}
+                </span>
+        
+                {% if productos.has_next %}
+                    <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                {% endif %}
+            </span>
+        </div>
+        <div class="product-category-container">
+            {% for p in productos %}
+            <div class="producto">
+                <div class="producto-imagen">
+                    <a href="{% url 'producto_detail' p.id %}" class="producto-enlace">
+                        <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-imagen">
+                    </a>
+                </div>
+                <div class="producto-info">
+                    <span class="producto-nombre">{{ p.nombre }}</span>
+                    <span class="producto-precio">{{ p.precio }}€</span>
+                    <span class="producto-marca">{{ p.marca.nombre }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if productos.has_previous %}
+                    <a href="?page=1" class="first-page-btn">1</a>
+                    <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                {% endif %}
+        
+                <span class="current-page">
+                   {{ productos.number }}
+                </span>
+        
+                {% if productos.has_next %}
+                    <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                {% endif %}
+            </span>
+        </div>
+        {% else %}
+            <span class="no-products-message">No se han encontrado productos en esta subcategoría.</span>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
