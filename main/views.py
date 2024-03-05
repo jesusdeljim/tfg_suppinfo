@@ -26,6 +26,7 @@ from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import MultifieldParser, OrGroup, QueryParser
 from whoosh.query import And
+from django.core.paginator import Paginator
 
 
 #----------------VIEWS FOR BD LOAD AND DELETE---------------------------
@@ -169,23 +170,32 @@ def producto_detail(request, id):
 
     return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
-
-def filter_by_category(request):
+def categoria_search(request, categoria_slug):
+    # Aquí obtienes los objetos de la categoría y los productos relacionados
+    categoria = Categoria.objects.get(slug=categoria_slug)
     categorias = Categoria.objects.all()
-    productos = Producto.objects.all().order_by('categoria')
+    subcategorias = Subcategoria.objects.all()
+    productos = Producto.objects.all()
+    if categoria:
+        productos = productos.filter(categoria__nombre=categoria)
+    paginator = Paginator(productos, 18)  # Muestra 20 productos por página
 
-    selected_category = request.GET.get('category', None)
-    if selected_category:
-        productos = productos.filter(categoria__nombre=selected_category)
+    page_number = request.GET.get('page')
+    productos = paginator.get_page(page_number)
+    
 
-    return render(request, 'filter_by_category.html', {'productos': productos, 'categorias': categorias, 'selected_category': selected_category})
+    return render(request, 'categorias.html', {'categoria': categoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
-def filter_by_brand(request):
-    brands = Marca.objects.all()
-    productos = Producto.objects.all().order_by('marca')
+def subcategoria_search(request,categoria_slug, subcategoria_slug):
+    # Aquí obtienes los objetos de la subcategoría y los productos relacionados
+    categoria = Categoria.objects.get(slug=categoria_slug)
+    subcategoria = Subcategoria.objects.get(slug=subcategoria_slug)
+    subcategorias = Subcategoria.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
 
-    selected_brand = request.GET.get('brand', None)
-    if selected_brand:
-        productos = productos.filter(marca__nombre=selected_brand)
+    if subcategoria:
+        productos = productos.filter(subcategoria__nombre=subcategoria)
 
-    return render(request, 'filter_by_brand.html', {'productos': productos, 'brands': brands, 'selected_brand': selected_brand})
+    return render(request, 'subcategorias.html', {'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+

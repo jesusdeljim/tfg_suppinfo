@@ -1,13 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-
-#¿Crear modelo para cada Marca?
-#¿Categorias no coincidentes entre marcas?
-
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
         return self.nombre
@@ -15,6 +11,7 @@ class Categoria(models.Model):
 class Subcategoria(models.Model):
     nombre = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
         return self.nombre

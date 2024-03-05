@@ -26,8 +26,6 @@ urlpatterns = [
     path('', views.inicio),
     path('inicio.html/', views.inicio),
     path('carga/', views.carga),
-    path('filter_by_category/', views.filter_by_category),
-    path('filter_by_brand/', views.filter_by_brand),
     path('registro/', views.registro),
     path('inicio_sesion/', views.inicio_sesion),
     path('cerrar_sesion/', views.cerrar_sesion),
@@ -36,4 +34,6 @@ urlpatterns = [
     path('admin_profile/', views.admin_profile),
     path('search/', views.search_products, name='search_products'),
     path('producto/<int:id>/', views.producto_detail, name='producto_detail'),
+    path('<slug:categoria_slug>/', views.categoria_search, name='categorias'),
+    path('<slug:categoria_slug>/<slug:subcategoria_slug>/', views.subcategoria_search, name='subcategorias'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
