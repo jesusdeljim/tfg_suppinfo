@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
+{% load my_filters %}
 
 {% block contenido %}
 <div class="content-container">
@@ -8,7 +9,7 @@
         <div class="search-filters-buttons">
             <button class="order-button" id="order-asc" onclick="orderProducts('asc')">Precio más bajo</button>
             <button class="order-button" id="order-desc" onclick="orderProducts('desc')">Precio más alto</button>
-            <button class="order-button" id="relevant" onclick="orderProducts('relevant')">Relevancia</button>
+            <button class="order-button" id="reviews" onclick="orderProducts('reviews')">Mejores Opiniones</button>
             <button class="order-button" id="new" onclick="orderProducts('new')">Novedades</button>
             <button class="order-button" id="rating" onclick="orderProducts('rating')">Mejor valorados</button>
         </div>
@@ -17,8 +18,8 @@
         <div class="pagination">
             <span class="step-links">
                 {% if productos.has_previous %}
-                    <a href="?page=1" class="first-page-btn">1</a>
-                    <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
+                    <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
                 {% endif %}
         
                 <span class="current-page">
@@ -26,8 +27,8 @@
                 </span>
         
                 {% if productos.has_next %}
-                    <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
                 {% endif %}
             </span>
         </div>
@@ -43,6 +44,21 @@
                     <span class="producto-nombre">{{ p.nombre }}</span>
                     <span class="producto-precio">{{ p.precio }}€</span>
                     <span class="producto-marca">{{ p.marca.nombre }}</span>
+                    <div class="producto-rating">
+                        {% for i in 0|to:4 %}
+                            {% with i|add:1 as next %}
+                                {% if p.rating_original > i %}
+                                    {% if p.rating_original < next %}
+                                        <i class="fas fa-star-half-alt"></i> <!-- Media estrella -->
+                                    {% else %}
+                                        <i class="fas fa-star"></i> <!-- Estrella llena -->
+                                    {% endif %}
+                                {% else %}
+                                    <i class="far fa-star"></i> <!-- Estrella vacía -->
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             {% endfor %}
@@ -50,17 +66,17 @@
         <div class="pagination">
             <span class="step-links">
                 {% if productos.has_previous %}
-                    <a href="?page=1" class="first-page-btn">1</a>
-                    <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
+                    <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
                 {% endif %}
         
                 <span class="current-page">
-                   {{ productos.number }}
+                    {{ productos.number }}
                 </span>
         
                 {% if productos.has_next %}
-                    <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
                 {% endif %}
             </span>
         </div>

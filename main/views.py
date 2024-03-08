@@ -214,7 +214,7 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
         productos= productos.order_by('precio')
     elif order == 'desc':
         productos = productos.order_by('-precio')
-    #elif order == 'relevant':
+    #elif order == 'reviews':
         # Define cómo quieres ordenar por relevancia
     elif order == 'new':
         productos = productos.order_by('-id')  

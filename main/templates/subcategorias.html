@@ -8,7 +8,7 @@
         <div class="search-filters-buttons">
             <button class="order-button" id="order-asc" onclick="orderProducts('asc')">Precio más bajo</button>
             <button class="order-button" id="order-desc" onclick="orderProducts('desc')">Precio más alto</button>
-            <button class="order-button" id="relevant" onclick="orderProducts('relevant')">Relevancia</button>
+            <button class="order-button" id="reviews" onclick="orderProducts('reviews')">Mejores Opiniones</button>
             <button class="order-button" id="new" onclick="orderProducts('new')">Novedades</button>
             <button class="order-button" id="rating" onclick="orderProducts('rating')">Mejor valorados</button>
         </div>
@@ -44,6 +44,21 @@
                     <span class="producto-nombre">{{ p.nombre }}</span>
                     <span class="producto-precio">{{ p.precio }}€</span>
                     <span class="producto-marca">{{ p.marca.nombre }}</span>
+                    <div class="producto-rating">
+                        {% for i in 0|to:4 %}
+                            {% with i|add:1 as next %}
+                                {% if p.rating_original > i %}
+                                    {% if p.rating_original < next %}
+                                        <i class="fas fa-star-half-alt"></i> <!-- Media estrella -->
+                                    {% else %}
+                                        <i class="fas fa-star"></i> <!-- Estrella llena -->
+                                    {% endif %}
+                                {% else %}
+                                    <i class="far fa-star"></i> <!-- Estrella vacía -->
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             {% endfor %}

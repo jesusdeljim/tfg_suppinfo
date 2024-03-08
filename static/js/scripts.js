@@ -3,10 +3,18 @@ document.addEventListener('DOMContentLoaded', function() {
   var categoriesMenu = document.getElementById('categoriesMenu');
 
   menuIcon.addEventListener('click', function() {
+    // Encuentra el ícono dentro del toggle
+    var icon = menuIcon.querySelector('i');
+
+    // Alternar la visibilidad del menú y la clase del ícono
     if (categoriesMenu.classList.contains('visible')) {
       categoriesMenu.classList.remove('visible');
+      icon.classList.remove('fa-chevron-up');
+      icon.classList.add('fa-chevron-down');
     } else {
       categoriesMenu.classList.add('visible');
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-up');
     }
   });
 });

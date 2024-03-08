@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
+{% load my_filters %}
 
 {% block encabezado %}
   <h1>SuppInfo</h1>
@@ -7,27 +8,43 @@
 
 {% block contenido %}
   <div class="carrusel-container-recommended">
-    <div class="carrusel-flecha-izquierda">
-      <img src="{% static 'icons/carrusel-izquierda.png' %}" alt="Anterior">
-    </div>
+    <a href="#" class="carrusel-flecha-izquierda">
+      <i class="fas fa-chevron-left"></i> <!-- Ícono de flecha hacia la izquierda para navegar -->
+    </a>
     <div class="productos-recomendados-container">
       <h2 class="productos-recomendados-titulo">Productos recomendados</h2>
       <div class="productos-recomendados-card">
       {% for p in productos_recomendados %}
         <div class="producto-recomendado">
-          <a href="{% url 'producto_detail' p.id %}" class="producto-recomendado-enlace">
-            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-recomendado-imagen">
+          <a href="{% url 'producto_detail' p.id %}" class="producto-enlace">
+            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-imagen">
           </a>
-          <div class="producto-recomendado-info">
-            <span class="producto-recomendado-nombre">{{ p.nombre }}</span>
-            <span class="producto-recomendado-precio">{{ p.precio }}€</span>
+          <div class="producto-info">
+            <span class="producto-nombre">{{ p.nombre }}</span>
+            <span class="producto-precio">{{ p.precio }}€</span>
+            <span class="producto-marca">{{ p.marca.nombre }}</span>
+            <div class="producto-rating">
+              {% for i in 0|to:4 %}
+                  {% with i|add:1 as next %}
+                      {% if p.rating_original > i %}
+                          {% if p.rating_original < next %}
+                              <i class="fas fa-star-half-alt"></i> <!-- Media estrella -->
+                          {% else %}
+                              <i class="fas fa-star"></i> <!-- Estrella llena -->
+                          {% endif %}
+                      {% else %}
+                          <i class="far fa-star"></i> <!-- Estrella vacía -->
+                      {% endif %}
+                  {% endwith %}
+              {% endfor %}
+          </div>
           </div>
         </div>
       {% endfor %}
       </div>
     </div>
-    <div class="carrusel-flecha-derecha">
-      <img src="{% static 'icons/carrusel-derecha.png' %}" alt="Siguiente">
-    </div>
+    <a href="#" class="carrusel-flecha-derecha">
+      <i class="fas fa-chevron-right"></i> <!-- Ícono de flecha hacia la derecha para navegar -->
+    </a>
   </div>
 {% endblock %}
