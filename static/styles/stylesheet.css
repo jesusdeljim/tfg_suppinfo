@@ -161,6 +161,9 @@
     align-items: center;
     justify-content: flex-end;
   }
+  .user-controls i {
+    color: #000000; 
+  }
   
   .admin-panel-icon,
   .user-profile-icon,
@@ -687,6 +690,190 @@
     margin: 20px 0;
 }
 
-.user-controls i {
-  color: #000000; 
+.user-profile-nav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  font-family: 'Anta', sans-serif;
+  
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.user-profile-nav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+  color: #000000;
+}
+
+.user-profile-nav a:hover {
+  color: rgb(87, 209, 240); 
+}
+
+.user-profile-nav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.user-profile-container {
+  display: flex;
+}
+
+.account-user-profile-nav {
+  position: absolute;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #fff; /* Fondo blanco para coincidir con el fondo de la web */
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.account-user-profile-nav h3 {
+  padding: 10px 15px;
+  margin: 0;
+  border-bottom: 1px solid #eaeaea; /* Línea horizontal para separar secciones */
+  font-size: 16px;
+  color: #333; /* Color oscuro para el texto */
+  font-family: 'Black Ops One', cursive;
+}
+
+.account-user-profile-nav a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #333; /* Color oscuro para el texto */
+  display: block;
+  transition: 0.3s;
+  font-family: 'Anta', sans-serif;
+}
+
+.account-user-profile-nav a:hover {
+  color: rgb(87, 209, 240); 
+} 
+
+
+.user-profile-container {
+  display: flex;
+}
+
+.user-profile-content {
+  margin-left: 250px; /* Desplaza el contenido para que no se solape con el nav lateral */
+  padding-left: 20px; /* Espaciado interno para el contenido */
+  width: calc(100% - 250px); /* Ajusta el ancho para tener en cuenta el nav lateral */
+  min-height: 100vh; /* Asegura que el contenedor tenga al menos la altura de la ventana */
+  background-color: #fff; /* Fondo blanco para coincidir con el nav lateral */
+  font-family: 'Black Ops One', cursive;
+}
+
+.user-profile-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px; /* Espaciado debajo de la tarjeta */
+}
+
+.profile-image-container {
+  flex-basis: 150px; /* Espacio asignado para el contenedor de la imagen */
+  text-align: center; /* Centra el icono de la imagen de perfil */
+}
+.user-profile-picture {
+  max-width: 100%; /* Limita el ancho de la imagen al de su contenedor */
+  max-height: 100%; /* Limita la altura de la imagen a la de su contenedor */
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+  object-fit: cover; /* Asegura que la imagen entera se ajuste dentro del contenedor */
+}
+.profile-icon {
+  font-size: 100px; /* Tamaño del icono de la imagen de perfil */
+  color: #eaeaea; /* Color del icono */
+}
+
+.user-details {
+  flex-grow: 1; /* Permite que el contenedor de detalles crezca para llenar el espacio */
+  padding-left: 20px; /* Espaciado a la izquierda de los detalles del usuario */
+}
+
+.user-details {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px; /* Espaciado a la izquierda de los detalles del usuario */
+  font-family: 'Anta', sans-serif;
+}
+
+.user-details-column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: calc(33.333% - 10px); /* Tercio del ancho del contenedor menos el margen */
+  margin-right: 15px; /* Espaciado entre columnas */
+}
+
+.user-details-column:last-child {
+  margin-right: 0; /* Elimina el margen derecho de la última columna */
+}
+
+.user-details-column p,
+.user-details-column a {
+  margin: 5px 0; /* Espaciado vertical para cada elemento */
+  line-height: 1.4; /* Altura de línea para mejorar la legibilidad */
+}
+
+.user-details-column a {
+  color: #007bff; /* Color para los enlaces, ajusta según tu paleta de colores */
+  text-decoration: none; /* Elimina el subrayado de los enlaces */
+}
+
+.user-details-column a:hover {
+  text-decoration: underline; /* Subraya los enlaces al pasar el ratón por encima */
+}
+.user-details-column strong {
+  display: block;
+}
+.user-details-column textarea {
+  width: 50%; 
+  height: auto; 
+  margin-bottom: 10px; 
+  border: 1px solid #a58f8f; 
+  background-color: #b8c9b02c;
+  padding: 5px; 
+  box-sizing: border-box; 
+  border-radius: 4px;
+  resize: none;
+  font-family: 'Anta', sans-serif;
+}
+
+.edit-profile-btn,
+.save-profile-btn {
+  background: none; /* Elimina el fondo */
+  border: none; /* Elimina el borde */
+  font-family: 'Anta', sans-serif; /* Establece la fuente del texto */
+  cursor: pointer; /* Cambia el cursor a un puntero */
+  padding: 0; /* Elimina el relleno */
+  font-size: 16px; /* Establece el tamaño del texto */
+}
+
+.edit-profile-btn i {
+  margin-right: 5px; /* Añade espacio entre el icono y el texto */
+}
+
+.edit-profile-btn:hover {
+  text-decoration: underline; /* Subraya el texto al pasar el ratón por encima */
+  color : rgb(87, 209, 240);
+}
+
+.save-profile-btn {
+  display: none;
 }

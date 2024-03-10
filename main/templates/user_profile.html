@@ -1,16 +1,57 @@
 {% extends 'index.html' %}
+{% load static %}
+
 
 {% block contenido %}
-  <section class="user-profile">
-    <h2>Perfil de Usuario</h2>
-    <p><strong>Nombre de Usuario:</strong> {{ usuario.username }}</p>
-    <p><strong>Email:</strong> {{ usuario.email }}</p>
-    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
-    <p><strong>Fecha de Nacimiento:</strong> {{ usuario.fecha_nacimiento }}</p>
-    <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
-    <p><strong>Ciudad:</strong> {{ usuario.ciudad }}</p>
-    <p><strong>País:</strong> {{ usuario.pais }}</p>
-    <p><strong>Código Postal:</strong> {{ usuario.codigo_postal }}</p>
-    <!-- Otros campos del usuario según tu modelo -->
-  </section>
+  <div class="user-profile-container">
+    <nav class="account-user-profile-nav">
+      <h3>Mi cuenta</h3>
+      <a href="/mi_cuenta/mis_datos">Mis datos</a>
+      <a href="/mi_cuenta/lista_deseos">Lista de deseos</a>
+      <a href="/mi_cuenta/opiniones">Mis opiniones</a>
+      <a href="/mi_cuenta/mensajes">Mensajes</a>
+      <h3>FAQs</h3>
+      <a href="/faqs">FAQs</a>
+    </nav>
+
+    <section class="user-profile-content">
+      <h2>Perfil de Usuario</h2>
+      <div class="user-profile-card">
+        <div class="profile-image-container">
+          {% if usuario.profile_image %}
+            <img class="user-profile-picture" src="{{ usuario.profile_image.url }}" alt="Imagen de perfil">
+          {% else %}
+            <i class="fas fa-user-circle profile-icon"></i>
+          {% endif %}
+        </div>
+        <div class="user-details">
+              <div class="user-details-column">
+                <span><strong>Nombre de Usuario:</strong><p id="editProfileForm" class="user-detail-field" name="username">{{ usuario.username }}</p></span>
+                <span><strong>Email:</strong><p id="editProfileForm" class="user-detail-field" name="email">{{ usuario.email }}</p></span>
+                <span><strong><a href="">Cambiar contraseña</a></strong></span>
+              </div>
+              <div class="user-details-column">
+                <span><strong>Nombre:</strong><p id="editProfileForm" class="user-detail-field" name="nombre">{{ usuario.nombre }}</p></span>
+                <span><strong>Apellidos:</strong><p id="editProfileForm" class="user-detail-field" name="apellidos">{{ usuario.apellidos }}</p></span>
+                <span><strong>Fecha de Nacimiento:</strong><p id="editProfileForm" class="user-detail-field" name="fecha_nacimiento">{{ usuario.fecha_nacimiento }}</p></span>
+              </div>
+              <div class="user-details-column">
+                <span><strong>Dirección:</strong><p id="editProfileForm" class="user-detail-field" name="direccion">{{ usuario.direccion }}</p></span>
+                <span><strong>Ciudad:</strong><p id="editProfileForm" class="user-detail-field" name="ciudad">{{ usuario.ciudad }}</p></span>
+                <span><strong>País:</strong><p id="editProfileForm" class="user-detail-field" name="pais">{{ usuario.pais }}</p></span>
+                <span><strong>Código Postal:</strong><p id="editProfileForm" class="user-detail-field" name="codigo_postal">{{ usuario.codigo_postal }}</p></span>
+            </div>
+        </div>
+        <button class="edit-profile-btn" id="edit-profile-details" onclick="toggleEditProfile()">
+          <i class="fas fa-pencil-alt"></i> Editar
+        </button>
+        <button class="save-profile-btn" id="save-profile-details" onclick="saveProfileDetails()">
+          <i class="fas fa-save"></i> Guardar cambios
+        </button>
+        <button class="save-profile-btn" id="cancel-profile-details" onclick="cancelEditProfile()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </section>
+  </div>
 {% endblock %}

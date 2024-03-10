@@ -9,8 +9,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.management import call_command
+from django.core.files.storage import FileSystemStorage
 from django.db import connection
 from django.db.models import Q
 from django.http.response import HttpResponseRedirect
@@ -117,8 +119,55 @@ def registro(request):
 
 @login_required
 def user_profile(request):
+    subcategorias = Subcategoria.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
     usuario = request.user
-    return render(request, 'user_profile.html', {'usuario': usuario})
+    return render(request, 'user_profile.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+
+
+@login_required
+@require_POST
+def update_profile(request):
+    # Asegúrate de que el usuario esté autenticado
+    user = request.user
+
+    # Obtén los datos enviados desde el formulario
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    first_name = request.POST.get('nombre')
+    last_name = request.POST.get('apellidos')
+    fecha_nacimiento = request.POST.get('fecha_nacimiento')
+    pais = request.POST.get('pais')
+    ciudad = request.POST.get('ciudad')
+    direccion = request.POST.get('direccion')
+    codigo_postal = request.POST.get('codigo_postal')
+
+    profile_image = request.FILES.get('profile_image')
+    if profile_image:
+        #si habia una imagen de perfil anterior, la borra
+        if user.profile_image:
+            ruta_imagen = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'static', 'profile_images', user.profile_image.url.split('/')[-1]))
+            os.remove(ruta_imagen)
+        fs = FileSystemStorage()
+        filename = fs.save('static/profile_images/' + username + "_"+ str(user.id)+".jpg", profile_image)
+        user.profile_image = fs.url(filename)  # Asegúrate de que tu modelo de usuario tenga un campo 'profile_image'
+    # Actualiza los datos del usuario
+    user.username = username
+    user.email = email
+    user.nombre = first_name
+    user.apellidos = last_name
+    user.fecha_nacimiento = fecha_nacimiento
+    user.pais = pais
+    user.ciudad = ciudad
+    user.direccion = direccion
+    user.codigo_postal = codigo_postal
+
+    # Guarda los cambios en la base de datos
+    user.save()
+    profile_image_url = request.user.profile_image.url if request.user.profile_image else None
+    # Devuelve una respuesta
+    return JsonResponse({'status': 'success', 'profile_image_url': profile_image_url})
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_profile(request):

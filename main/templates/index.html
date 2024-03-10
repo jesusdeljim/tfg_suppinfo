@@ -6,6 +6,7 @@
 <head>
   <meta charset='utf-8'>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
@@ -20,7 +21,14 @@
 </head>
 
 <body>
-
+  <div id="userProfileNav" class="user-profile-nav">
+    <a href="javascript:void(0);" class="closebtn" onclick="toggleUserProfileNav()">&times;</a>
+    <a href="/mi_cuenta/mis_datos">Mis datos</a>
+    <a href="/mi_cuenta/lista_deseos">Lista de deseos</a>
+    <a href="/mi_cuenta/opiniones">Mis opiniones</a>
+    <a href="/mi_cuenta/mensajes">Mensajes</a>
+    <a href="/faqs">FAQs</a>
+  </div>
   <header class="index-header">
     <div class="header-content">
       <div class="logo-container">
@@ -39,7 +47,7 @@
               <i class="fas fa-user-shield fa-2x" aria-hidden="true"></i>
             </a>
           {% endif %}
-          <a href="/user_profile" class="user-profile-icon">
+          <a href="javascript:void(0);" class="user-profile-icon" onclick="toggleUserProfileNav()">
             <i class="fas fa-user-circle fa-2x" aria-hidden="true"></i>
           </a>
           <a href="/cerrar_sesion" class="logout-icon">
@@ -63,18 +71,18 @@
         <span class="categories-title">CATEGORÍAS</span>
         <ul class="categories-menu-displayed">
           {% for categoria in categorias %}
-          <li class="category-item">
-            <a href="{% url 'categorias' categoria.slug %}">{{ categoria.nombre }}</a>
-            <ul class="subcategory-nav">
-              {% for subcategoria in subcategorias %}
-              {% if subcategoria.categoria.id == categoria.id %}
-                <li>
-                  <a class="subcategory-item" href="{% url 'subcategorias' categoria.slug subcategoria.slug %}">{{ subcategoria.nombre }}</a>
-                </li>
-              {% endif %}
-              {% endfor %}
-            </ul>
-          </li>
+            <li class="category-item">
+              <a href="{% url 'categorias' categoria.slug %}">{{ categoria.nombre }}</a>
+                <ul class="subcategory-nav">
+                  {% for subcategoria in subcategorias %}
+                    {% if subcategoria.categoria.id == categoria.id %}
+                      <li>
+                        <a class="subcategory-item" href="{% url 'subcategorias' categoria.slug subcategoria.slug %}">{{ subcategoria.nombre }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+            </li>
           {% endfor %}
         </ul>
       </div>

@@ -66,11 +66,13 @@ class Usuario(AbstractUser):
     # Campos personalizados
     email = models.EmailField(unique=True)
     nombre = models.CharField(max_length=255)
+    apellidos = models.CharField(max_length=255, blank=True, null=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
     direccion = models.CharField(max_length=255, null=True, blank=True)
     ciudad = models.CharField(max_length=255, null=True, blank=True)
     pais = models.CharField(max_length=255, null=True, blank=True)
     codigo_postal = models.CharField(max_length=20, null=True, blank=True)
+    profile_image = models.ImageField(upload_to='static/profile_images/', blank=True, null=True)
     
     # Otros campos que puedas necesitar
     #lista_favoritos = models.ManyToManyField(Producto, related_name='usuarios_favoritos', blank=True)
