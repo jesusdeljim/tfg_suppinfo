@@ -148,6 +148,69 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+function showAdvancedSearch() {
+  document.getElementById('advanced-search-btn').style.display = 'block';
+  
+}
+
+function toggleAdvancedSearch() {
+  var advancedSearchContainer = document.getElementById('advanced-search-container');
+  var isDisplayed = advancedSearchContainer.style.display !== 'none';
+  advancedSearchContainer.style.display = isDisplayed ? 'none' : 'flex';
+}
+
+//si el elemento advanced-search-container tiene display: flex, quiero que hacer click fuera de él lo oculte
+document.addEventListener('click', function(event) {
+  var advancedSearchContainer = document.getElementById('advanced-search-container');
+  var advancedSearchBtn = document.getElementById('advanced-search-btn');
+  var searchInput = document.getElementById('search-input');
+  if (!advancedSearchContainer.contains(event.target) & !advancedSearchBtn.contains(event.target) & !searchInput.contains(event.target) & event.target !== advancedSearchContainer) {
+    advancedSearchContainer.style.display = 'none';
+    advancedSearchBtn.style.display = 'none';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  var priceRangeSlider = document.getElementById('price-range-slider');
+  var priceRangeLabel = document.getElementById('price-range-label');
+  if (priceRangeSlider) {
+    noUiSlider.create(priceRangeSlider, {
+      start: [0, 999],
+      connect: true,
+      range: {
+        'min': 0,
+        'max': 999
+      },
+      format: {
+        to: function (value) {
+          return value.toFixed(0) + '€';
+        },
+        from: function (value) {
+          return Number(value.replace('€', ''));
+        }
+      }
+    });
+
+    priceRangeSlider.noUiSlider.on('update', function (values, handle) {
+      priceRangeLabel.innerHTML = values.join(' - ');
+    });
+  }
+});
+
+function performAdvancedSearch() {
+  // Aquí puedes definir la lógica para realizar la búsqueda avanzada
+  // Recoge los valores de los campos y envía la solicitud de búsqueda
+  var productName = document.getElementById('advanced-search-name').value;
+  var minRating = document.getElementById('advanced-search-rating').value;
+  var inStock = document.getElementById('advanced-search-stock').checked;
+  var keywords = document.getElementById('advanced-search-keywords').value;
+  var brand = document.getElementById('advanced-search-brand').value;
+  var ingredients = document.getElementById('advanced-search-ingredients').value;
+  var flavor = document.getElementById('advanced-search-flavor').value;
+  
+  document.getElementById('advanced-search-btn').style.display = 'none';
+  document.getElementById('advanced-search-container').style.display = 'none';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var flechaIzquierda = document.querySelector('.carrusel-flecha-izquierda');
@@ -157,12 +220,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   flechaIzquierda.addEventListener('click', function() {
     // Desplaza el contenedor hacia la izquierda
-    contenedorProductos.scrollBy({ left: -anchoProducto * 5, behavior: 'smooth' });
+    contenedorProductos.scrollBy({ left: -anchoProducto * 4, behavior: 'smooth' });
   });
 
   flechaDerecha.addEventListener('click', function() {
     // Desplaza el contenedor hacia la derecha
-    contenedorProductos.scrollBy({ left: anchoProducto * 5, behavior: 'smooth' });
+    contenedorProductos.scrollBy({ left: anchoProducto * 4, behavior: 'smooth' });
   });
 });
 

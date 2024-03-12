@@ -1,3 +1,4 @@
+from multiprocessing import context
 import os
 from re import sub
 import shutil
@@ -20,8 +21,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 
 from main.forms import *
-from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Proteina,
-                         Sabor, Snack, Vitamina)
+from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Sabor)
 from main.populateDB import populate
 
 from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
@@ -186,10 +186,18 @@ def inicio(request):
     productos=Producto.objects.all()
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
+    ix = open_dir("Index")
+    context = {}
+    
+            
+
     # Selecciona una muestra aleatoria de productos recomendados
     productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
     
-    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def search_products(request):
     search_term = request.GET.get('query', '')

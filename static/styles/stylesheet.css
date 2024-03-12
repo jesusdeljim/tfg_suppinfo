@@ -72,9 +72,12 @@
   }
   
   .search-container {
+    display: flex;
     position: relative;
     max-width: 1000px;
     flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
   .search-input {
@@ -82,11 +85,105 @@
     padding: 8px 20px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 20px;
     outline: none;
     height: 40px;
+    flex-grow: 1;
   }
 
+  .advanced-search-btn {
+    display: none; 
+    padding: 8px;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-family: 'Anta', sans-serif; 
+  }
+  .search-container button:hover {
+    background-color: #545455;
+  }
+  
+  
+  .search-input:focus + .advanced-search-btn {
+    display: block;
+  }
+
+  .advanced-search-container {
+    display: none; 
+    flex-direction: column;
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    right: 0;
+    background: #fff; 
+    border: 1px solid #ccc; 
+    z-index: 1001; 
+    font-family: 'Anta', sans-serif;
+  }
+  #advanced-search-title{
+    font-family: 'Black Ops One', cursive;
+    text-align: center; 
+    margin: 20px 0;
+  }
+  .advanced-search-content {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 16px; 
+    
+  }
+  
+  .advanced-search-column {
+    flex: 1; 
+    min-width: 250px; 
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  #price-range-slider {
+    width: calc(100% - 40px); 
+    margin: 20px; 
+  }
+  
+  
+  .advanced-search-container input {
+    width: calc(100% - 16px); 
+    margin-bottom: 8px; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+  }
+  
+  
+  .advanced-search-container span {
+    margin-bottom: 4px; 
+    color: #333; 
+    font-size: 14px; 
+  }
+  
+  
+  .advanced-search-container button {
+    width: calc(100% - 16px); 
+    margin-bottom: 8px; 
+    padding: 8px; 
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    font-family: 'Anta', sans-serif;
+    margin-left: 8px;
+  }
+  
+  .advanced-search-container button:hover {
+    background-color: #545455; 
+    font-family: 'Anta', sans-serif;
+  }
+  .advanced-search-checkbox-container{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+    white-space: nowrap; 
+    align-items: flex-start;
+  }
   .search-results {
     position: absolute;
     left: 0; 

@@ -14,6 +14,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
   <script src="{% static 'js/scripts.js' %}"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <title>SuppInfo - Suplementación deportiva</title>
@@ -37,8 +39,40 @@
         </a>
       </div>
       <div class="search-container">
-        <input type="text" id="search-input" placeholder="Buscar productos..." class="search-input" oninput="searchProducts()">
+        <input type="text" id="search-input" placeholder="Buscar productos..." class="search-input" oninput="searchProducts()" onfocus="showAdvancedSearch()">
+        <button id="advanced-search-btn" class="advanced-search-btn" onclick="toggleAdvancedSearch()" style="display:none;">Búsqueda avanzada</button>
         <div id="search-results" class="search-results"></div>
+        <div id="advanced-search-container" class="advanced-search-container" style="display:none;">
+          <h2 id="advanced-search-title">Búsqueda avanzada</h2>
+          <div class="advanced-search-content">
+            <div class="advanced-search-column">
+              <span>Nombre del producto</span>
+              <input type="text" id="advanced-search-name" placeholder="Nombre del producto">
+              <span>Precio:</span>
+              <span id="price-range-label"></span>
+              <div id="price-range-slider"></div>
+              <span>Valoración mínima:</span>
+              <input type="number" id="advanced-search-rating" placeholder="Rating mínimo" min="1" max="5">
+              <span>Stock:</span>
+                <div class="advanced-search-checkbox-container">
+                  <label for="advanced-search-stock">En stock</label>
+                  <input type="checkbox" id="advanced-search-stock" value="true">  
+                </div>
+            </div>
+            <div class="advanced-search-column">
+              <span>Búsqueda descriptiva:</span>
+              <input type="text" id="advanced-search-keywords" placeholder="Palabras clave en la descripción">
+              <span>Marca:</span>
+              <input type="text" id="advanced-search-brand" placeholder="Marca del producto">
+              <span>Ingredientes:</span>
+              <input type="text" id="advanced-search-ingredients" placeholder="Ingredientes del producto">
+              <span>Sabor:</span>
+              <input type="text" id="advanced-search-flavor" placeholder="Sabor del producto">
+              
+            </div>
+          </div>
+          <button onclick="performAdvancedSearch()">Realizar búsqueda avanzada</button>
+        </div>
       </div>
       <div class="user-controls">
         {% if user.is_authenticated %}

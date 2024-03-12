@@ -49,18 +49,6 @@ class Producto(models.Model):
     def __str__(self):
         return self.nombre
 
-class Proteina(Producto):
-    categoria_proteina = models.ForeignKey(Categoria, on_delete=models.CASCADE, limit_choices_to={'nombre': 'Proteína'})
-    cantidad_proteina = models.DecimalField(max_digits=5, decimal_places=2)
-
-class Vitamina(Producto):
-    categoria_vitamina = models.ForeignKey(Categoria, on_delete=models.CASCADE, limit_choices_to={'nombre': 'Vitamina'})
-    cantidad_vitamina = models.DecimalField(max_digits=5, decimal_places=2)
-
-class Snack(Producto):
-    categoria_snack = models.ForeignKey(Categoria, on_delete=models.CASCADE, limit_choices_to={'nombre': 'Snack'})
-    calorias = models.PositiveIntegerField()
-
     
 class Usuario(AbstractUser):
     # Campos personalizados
