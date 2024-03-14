@@ -219,11 +219,37 @@ def search_products(request):
 
     return JsonResponse(results)  # Devuelve los resultados como JSON
 
-def producto_detail(request, id):
-    producto = Producto.objects.get(pk=id)
-    productos=Producto.objects.all()
+def advanced_search(request):
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
+    productos = Producto.objects.all()
+    advanced_search_name = request.GET.get('name', '')
+    advanced_search_brand = request.GET.get('brand', '')
+    advanced_search_minRating = request.GET.get('rating', '')
+    advanced_search_keywords = request.GET.get('keywords', '')
+    advanced_search_stock = request.GET.get('stock', '')
+    advanced_search_ingredients = request.GET.get('ingredients', '')
+    advanced_search_flavors = request.GET.get('flavor', '')
+    matching_products = []
+    
+    if advanced_search_name:
+        matching_products = productos.filter(nombre__icontains=advanced_search_name)
+        total_matches = matching_products.count()
+
+    
+    return render(request, 'advanced_search.html', {'total_matches' : total_matches,'matching_products' : matching_products, 'productos' : productos ,'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+
+def producto_detail(request, id):
+    producto = Producto.objects.get(pk=id)
+    categorias = Categoria.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
+    productos = Producto.objects.all()
 
     return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
@@ -232,6 +258,9 @@ def categoria_search(request, categoria_slug):
     categoria = Categoria.objects.get(slug=categoria_slug)
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
     if categoria:
         productos = productos.filter(categoria__nombre=categoria)
@@ -259,8 +288,11 @@ def categoria_search(request, categoria_slug):
 def subcategoria_search(request,categoria_slug, subcategoria_slug):
     categoria = Categoria.objects.get(slug=categoria_slug)
     subcategoria = Subcategoria.objects.get(slug=subcategoria_slug)
-    subcategorias = Subcategoria.objects.all()
     categorias = Categoria.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
 
     if subcategoria:

@@ -32,6 +32,7 @@ urlpatterns = [
     path('eliminar_base_datos/', views.eliminar_base_datos),
     path('admin_profile/', views.admin_profile),
     path('search/', views.search_products, name='search_products'),
+    path('advanced_search/', views.advanced_search, name='advanced_search'),
     path('producto/<int:id>/', views.producto_detail, name='producto_detail'),
     path('categoria/<slug:categoria_slug>/', views.categoria_search, name='categorias'),
     path('categoria/<slug:categoria_slug>/<slug:subcategoria_slug>/', views.subcategoria_search, name='subcategorias'),

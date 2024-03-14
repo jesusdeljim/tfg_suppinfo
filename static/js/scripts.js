@@ -207,6 +207,17 @@ function performAdvancedSearch() {
   var brand = document.getElementById('advanced-search-brand').value;
   var ingredients = document.getElementById('advanced-search-ingredients').value;
   var flavor = document.getElementById('advanced-search-flavor').value;
+  //make the logic to send the request to the server
+  var searchURL = '/advanced_search/?name=' + encodeURIComponent(productName) +
+                  '&rating=' + encodeURIComponent(minRating) +
+                  '&stock=' + inStock +
+                  '&keywords=' + encodeURIComponent(keywords) +
+                  '&brand=' + encodeURIComponent(brand) +
+                  '&ingredients=' + encodeURIComponent(ingredients) +
+                  '&flavor=' + encodeURIComponent(flavor);
+
+  // Redirige a la página de búsqueda con los parámetros adecuados
+  window.location.href = searchURL;
   
   document.getElementById('advanced-search-btn').style.display = 'none';
   document.getElementById('advanced-search-container').style.display = 'none';

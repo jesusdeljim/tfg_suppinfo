@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block contenido %}
+    {% for product in matching_products %}
+        <div>
+            <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
+            <h3>{{ product.nombre }}</h3>
+            <!-- Add any other product details you want to display -->
+        </div>
+    {% endfor %}
+{% endblock %}
