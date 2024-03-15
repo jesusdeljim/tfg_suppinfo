@@ -175,11 +175,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var priceRangeLabel = document.getElementById('price-range-label');
   if (priceRangeSlider) {
     noUiSlider.create(priceRangeSlider, {
-      start: [0, 999],
+      start: [0, 200],
       connect: true,
       range: {
         'min': 0,
-        'max': 999
+        'max': 200
       },
       format: {
         to: function (value) {
@@ -198,8 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function performAdvancedSearch() {
-  // Aquí puedes definir la lógica para realizar la búsqueda avanzada
-  // Recoge los valores de los campos y envía la solicitud de búsqueda
+  var priceRange = document.getElementById('price-range-label').innerHTML;
   var productName = document.getElementById('advanced-search-name').value;
   var minRating = document.getElementById('advanced-search-rating').value;
   var inStock = document.getElementById('advanced-search-stock').checked;
@@ -207,14 +206,40 @@ function performAdvancedSearch() {
   var brand = document.getElementById('advanced-search-brand').value;
   var ingredients = document.getElementById('advanced-search-ingredients').value;
   var flavor = document.getElementById('advanced-search-flavor').value;
-  //make the logic to send the request to the server
-  var searchURL = '/advanced_search/?name=' + encodeURIComponent(productName) +
-                  '&rating=' + encodeURIComponent(minRating) +
-                  '&stock=' + inStock +
-                  '&keywords=' + encodeURIComponent(keywords) +
-                  '&brand=' + encodeURIComponent(brand) +
-                  '&ingredients=' + encodeURIComponent(ingredients) +
-                  '&flavor=' + encodeURIComponent(flavor);
+  // Make the logic to send the request to the server
+  var searchURL = '/advanced_search/?';
+
+  if (productName.trim() !== '') {
+    searchURL += 'name=' + encodeURIComponent(productName) + '&';
+  }
+  if (minRating.trim() !== '') {
+    searchURL += 'rating=' + encodeURIComponent(minRating) + '&';
+  }
+  if (inStock) {
+    searchURL += 'stock=' + encodeURIComponent(inStock) + '&';
+  }
+  if (keywords.trim() !== '') {
+    searchURL += 'keywords=' + encodeURIComponent(keywords) + '&';
+  }
+  if (brand.trim() !== '') {
+    searchURL += 'brand=' + encodeURIComponent(brand) + '&';
+  }
+  if (ingredients.trim() !== '') {
+    searchURL += 'ingredients=' + encodeURIComponent(ingredients) + '&';
+  }
+  if (flavor.trim() !== '') {
+    searchURL += 'flavor=' + encodeURIComponent(flavor) + '&';
+  }
+  if (priceRange !== '0 - 999') {
+    var priceRangeValues = priceRange.split(' - ');
+    searchURL += 'min_price=' + priceRangeValues[0].replace('€', '') +
+                 '&max_price=' + priceRangeValues[1].replace('€', '') + '&';
+  }
+
+  // Remove the trailing '&' if there are no additional parameters
+  if (searchURL.endsWith('&')) {
+    searchURL = searchURL.slice(0, -1);
+  }
 
   // Redirige a la página de búsqueda con los parámetros adecuados
   window.location.href = searchURL;

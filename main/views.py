@@ -28,6 +28,7 @@ from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import MultifieldParser, OrGroup, QueryParser
 from whoosh.query import And
+from whoosh.query import Every
 from django.core.paginator import Paginator
 
 
@@ -189,7 +190,6 @@ def inicio(request):
     marcas = Marca.objects.all()
     sabores = Sabor.objects.all()
     ingredientes = Ingrediente.objects.all()
-    ix = open_dir("Index")
     context = {}
     
             
@@ -219,6 +219,14 @@ def search_products(request):
 
     return JsonResponse(results)  # Devuelve los resultados como JSON
 
+def search_products_description_whoosh(query):
+    ix = open_dir("Index")
+    searcher = ix.searcher()
+    query_parser = QueryParser("descripcion", schema=ix.schema)
+    parsed_query = query_parser.parse(query)
+    results = searcher.search(parsed_query)
+    return results
+
 def advanced_search(request):
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
@@ -233,13 +241,50 @@ def advanced_search(request):
     advanced_search_stock = request.GET.get('stock', '')
     advanced_search_ingredients = request.GET.get('ingredients', '')
     advanced_search_flavors = request.GET.get('flavor', '')
+    advanced_search_min_price = request.GET.get('min_price', '')
+    advanced_search_max_price = request.GET.get('max_price', '')
     matching_products = []
-    
-    if advanced_search_name:
-        matching_products = productos.filter(nombre__icontains=advanced_search_name)
+
+    if advanced_search_keywords:
+        results = search_products_description_whoosh(advanced_search_keywords)
+        producto_ids = [result['id_producto'] for result in results]
+        productos = Producto.objects.filter(id__in=producto_ids)
+        for producto in productos:
+            for r in results:
+                if producto.id == int(r['id_producto']):
+                    matching_products.append(producto)
+                    
+    if advanced_search_name or advanced_search_brand or advanced_search_minRating or advanced_search_keywords or advanced_search_stock or advanced_search_ingredients or advanced_search_flavors:
+
+        matching_products = productos.filter(
+            Q(nombre__icontains=advanced_search_name) if advanced_search_name else Q(),
+            Q(marca__nombre__icontains=advanced_search_brand) if advanced_search_brand else Q(),
+            Q(rating_original__gte=advanced_search_minRating) if advanced_search_minRating else Q(),
+            Q(stock__gte=True) if advanced_search_stock == 'true' else Q(),
+            Q(ingrediente__ingrediente__icontains=advanced_search_ingredients) if advanced_search_ingredients else Q(),
+            Q(sabor__sabor__icontains=advanced_search_flavors) if advanced_search_flavors else Q(),
+            Q(precio__gte=advanced_search_min_price) if advanced_search_min_price else Q(),
+            Q(precio__lte=advanced_search_max_price) if advanced_search_max_price else Q(),
+            
+        ).distinct()  # Remove duplicate products from the queryset
         total_matches = matching_products.count()
 
-    
+    order = request.GET.get('order')
+    if order == 'asc':
+        matching_products= matching_products.order_by('precio')
+    elif order == 'desc':
+        matching_products = matching_products.order_by('-precio')
+    #elif order == 'reviews':
+        # Define cómo quieres ordenar por reviews
+    elif order == 'new':
+        matching_products = matching_products.order_by('-id')  
+    elif order == 'rating':
+        matching_products = matching_products.order_by('-rating_original')
+
+    paginator = Paginator(matching_products, 18)  # Muestra 20 productos por página
+
+    page_number = request.GET.get('page')
+    matching_products = paginator.get_page(page_number)
     return render(request, 'advanced_search.html', {'total_matches' : total_matches,'matching_products' : matching_products, 'productos' : productos ,'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def producto_detail(request, id):
@@ -250,8 +295,14 @@ def producto_detail(request, id):
     sabores = Sabor.objects.all()
     ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
+    ix = open_dir("Index")
+    with ix.searcher() as searcher:
+        results = searcher.documents()
+        for r in results:
+            if r['id_producto'] == str(producto.id):
+                descripcion = (r['descripcion'])
 
-    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion})
 
 def categoria_search(request, categoria_slug):
 
@@ -270,8 +321,8 @@ def categoria_search(request, categoria_slug):
         productos= productos.order_by('precio')
     elif order == 'desc':
         productos = productos.order_by('-precio')
-    #elif order == 'relevant':
-        # Define cómo quieres ordenar por relevancia
+    #elif order == 'reviews':
+        # Define cómo quieres ordenar por reviews
     elif order == 'new':
         productos = productos.order_by('-id')  
     elif order == 'rating':
@@ -304,7 +355,7 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
     elif order == 'desc':
         productos = productos.order_by('-precio')
     #elif order == 'reviews':
-        # Define cómo quieres ordenar por relevancia
+        # Define cómo quieres ordenar por reviews
     elif order == 'new':
         productos = productos.order_by('-id')  
     elif order == 'rating':
