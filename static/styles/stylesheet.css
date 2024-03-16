@@ -270,6 +270,7 @@
   .login-icon,
   .register-icon {
     margin-left: 10px;
+    padding: 10px;
   }
   
   .username {
@@ -447,6 +448,7 @@
     padding: 0 50px;
     max-width: calc(60% + 100px);
     z-index: 100;
+    margin-top: 0px;
   }
   .productos-new-arrivals-titulo {
     font-family: 'Black Ops One', cursive;
@@ -484,19 +486,16 @@
     scroll-snap-align: start;
   }
   
-
-
-
-
-
   .carrusel-container-best-sellers {
     position: relative;
     width: 60%;
     margin: auto;
     overflow: hidden; 
     padding: 0 50px;
+    height: 550px;
     max-width: calc(60% + 100px);
     z-index: 100;
+    margin-top: 0px;
   }
   .productos-best-sellers-titulo {
     font-family: 'Black Ops One', cursive;
@@ -583,6 +582,7 @@
     width: 100%;
     overflow: hidden;
     margin-top: 20px;
+    margin-bottom: 20px;
   }
   .header-content-forms {
     text-align: center;
@@ -947,7 +947,6 @@
   right: 0;
   background-color: #fff;
   font-family: 'Anta', sans-serif;
-  
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -1183,4 +1182,61 @@
 
 .action-link:hover {
   color:rgb(87, 209, 240)
+}
+
+.footer {
+  padding: 10px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-family: 'Black Ops One', cursive;
+}
+
+.footer-section p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-family: 'Anta', sans-serif;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+  font-family: 'Anta', sans-serif;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #000000;
+}
+.footer-section ul li a:hover {
+  text-decoration: none;
+  color:rgb(87, 209, 240);
+}
+
+.footer-bottom {
+  padding: 15px 0;
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
 }

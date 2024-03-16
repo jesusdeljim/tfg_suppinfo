@@ -127,6 +127,36 @@
     {% block contenido %}{% endblock %}
   </section>
 
-  {% block pie %}{% endblock %}
+  {% block pie %}
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Contacto</h3>
+        <p><strong>Dirección:</strong> Avenida Ramón y Cajal S/N, Sevilla,España 41005</p>
+        <p><strong>Teléfono:</strong> 999999999</p>
+        <p><strong>Email:</strong> info@suppinfo.net</p>
+      </div>
+      <div class="footer-section">
+        <h3>Enlaces útiles</h3>
+        <ul>
+          <li><a href="/terminos_y_condiciones">Términos y condiciones</a></li>
+          <li><a href="/politica_de_privacidad">Política de privacidad</a></li>
+          <li><a href="/politica_de_cookies">Política de cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Síguenos en las redes sociales</h3>
+        <ul>
+          <li><a href="[Enlace a tu página de Facebook]">Facebook</a></li>
+          <li><a href="[Enlace a tu cuenta de Twitter]">Twitter</a></li>
+          <li><a href="[Enlace a tu cuenta de Instagram]">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 SuppInfo - Todos los derechos reservados</p>
+    </div>
+  </footer>  
+  {% endblock %}
 </body>
 </html>

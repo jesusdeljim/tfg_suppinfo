@@ -207,7 +207,7 @@ def inicio(request):
     productos_reviews = {}
     ix = open_dir("Index")
     with ix.searcher() as searcher:
-        for producto in productos_con_alto_rating:
+        for producto in random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating))): # Aqui se cambiara productos_con_alto_rating por productos_mejores_reviews
             results = searcher.documents(id_producto=str(producto.id))
             reviews = []
             for r in results:
