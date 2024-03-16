@@ -4,10 +4,55 @@
   <section class="admin-panel">
     <h2>Panel de Administración</h2>
     <p>Bienvenido, {{ usuario.username }}.</p>
-    <div>
-      <!-- Agrega aquí cualquier información específica del panel de administración -->
-      <a href='/carga'>Cargar Base de Datos</a>
-      <a href='/eliminar_base_datos'>Eliminar Base de Datos</a>
+    <div class ="admin-panel-table-container">
+      <!-- Table for users -->
+      <h3>Datos registrados</h3>
+      <div class="admin-panel-scrollable-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Usuarios Registrados</td>
+              <td>{{ usuarios.count }}</td>
+            </tr>
+            <tr>
+              <td>Productos</td>
+              <td>{{ productos.count }}</td>
+            </tr>
+            <tr>
+              <td>Sabores</td>
+              <td>{{ sabores.count }}</td>
+            </tr>
+            <tr>
+              <td>Ingredientes</td>
+              <td>{{ ingredientes.count }}</td>
+            </tr>
+            <tr>
+              <td>Marcas</td>
+              <td>{{ marcas.count }}</td>
+            </tr>
+            <tr>
+              <td>Categorias</td>
+              <td>{{ categorias.count }}</td>
+            </tr>
+            <tr>
+              <td>Subcategorias</td>
+              <td>{{ subcategorias.count }}</td>
+            </tr>
+
+            <!-- Add other totals as needed -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="admin-actions">
+      <a href='/carga' class="action-link">Cargar Base de Datos</a>
+      <a href='/eliminar_base_datos' class="action-link">Eliminar Base de Datos</a>
     </div>
   </section>
 {% endblock %}

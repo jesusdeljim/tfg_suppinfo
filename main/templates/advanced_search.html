@@ -19,17 +19,17 @@
         <div class="pagination">
             <span class="step-links">
                 {% if matching_products.has_previous %}
-                    <a href="?page=1" class="first-page-btn">1</a>
-                    <a href="?page={{ matching_products.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    <a href="?page=1{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="first-page-btn">1</a>
+                    <a href="?page={{ matching_products.previous_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="previous-page-btn">&larr;</a>
                 {% endif %}
-        
+
                 <span class="current-page">
                     {{ matching_products.number }}
                 </span>
-        
+
                 {% if matching_products.has_next %}
-                    <a href="?page={{ matching_products.next_page_number }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ matching_products.paginator.num_pages }}" class="last-page-btn">{{ matching_products.paginator.num_pages }}</a>
+                    <a href="?page={{ matching_products.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ matching_products.paginator.num_pages }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="last-page-btn">{{ matching_products.paginator.num_pages }}</a>
                 {% endif %}
             </span>
         </div>
@@ -67,17 +67,17 @@
         <div class="pagination">
             <span class="step-links">
                 {% if matching_products.has_previous %}
-                    <a href="?page=1" class="first-page-btn">1</a>
-                    <a href="?page={{ matching_products.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    <a href="?page=1{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="first-page-btn">1</a>
+                    <a href="?page={{ matching_products.previous_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="previous-page-btn">&larr;</a>
                 {% endif %}
-        
+
                 <span class="current-page">
-                   {{ matching_products.number }}
+                    {{ matching_products.number }}
                 </span>
-        
+
                 {% if matching_products.has_next %}
-                    <a href="?page={{ matching_products.next_page_number }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ matching_products.paginator.num_pages }}" class="last-page-btn">{{ matching_products.paginator.num_pages }}</a>
+                    <a href="?page={{ matching_products.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="next-page-btn">&rarr;</a>
+                    <a href="?page={{ matching_products.paginator.num_pages }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.stock %}&stock={{ request.GET.stock }}{% endif %}{% if request.GET.keywords %}&keywords={{ request.GET.keywords }}{% endif %}{% if request.GET.brand %}&brand={{ request.GET.brand }}{% endif %}{% if request.GET.ingredients %}&ingredients={{ request.GET.ingredients }}{% endif %}{% if request.GET.flavor %}&flavor={{ request.GET.flavor }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}" class="last-page-btn">{{ matching_products.paginator.num_pages }}</a>
                 {% endif %}
             </span>
         </div>

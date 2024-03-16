@@ -18,17 +18,27 @@
         <div class="pagination">
             <span class="step-links">
                 {% if productos.has_previous %}
-                    <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
-                    <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
+                    {% if request.GET.order %}
+                        <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
+                        <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
+                    {% else %}
+                        <a href="?page=1" class="first-page-btn">1</a>
+                        <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    {% endif %}
                 {% endif %}
-        
+
                 <span class="current-page">
                     {{ productos.number }}
                 </span>
-        
+
                 {% if productos.has_next %}
-                    <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% if request.GET.order %}
+                        <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
+                        <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% else %}
+                        <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
+                        <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% endif %}
                 {% endif %}
             </span>
         </div>
@@ -66,17 +76,27 @@
         <div class="pagination">
             <span class="step-links">
                 {% if productos.has_previous %}
-                    <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
-                    <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
+                    {% if request.GET.order %}
+                        <a href="?page=1&order={{ request.GET.order }}" class="first-page-btn">1</a>
+                        <a href="?page={{ productos.previous_page_number }}&order={{ request.GET.order }}" class="previous-page-btn">&larr;</a>
+                    {% else %}
+                        <a href="?page=1" class="first-page-btn">1</a>
+                        <a href="?page={{ productos.previous_page_number }}" class="previous-page-btn">&larr;</a>
+                    {% endif %}
                 {% endif %}
-        
+
                 <span class="current-page">
                     {{ productos.number }}
                 </span>
-        
+
                 {% if productos.has_next %}
-                    <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
-                    <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% if request.GET.order %}
+                        <a href="?page={{ productos.next_page_number }}&order={{ request.GET.order }}" class="next-page-btn">&rarr;</a>
+                        <a href="?page={{ productos.paginator.num_pages }}&order={{ request.GET.order }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% else %}
+                        <a href="?page={{ productos.next_page_number }}" class="next-page-btn">&rarr;</a>
+                        <a href="?page={{ productos.paginator.num_pages }}" class="last-page-btn">{{ productos.paginator.num_pages }}</a>
+                    {% endif %}
                 {% endif %}
             </span>
         </div>

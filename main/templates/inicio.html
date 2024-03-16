@@ -8,7 +8,7 @@
 
 {% block contenido %}
   <div class="carrusel-container-recommended">
-    <a href="#" class="carrusel-flecha-izquierda">
+    <a class="carrusel-flecha-izquierda-recommended">
       <i class="fas fa-chevron-left"></i> <!-- Ícono de flecha hacia la izquierda para navegar -->
     </a>
     <div class="productos-recomendados-container">
@@ -43,8 +43,98 @@
       {% endfor %}
       </div>
     </div>
-    <a href="#" class="carrusel-flecha-derecha">
+    <a class="carrusel-flecha-derecha-recommended">
       <i class="fas fa-chevron-right"></i> <!-- Ícono de flecha hacia la derecha para navegar -->
     </a>
+  </div>
+
+  <div class="carrusels-container">
+    <div class="carrusel-container-new-arrivals">
+      <a class="carrusel-flecha-izquierda-new-arrival">
+        <i class="fas fa-chevron-left"></i>
+      </a>
+      <div class="productos-new-arrivals-container">
+        <h2 class="productos-new-arrivals-titulo">Novedades</h2>
+        <div class="productos-new-arrivals-card">
+          {% for p in nuevos_productos %}
+            <div class="producto-new-arrival">
+              <a href="{% url 'producto_detail' p.id %}" class="producto-enlace">
+                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-imagen">
+              </a>
+              <div class="producto-info">
+                <span class="producto-nombre">{{ p.nombre }}</span>
+                <span class="producto-precio">{{ p.precio }}€</span>
+                <span class="producto-marca">{{ p.marca.nombre }}</span>
+                <div class="producto-rating">
+                  {% for i in 0|to:4 %}
+                    {% with i|add:1 as next %}
+                      {% if p.rating_original > i %}
+                        {% if p.rating_original < next %}
+                          <i class="fas fa-star-half-alt"></i>
+                        {% else %}
+                          <i class="fas fa-star"></i>
+                        {% endif %}
+                      {% else %}
+                        <i class="far fa-star"></i>
+                      {% endif %}
+                    {% endwith %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <a class="carrusel-flecha-derecha-new-arrival">
+        <i class="fas fa-chevron-right"></i>
+      </a>
+    </div>
+  
+    <div class="carrusel-container-best-sellers">
+      <div class="productos-best-sellers-container">
+        <h2 class="productos-best-sellers-titulo">Mejores Opiniones</h2>
+        <div class="productos-best-sellers-card" id="best-sellers-carousel">
+          {% for p, r in productos_reviews.items %}
+            <div class="producto-best-seller-complete">
+              <div class="producto-best-seller">
+                <a href="{% url 'producto_detail' p.id %}" class="producto-enlace">
+                  <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-imagen-best-seller">
+                </a>
+                <div class="producto-info">
+                  <span class="producto-nombre">{{ p.nombre }}</span>
+                  <span class="producto-precio">{{ p.precio }}€</span>
+                  <span class="producto-marca">{{ p.marca.nombre }}</span>
+                  <div class="producto-rating">
+                    {% for i in 0|to:4 %}
+                      {% with i|add:1 as next %}
+                        {% if p.rating_original > i %}
+                          {% if p.rating_original < next %}
+                            <i class="fas fa-star-half-alt"></i>
+                          {% else %}
+                            <i class="fas fa-star"></i>
+                          {% endif %}
+                        {% else %}
+                          <i class="far fa-star"></i>
+                        {% endif %}
+                      {% endwith %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="producto-best-seller-reviews">
+                <h3>Reseñas</h3>
+                <div class="producto-best-seller-reviews-container">
+                  {% for review in r %}
+                    <div class="producto-best-seller-review">
+                      <p>"{{review}}"</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

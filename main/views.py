@@ -27,16 +27,19 @@ from main.populateDB import populate
 from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
 from whoosh.index import create_in, open_dir
 from whoosh.qparser import MultifieldParser, OrGroup, QueryParser
-from whoosh.query import And
-from whoosh.query import Every
+from whoosh.query import And, Every, Or
 from django.core.paginator import Paginator
 
 
 #----------------VIEWS FOR BD LOAD AND DELETE---------------------------
 
+@user_passes_test(lambda u: u.is_superuser)
 def carga(request):
-    populate()
-    return HttpResponseRedirect('/inicio.html')
+    if request.method == 'POST':
+        confirmacion = request.POST.get('confirmacion', '')
+        if confirmacion.lower() == 'cargar':
+            populate()
+            return HttpResponseRedirect('/inicio.html')
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -173,7 +176,16 @@ def update_profile(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_profile(request):
     usuario = request.user
-    return render(request, 'admin_profile.html', {'usuario': usuario})
+    #I want to have a table on admin profile that shows all the users registered, all the products, all the categories, all the subcategories, all the brands, all the flavors and all the ingredients
+    usuarios = Usuario.objects.all()
+    productos = Producto.objects.all()
+    categorias = Categoria.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    marcas = Marca.objects.all()
+    sabores = Sabor.objects.all()
+    ingredientes = Ingrediente.objects.all()
+
+    return render(request, 'admin_profile.html', {'usuario': usuario, 'usuarios': usuarios, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 
 #----------------VIEWS FOR PRODUCTS MANAGEMENT---------------------------
@@ -184,20 +196,27 @@ def inicio(request):
     
     # Obtén los productos con mayor rating_original
     productos_con_alto_rating = Producto.objects.filter(rating_original__isnull=False).order_by('-rating_original')
+    productos_nuevos = Producto.objects.all().order_by('-id')[:cantidad_recomendados]
+    productos_mejores_reviews = [] # Aquí se almacenarán los productos con mejores reviews
     productos=Producto.objects.all()
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
     marcas = Marca.objects.all()
     sabores = Sabor.objects.all()
     ingredientes = Ingrediente.objects.all()
-    context = {}
-    
-            
-
-    # Selecciona una muestra aleatoria de productos recomendados
+    productos_reviews = {}
+    ix = open_dir("Index")
+    with ix.searcher() as searcher:
+        for producto in productos_con_alto_rating:
+            results = searcher.documents(id_producto=str(producto.id))
+            reviews = []
+            for r in results:
+                reviews.extend(r['reviews'].split("|writer_split|"))
+            productos_reviews[producto] = reviews
+    productos_reviews = dict(list(productos_reviews.items())[:cantidad_recomendados])
     productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
-    
-    return render(request, 'inicio.html', {'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    nuevos_productos = random.sample(list(productos_nuevos), min(cantidad_recomendados, len(productos_nuevos)))
+    return render(request, 'inicio.html', {'productos_reviews': productos_reviews,'nuevos_productos':nuevos_productos,'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def search_products(request):
     search_term = request.GET.get('query', '')
@@ -219,15 +238,21 @@ def search_products(request):
 
     return JsonResponse(results)  # Devuelve los resultados como JSON
 
+
 def search_products_description_whoosh(query):
     ix = open_dir("Index")
     searcher = ix.searcher()
     query_parser = QueryParser("descripcion", schema=ix.schema)
-    parsed_query = query_parser.parse(query)
-    results = searcher.search(parsed_query)
+    
+    keywords = [keyword + "*" for keyword in query.split()]
+    
+    or_query = Or([query_parser.parse(keyword) for keyword in keywords])
+
+    results = searcher.search(or_query, limit=None)
     return results
 
 def advanced_search(request):
+    
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
     marcas = Marca.objects.all()
@@ -244,6 +269,7 @@ def advanced_search(request):
     advanced_search_min_price = request.GET.get('min_price', '')
     advanced_search_max_price = request.GET.get('max_price', '')
     matching_products = []
+    total_matches = 0
 
     if advanced_search_keywords:
         results = search_products_description_whoosh(advanced_search_keywords)
@@ -254,7 +280,7 @@ def advanced_search(request):
                 if producto.id == int(r['id_producto']):
                     matching_products.append(producto)
                     
-    if advanced_search_name or advanced_search_brand or advanced_search_minRating or advanced_search_keywords or advanced_search_stock or advanced_search_ingredients or advanced_search_flavors:
+    if advanced_search_name or advanced_search_brand or advanced_search_minRating or advanced_search_keywords or advanced_search_stock or advanced_search_ingredients or advanced_search_flavors or advanced_search_min_price or advanced_search_max_price:
 
         matching_products = productos.filter(
             Q(nombre__icontains=advanced_search_name) if advanced_search_name else Q(),
@@ -265,17 +291,15 @@ def advanced_search(request):
             Q(sabor__sabor__icontains=advanced_search_flavors) if advanced_search_flavors else Q(),
             Q(precio__gte=advanced_search_min_price) if advanced_search_min_price else Q(),
             Q(precio__lte=advanced_search_max_price) if advanced_search_max_price else Q(),
-            
         ).distinct()  # Remove duplicate products from the queryset
+         
         total_matches = matching_products.count()
 
     order = request.GET.get('order')
     if order == 'asc':
-        matching_products= matching_products.order_by('precio')
+        matching_products = matching_products.order_by('precio')
     elif order == 'desc':
         matching_products = matching_products.order_by('-precio')
-    #elif order == 'reviews':
-        # Define cómo quieres ordenar por reviews
     elif order == 'new':
         matching_products = matching_products.order_by('-id')  
     elif order == 'rating':
@@ -285,7 +309,8 @@ def advanced_search(request):
 
     page_number = request.GET.get('page')
     matching_products = paginator.get_page(page_number)
-    return render(request, 'advanced_search.html', {'total_matches' : total_matches,'matching_products' : matching_products, 'productos' : productos ,'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    
+    return render(request, 'advanced_search.html', {'total_matches': total_matches, 'matching_products': matching_products, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def producto_detail(request, id):
     producto = Producto.objects.get(pk=id)

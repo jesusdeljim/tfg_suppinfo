@@ -4,7 +4,7 @@ from .models import Usuario
 
 class RegistroForm(UserCreationForm):
     email = forms.EmailField()
-    nombre = forms.CharField(max_length=255, required=True)
+    nombre = forms.CharField(max_length=255, required=False)
     fecha_nacimiento = forms.DateField(required=False, widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
     direccion = forms.CharField(max_length=255, required=False)
     ciudad = forms.CharField(max_length=255, required=False)

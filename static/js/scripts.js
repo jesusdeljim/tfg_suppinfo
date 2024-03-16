@@ -249,8 +249,8 @@ function performAdvancedSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  var flechaIzquierda = document.querySelector('.carrusel-flecha-izquierda');
-  var flechaDerecha = document.querySelector('.carrusel-flecha-derecha');
+  var flechaIzquierda = document.querySelector('.carrusel-flecha-izquierda-recommended');
+  var flechaDerecha = document.querySelector('.carrusel-flecha-derecha-recommended');
   var contenedorProductos = document.querySelector('.productos-recomendados-card');
   var anchoProducto = document.querySelector('.producto-recomendado').clientWidth;
 
@@ -263,6 +263,64 @@ document.addEventListener('DOMContentLoaded', function() {
     // Desplaza el contenedor hacia la derecha
     contenedorProductos.scrollBy({ left: anchoProducto * 4, behavior: 'smooth' });
   });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var flechaIzquierdaNew = document.querySelector('.carrusel-flecha-izquierda-new-arrival');
+  var flechaDerechaNew = document.querySelector('.carrusel-flecha-derecha-new-arrival');
+  var contenedorProductosNew = document.querySelector('.productos-new-arrivals-card');
+  var anchoProductoNew = document.querySelector('.producto-new-arrival').clientWidth;
+
+  flechaIzquierdaNew.addEventListener('click', function() {
+    // Desplaza el contenedor hacia la izquierda
+    contenedorProductosNew.scrollBy({ left: -anchoProductoNew * 3, behavior: 'smooth' });
+  });
+
+  flechaDerechaNew.addEventListener('click', function() {
+    // Desplaza el contenedor hacia la derecha
+    contenedorProductosNew.scrollBy({ left: anchoProductoNew * 3, behavior: 'smooth' });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var contenedorProductosBest = document.querySelector('.productos-best-sellers-card');
+  var anchoProductoBestSeller = document.querySelector('.producto-best-seller-complete').clientWidth;
+  var intervalTime = 5000; // Intervalo de tiempo en milisegundos (por ejemplo, 5 segundos)
+  var scrollInterval; // Variable para almacenar el intervalo
+
+  function scrollCarousel() {
+    var scrollPos = contenedorProductosBest.scrollLeft + anchoProductoBestSeller;
+    if (scrollPos >= contenedorProductosBest.scrollWidth) {
+      // Si alcanza el final del carrusel, vuelve al principio
+      contenedorProductosBest.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // De lo contrario, sigue desplazándose normalmente
+      contenedorProductosBest.scrollTo({
+        left: scrollPos,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function startScrolling() {
+    scrollInterval = setInterval(scrollCarousel, intervalTime);
+  }
+
+  function stopScrolling() {
+    clearInterval(scrollInterval);
+  }
+
+  // Iniciar el desplazamiento automático cuando se cargue la página
+  startScrolling();
+
+  // Detener el desplazamiento automático cuando el mouse esté sobre el carrusel
+  contenedorProductosBest.addEventListener('mouseenter', stopScrolling);
+
+  // Reanudar el desplazamiento automático cuando el mouse salga del carrusel
+  contenedorProductosBest.addEventListener('mouseleave', startScrolling);
 });
 
 function searchProducts() {
