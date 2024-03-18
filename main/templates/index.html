@@ -61,7 +61,8 @@
             </div>
             <div class="advanced-search-column">
               <span>Búsqueda descriptiva:</span>
-              <input type="text" id="advanced-search-keywords" placeholder="Palabras clave en la descripción separadas con un espacio">
+              <input type="text" id="advanced-search-keywords" placeholder="Palabras clave en la descripción separadas con un espacio" oninput="validateKeywords()" minlength="3">
+              <span id="keywords-error" class="advanced-search-error" style="color: red; display: none;">Ingrese al menos 3 caracteres</span>
               <span>Marca:</span>
               <input type="text" id="advanced-search-brand" placeholder="Marca del producto">
               <span>Ingredientes:</span>

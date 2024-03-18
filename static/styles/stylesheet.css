@@ -596,7 +596,7 @@
   }
   .carrusels-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -1259,4 +1259,37 @@
 .footer-bottom p {
   margin: 0;
   font-size: 14px;
+}
+
+.cookies-policy-content {
+  padding: 20px;
+  font-family: 'Anta', sans-serif;
+}
+
+.cookies-policy-content h2 {
+  font-family: 'Black Ops One', cursive;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.privacy-policy-content {
+  padding: 20px;
+  font-family: 'Anta', sans-serif;
+}
+
+.privacy-policy-content h2 {
+  font-family: 'Black Ops One', cursive;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.terms-and-conditions-content {
+  padding: 20px;
+  font-family: 'Anta', sans-serif;
+}
+
+.terms-and-conditions-content h2 {
+  font-family: 'Black Ops One', cursive;
+  font-size: 24px;
+  margin-bottom: 20px;
 }

@@ -169,7 +169,16 @@ document.addEventListener('click', function(event) {
     advancedSearchBtn.style.display = 'none';
   }
 });
+function validateKeywords() {
+  var keywordsInput = document.getElementById("advanced-search-keywords");
+  var keywordsError = document.getElementById("keywords-error");
 
+  if (keywordsInput.value.length < 3) {
+    keywordsError.style.display = "block";
+  } else {
+    keywordsError.style.display = "none";
+  }
+}
 document.addEventListener('DOMContentLoaded', function () {
   var priceRangeSlider = document.getElementById('price-range-slider');
   var priceRangeLabel = document.getElementById('price-range-label');
@@ -198,6 +207,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function performAdvancedSearch() {
+  var advancedSearchError = document.getElementById('keywords-error');
+  if (advancedSearchError.style.display !== 'none') {
+    return;
+  }
+
   var priceRange = document.getElementById('price-range-label').innerHTML;
   var productName = document.getElementById('advanced-search-name').value;
   var minRating = document.getElementById('advanced-search-rating').value;
@@ -243,7 +257,7 @@ function performAdvancedSearch() {
 
   // Redirige a la página de búsqueda con los parámetros adecuados
   window.location.href = searchURL;
-  
+
   document.getElementById('advanced-search-btn').style.display = 'none';
   document.getElementById('advanced-search-container').style.display = 'none';
 }

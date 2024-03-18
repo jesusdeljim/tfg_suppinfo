@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block encabezado %}
+  <h1>SuppInfo</h1>
+{% endblock %}
+
+{% block contenido %}
+  <h2>Preguntas frecuentes</h2>
+  <p>En esta sección encontrarás las preguntas más frecuentes que nos hacen nuestros usuarios.</p>
+  <ul>
+    <li>¿Cómo puedo registrarme?</li>
+    <li>¿Cómo puedo recuperar mi contraseña?</li>
+    <li>¿Cómo puedo cambiar mi contraseña?</li>
+    <li>¿Cómo puedo cambiar mi nombre de usuario?</li>
+    <li>¿Cómo puedo cambiar mi dirección de correo electrónico?</li>
+  </ul>
+{% endblock %}

@@ -129,6 +129,29 @@ def user_profile(request):
     usuario = request.user
     return render(request, 'user_profile.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
+@login_required
+def user_wishlist(request):
+    subcategorias = Subcategoria.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    usuario = request.user
+    return render(request, 'user_wishlist.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+
+@login_required
+def user_reviews(request):
+    subcategorias = Subcategoria.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    usuario = request.user
+    return render(request, 'user_reviews.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+
+@login_required
+def user_messages(request):
+    subcategorias = Subcategoria.objects.all()
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    usuario = request.user
+    return render(request, 'user_messages.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 @login_required
 @require_POST
@@ -395,3 +418,26 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
 
     return render(request, 'subcategorias.html', {'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
+def faqs(request):
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    return render(request, 'faqs.html', {'categorias': categorias, 'productos': productos, 'subcategorias': subcategorias})
+
+def terminos_y_condiciones(request):
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    return render(request, 'terminos_y_condiciones.html', {'categorias': categorias, 'productos': productos, 'subcategorias': subcategorias})
+
+def politica_de_privacidad(request):
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    return render(request, 'politica_de_privacidad.html', {'categorias': categorias, 'productos': productos, 'subcategorias': subcategorias})
+
+def politica_de_cookies(request):
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.all()
+    subcategorias = Subcategoria.objects.all()
+    return render(request, 'politica_de_cookies.html', {'categorias': categorias, 'productos': productos, 'subcategorias': subcategorias})
