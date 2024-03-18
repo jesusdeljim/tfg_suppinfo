@@ -1261,35 +1261,191 @@
   font-size: 14px;
 }
 
+/* Estilos generales */
 .cookies-policy-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: auto;
+  width: 50%;
   padding: 20px;
   font-family: 'Anta', sans-serif;
+  line-height: 1.6;
 }
 
 .cookies-policy-content h2 {
-  font-family: 'Black Ops One', cursive;
-  font-size: 24px;
+  font-family: 'Anta', sans-serif;
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
+.cookies-policy-content p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.cookies-policy-content ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.cookies-policy-content li {
+  margin-bottom: 10px;
+}
+
+.cookies-policy-content a {
+  color: #007bff;
+}
+
+/* Estilos específicos */
+.cookies-policy-content main {
+  margin-top: 20px;
+}
+
+.cookies-policy-content section {
+  margin-bottom: 30px;
+}
+
+
 .privacy-policy-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: auto;
+  width: 50%;
   padding: 20px;
   font-family: 'Anta', sans-serif;
+  line-height: 1.6;
 }
 
 .privacy-policy-content h2 {
-  font-family: 'Black Ops One', cursive;
-  font-size: 24px;
+  font-family: 'Anta', sans-serif;
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
+.privacy-policy-content h1 {
+  font-family: 'Anta', sans-serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.privacy-policy-content p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.privacy-policy-content ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.privacy-policy-content li {
+  margin-bottom: 10px;
+}
+
+.privacy-policy-content a {
+  color: #007bff;
+}
+
+/* Estilos específicos */
+.privacy-policy-content main {
+  margin-top: 20px;
+}
+
+.privacy-policy-content section {
+  margin-bottom: 30px;
+}
+
+
 .terms-and-conditions-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: auto;
+  width: 50%;
   padding: 20px;
   font-family: 'Anta', sans-serif;
+  line-height: 1.6;
 }
 
 .terms-and-conditions-content h2 {
-  font-family: 'Black Ops One', cursive;
-  font-size: 24px;
+  font-family: 'Anta', sans-serif;
+  font-size: 28px;
   margin-bottom: 20px;
+}
+
+.terms-and-conditions-content p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.terms-and-conditions-content ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.terms-and-conditions-content li {
+  margin-bottom: 10px;
+}
+
+.terms-and-conditions-content a {
+  color: #007bff;
+}
+
+/* Estilos específicos */
+.terms-and-conditions-content main {
+  margin-top: 20px;
+}
+
+.terms-and-conditions-content section {
+  margin-bottom: 30px;
+}
+
+.faq-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  margin: auto;
+  width: 50%;
+  padding: 20px;
+  font-family: 'Anta', sans-serif;
+  line-height: 1.6;
+}
+
+.faq-content h2 {
+  font-family: 'Black Ops One', cursive;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.faq-content h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.faq-content p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.faq-content a {
+  color: #007bff;
+}
+
+/* Estilos específicos */
+.faq-content main {
+  margin-top: 20px;
+}
+
+.faq-content section {
+  margin-bottom: 30px;
 }
