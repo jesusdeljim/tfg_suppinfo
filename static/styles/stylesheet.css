@@ -1449,3 +1449,48 @@
 .faq-content section {
   margin-bottom: 30px;
 }
+
+
+.product-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.product-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.product-stock,
+.product-price,
+.product-description-title,
+.product-description,
+.product-reviews-title,
+.product-review {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.product-reviews {
+  list-style: none;
+  padding: 0;
+}
+
+.product-review {
+  font-size: 14px;
+  margin-bottom: 5px;
+}

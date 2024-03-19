@@ -57,6 +57,10 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+    def esta_en_lista_deseos(self, usuario):
+        lista_deseos, creado = ListaDeseos.objects.get_or_create(usuario=usuario)
+        return self in lista_deseos.productos.all()
 
     
 class Usuario(AbstractUser):
@@ -70,10 +74,6 @@ class Usuario(AbstractUser):
     pais = models.CharField(max_length=255, null=True, blank=True)
     codigo_postal = models.CharField(max_length=20, null=True, blank=True)
     profile_image = models.ImageField(upload_to='static/profile_images/', blank=True, null=True)
-    
-    # Otros campos que puedas necesitar
-    #lista_favoritos = models.ManyToManyField(Producto, related_name='usuarios_favoritos', blank=True)
-    # ... otros campos ...
 
     # Especifica related_name de manera única para evitar conflictos
     groups = models.ManyToManyField(
@@ -87,5 +87,16 @@ class Usuario(AbstractUser):
         blank=True,
     )
 
+    def lista_deseos(self):
+        lista_deseos, creado = ListaDeseos.objects.get_or_create(usuario=self)
+        return lista_deseos
+
     def __str__(self):
         return self.username
+    
+class ListaDeseos(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    producto = models.ManyToManyField(Producto)
+
+    def __str__(self):
+        return self.producto.nombre

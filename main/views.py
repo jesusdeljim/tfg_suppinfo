@@ -21,7 +21,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 
 from main.forms import *
-from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Sabor)
+from main.models import (Categoria, Subcategoria, Ingrediente, Marca, Producto, Sabor, ListaDeseos)
 from main.populateDB import populate
 
 from whoosh.fields import DATETIME, ID, KEYWORD, Schema, TEXT
@@ -135,8 +135,20 @@ def user_wishlist(request):
     categorias = Categoria.objects.all()
     productos = Producto.objects.all()
     usuario = request.user
-    return render(request, 'user_wishlist.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
+    lista, created = ListaDeseos.objects.get_or_create(usuario=request.user)
+    wishlist = lista.producto.all()
+    return render(request, 'user_wishlist.html', {'usuario': usuario, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'wishlist': wishlist})
+
+@login_required
+def add_to_wishlist(request, producto_id):
+    if request.method == 'POST':
+        producto = Producto.objects.get(pk=producto_id)
+        lista_deseos, creado = ListaDeseos.objects.get_or_create(usuario=request.user)
+        lista_deseos.producto.add(producto)
+        return JsonResponse({'mensaje': 'Producto agregado a la lista de deseos correctamente.'})
+    else:
+        return JsonResponse({'error': 'Se esperaba una solicitud POST.'}, status=400)
 @login_required
 def user_reviews(request):
     subcategorias = Subcategoria.objects.all()
@@ -344,13 +356,15 @@ def producto_detail(request, id):
     ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
     ix = open_dir("Index")
+    reviews = []
     with ix.searcher() as searcher:
         results = searcher.documents()
         for r in results:
             if r['id_producto'] == str(producto.id):
                 descripcion = (r['descripcion'])
+                reviews.extend(r['reviews'].split("|writer_split|"))
 
-    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion})
+    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion, 'reviews': reviews, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def categoria_search(request, categoria_slug):
 

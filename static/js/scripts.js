@@ -398,3 +398,28 @@ function orderProducts(orderBy) {
   // Redirige a la URL con el parámetro de ordenación
   window.location.href = url.href;
 }
+
+function addToWishlist(productoId) {
+  // Realizar una solicitud POST al servidor para agregar el producto a la lista de deseos
+  var csrftoken = $('meta[name="csrf-token"]').attr('content'); // Obtiene el token CSRF
+  fetch('/add-to-wishlist/' + productoId, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken  // Asegúrate de incluir el token CSRF en la solicitud
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      // Cambiar el icono del corazón vacío a lleno si la solicitud es exitosa
+      const wishlistIcon = document.getElementById('wishlist-icon-' + productoId);
+      wishlistIcon.classList.remove('far');
+      wishlistIcon.classList.add('fas');
+      wishlistIcon.classList.add('fa-heart');
+    } else {
+      console.error('Error al agregar a la lista de deseos');
+    }
+  })
+  .catch(error => {
+    console.error('Error de red:', error);
+  });
+}

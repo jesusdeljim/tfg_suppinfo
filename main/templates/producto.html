@@ -3,12 +3,22 @@
 
 {% block contenido %}
 <div class="product-page">
-  <h1>{{ producto.nombre }}</h1>
-  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-  <p>{{ producto.stock }}</p>
-  <p>Precio: {{ producto.precio }}€</p>
-  <p>Descripcion: </p>
-  <p>{{ descripcion }}</p>
-  <!-- Añade más detalles del producto según sea necesario -->
+  <h1 class="product-title">{{ producto.nombre }}</h1>
+  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="product-image">
+  <p class="product-stock">Stock disponible: {{ producto.stock }}</p>
+  <p class="product-price">Precio: <span class="price">{{ producto.precio }}€</span></p>
+  <p class="product-description-title">Descripción: </p>
+  <p class="product-description">{{ descripcion }}</p>
+  <p class="product-reviews-title">Reviews:</p>
+  <ul class="product-reviews">
+    {% for review in reviews %}
+      <li class="product-review">{{ review }}</li>
+    {% empty %}
+      <li class="product-review">No hay reseñas disponibles.</li>
+    {% endfor %}
+  </ul>
+  <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="addToWishlist('{{ producto.id }}')">
+    <i class="far fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón vacío -->
+  </button>
 </div>
 {% endblock %}
