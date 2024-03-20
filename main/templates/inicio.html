@@ -37,7 +37,10 @@
                       {% endif %}
                   {% endwith %}
               {% endfor %}
-          </div>
+              <button class="wishlist-btn" id="wishlist-btn-{{ p.id }}" onclick="addToWishlist('{{ p.id }}')">
+                <i class="far fa-heart" id="wishlist-icon-{{ p.id }}"></i> <!-- Corazón vacío -->
+              </button>
+            </div>
           </div>
         </div>
       {% endfor %}
@@ -79,6 +82,9 @@
                       {% endif %}
                     {% endwith %}
                   {% endfor %}
+                  <button class="wishlist-btn" id="wishlist-btn-{{ p.id }}" onclick="addToWishlist('{{ p.id }}')">
+                    <i class="far fa-heart" id="wishlist-icon-{{ p.id }}"></i> <!-- Corazón vacío -->
+                  </button>
                 </div>
               </div>
             </div>
@@ -118,6 +124,9 @@
                         {% endif %}
                       {% endwith %}
                     {% endfor %}
+                    <button class="wishlist-btn" id="wishlist-btn-{{ p.id }}" onclick="addToWishlist('{{ p.id }}')">
+                      <i class="far fa-heart" id="wishlist-icon-{{ p.id }}"></i> <!-- Corazón vacío -->
+                    </button>
                   </div>
                 </div>
               </div>

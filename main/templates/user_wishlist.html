@@ -7,18 +7,43 @@
 {% endblock %}
 
 {% block contenido %}
-  <h2>Mi lista de deseos</h2>
-  <p>En esta sección podrás encontrar los productos que has añadido a tu lista de deseos</p>
-  <div class="row">
-    {% for product in wishlist %}
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card mb-4">
-          <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ product.nombre }}</h5>
-            <p class="card-text">Precio: ${{ product.price }}</p>
+  <div class="wishlist-content-container">
+    <h1 class="wishlist-title">Mi lista de deseos</h2>
+    <p>En esta sección podrás encontrar los productos que has añadido a tu lista de deseos.</p>
+    <div class="wishlist-container">
+      {% for p in wishlist %}
+        <div class="producto">
+            <div class="producto-imagen">
+              <a href="{% url 'producto_detail' p.id %}" class="producto-enlace">
+                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="producto-imagen">
+              </a>          
+            </div>
+            <div class="producto-info">
+              <span class="producto-nombre">{{ p.nombre }}</span>
+              <span class="producto-precio">{{ p.precio }}€</span>
+              <span class="producto-marca">{{ p.marca.nombre }}</span>
+              <div class="producto-rating">
+                  {% for i in 0|to:4 %}
+                      {% with i|add:1 as next %}
+                          {% if p.rating_original > i %}
+                              {% if p.rating_original < next %}
+                                  <i class="fas fa-star-half-alt"></i> <!-- Media estrella -->
+                              {% else %}
+                                  <i class="fas fa-star"></i> <!-- Estrella llena -->
+                              {% endif %}
+                          {% else %}
+                              <i class="far fa-star"></i> <!-- Estrella vacía -->
+                          {% endif %}
+                      {% endwith %}
+                  {% endfor %}
+                  <button class="remove-from-wishlist-btn" onclick="removeFromWishlist('{{ p.id }}')">
+                    <i class="fas fa-heart"></i>
+                  </button>
+              </div>
+              
+            </div>
           </div>
-        </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

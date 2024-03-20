@@ -39,6 +39,7 @@ urlpatterns = [
     path('mi_cuenta/mis_datos', views.user_profile, name='user_profile'),
     path('mi_cuenta/lista_deseos', views.user_wishlist, name='user_wishlist'),
     path('add-to-wishlist/<int:producto_id>', views.add_to_wishlist, name='agregar_a_lista_deseos'),
+    path('remove-from-wishlist/<int:producto_id>', views.remove_from_wishlist, name='quitar_de_lista_deseos'),
     path('mi_cuenta/opiniones', views.user_reviews, name='user_reviews'),
     path('mi_cuenta/mensajes', views.user_messages, name='user_messages'),
     path('faqs/', views.faqs, name='faqs'),

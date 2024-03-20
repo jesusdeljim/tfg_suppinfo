@@ -149,6 +149,16 @@ def add_to_wishlist(request, producto_id):
         return JsonResponse({'mensaje': 'Producto agregado a la lista de deseos correctamente.'})
     else:
         return JsonResponse({'error': 'Se esperaba una solicitud POST.'}, status=400)
+
+@login_required
+def remove_from_wishlist(request, producto_id):
+    if request.method == 'POST':
+        producto = Producto.objects.get(pk=producto_id)
+        lista_deseos, creado = ListaDeseos.objects.get_or_create(usuario=request.user)
+        lista_deseos.producto.remove(producto)
+        return JsonResponse({'mensaje': 'Producto eliminado de la lista de deseos correctamente.'})
+    else:
+        return JsonResponse({'error': 'Se esperaba una solicitud POST.'}, status=400)
 @login_required
 def user_reviews(request):
     subcategorias = Subcategoria.objects.all()
@@ -355,6 +365,7 @@ def producto_detail(request, id):
     sabores = Sabor.objects.all()
     ingredientes = Ingrediente.objects.all()
     productos = Producto.objects.all()
+    usuario = request.user
     ix = open_dir("Index")
     reviews = []
     with ix.searcher() as searcher:
@@ -364,7 +375,7 @@ def producto_detail(request, id):
                 descripcion = (r['descripcion'])
                 reviews.extend(r['reviews'].split("|writer_split|"))
 
-    return render(request, 'producto.html', {'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion, 'reviews': reviews, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    return render(request, 'producto.html', {'usuario':usuario,'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion, 'reviews': reviews, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def categoria_search(request, categoria_slug):
 

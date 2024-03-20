@@ -127,6 +127,7 @@ function saveProfileDetails() {
         $(this).replaceWith($('<p id="editProfileForm" class="user-detail-field" name="'+name+'"></p>').text(value));
       });
       $('form#editProfileForm').contents().unwrap();
+      location.reload();
     },
     error: function() {
       // Aquí manejas errores
@@ -417,6 +418,27 @@ function addToWishlist(productoId) {
       wishlistIcon.classList.add('fa-heart');
     } else {
       console.error('Error al agregar a la lista de deseos');
+    }
+  })
+  .catch(error => {
+    console.error('Error de red:', error);
+  });
+}
+
+function removeFromWishlist(productoId) {
+  var csrftoken = $('meta[name="csrf-token"]').attr('content'); // Obtiene el token CSRF
+  // Realizar una solicitud POST al servidor para eliminar el producto de la lista de deseos
+  fetch('/remove-from-wishlist/' + productoId, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken  // Asegúrate de incluir el token CSRF en la solicitud
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      location.reload(); // Recarga la página para reflejar los cambios
+    } else {
+      console.error('Error al eliminar de la lista de deseos');
     }
   })
   .catch(error => {
