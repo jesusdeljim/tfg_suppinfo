@@ -107,9 +107,6 @@ def cerrar_sesion(request):
     return HttpResponseRedirect('/inicio.html')
 
 def registro(request):
-    response = requests.get('https://restcountries.com/v3.1/all')
-    countries = response.json()
-    country_names = [country['name']['common'] for country in countries]
     if request.method == 'POST':
         register_form = RegistroForm(request.POST)
         if register_form.is_valid():
@@ -119,7 +116,7 @@ def registro(request):
             return HttpResponseRedirect('/inicio.html')  
     else:
         register_form = RegistroForm()
-    return render(request, 'registro.html', {'register_form': register_form, 'countries': country_names})
+    return render(request, 'registro.html', {'register_form': register_form})
 
 @login_required
 def user_profile(request):
@@ -238,8 +235,12 @@ def admin_profile(request):
 def inicio(request):
     # Define la cantidad de productos recomendados que deseas mostrar
     cantidad_recomendados = 15
-    
     # Obtén los productos con mayor rating_original
+    if request.user.is_authenticated:
+        lista = ListaDeseos.objects.get(usuario=request.user)
+        wishlist = list(lista.producto.all())
+    else:
+        wishlist = []
     productos_con_alto_rating = Producto.objects.filter(rating_original__isnull=False).order_by('-rating_original')
     productos_nuevos = Producto.objects.all().order_by('-id')[:cantidad_recomendados]
     productos_mejores_reviews = [] # Aquí se almacenarán los productos con mejores reviews
@@ -261,7 +262,7 @@ def inicio(request):
     productos_reviews = dict(list(productos_reviews.items())[:cantidad_recomendados])
     productos_recomendados = random.sample(list(productos_con_alto_rating), min(cantidad_recomendados, len(productos_con_alto_rating)))
     nuevos_productos = random.sample(list(productos_nuevos), min(cantidad_recomendados, len(productos_nuevos)))
-    return render(request, 'inicio.html', {'productos_reviews': productos_reviews,'nuevos_productos':nuevos_productos,'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    return render(request, 'inicio.html', {'wishlist': wishlist,'productos_reviews': productos_reviews,'nuevos_productos':nuevos_productos,'productos_recomendados': productos_recomendados, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def search_products(request):
     search_term = request.GET.get('query', '')
@@ -297,7 +298,11 @@ def search_products_description_whoosh(query):
     return results
 
 def advanced_search(request):
-    
+    if request.user.is_authenticated:
+        lista = ListaDeseos.objects.get(usuario=request.user)
+        wishlist = list(lista.producto.all())
+    else:
+        wishlist = []
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
     marcas = Marca.objects.all()
@@ -355,9 +360,14 @@ def advanced_search(request):
     page_number = request.GET.get('page')
     matching_products = paginator.get_page(page_number)
     
-    return render(request, 'advanced_search.html', {'total_matches': total_matches, 'matching_products': matching_products, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    return render(request, 'advanced_search.html', {'wishlist': wishlist,'total_matches': total_matches, 'matching_products': matching_products, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def producto_detail(request, id):
+    if request.user.is_authenticated:
+        lista = ListaDeseos.objects.get(usuario=request.user)
+        wishlist = list(lista.producto.all())
+    else:
+        wishlist = []
     producto = Producto.objects.get(pk=id)
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
@@ -375,10 +385,14 @@ def producto_detail(request, id):
                 descripcion = (r['descripcion'])
                 reviews.extend(r['reviews'].split("|writer_split|"))
 
-    return render(request, 'producto.html', {'usuario':usuario,'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion, 'reviews': reviews, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
+    return render(request, 'producto.html', {'wishlist':wishlist,'usuario':usuario,'producto': producto, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias, 'descripcion': descripcion, 'reviews': reviews, 'marcas': marcas, 'sabores': sabores, 'ingredientes': ingredientes})
 
 def categoria_search(request, categoria_slug):
-
+    if request.user.is_authenticated:
+        lista = ListaDeseos.objects.get(usuario=request.user)
+        wishlist = list(lista.producto.all())
+    else:
+        wishlist = []
     categoria = Categoria.objects.get(slug=categoria_slug)
     categorias = Categoria.objects.all()
     subcategorias = Subcategoria.objects.all()
@@ -407,9 +421,14 @@ def categoria_search(request, categoria_slug):
     productos = paginator.get_page(page_number)
     
 
-    return render(request, 'categorias.html', {'categoria': categoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+    return render(request, 'categorias.html', {'wishlist':wishlist,'categoria': categoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 def subcategoria_search(request,categoria_slug, subcategoria_slug):
+    if request.user.is_authenticated:
+        lista = ListaDeseos.objects.get(usuario=request.user)
+        wishlist = list(lista.producto.all())
+    else:
+        wishlist = []
     categoria = Categoria.objects.get(slug=categoria_slug)
     subcategoria = Subcategoria.objects.get(slug=subcategoria_slug)
     categorias = Categoria.objects.all()
@@ -441,7 +460,7 @@ def subcategoria_search(request,categoria_slug, subcategoria_slug):
 
     
 
-    return render(request, 'subcategorias.html', {'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
+    return render(request, 'subcategorias.html', {'wishlist':wishlist,'categoria': categoria,'subcategoria': subcategoria, 'productos': productos, 'categorias': categorias, 'subcategorias': subcategorias})
 
 def faqs(request):
     categorias = Categoria.objects.all()

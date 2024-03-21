@@ -614,7 +614,10 @@
   .forms-logo {
     width: 150px; /* Ajusta según el tamaño de tu logo */
   }
-  
+  .register-content {
+    display: flex;
+    flex-direction: row;
+  }
   .login_container {
     display: flex;
     justify-content: center;

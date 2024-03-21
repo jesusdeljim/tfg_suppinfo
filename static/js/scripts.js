@@ -288,12 +288,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   flechaIzquierdaNew.addEventListener('click', function() {
     // Desplaza el contenedor hacia la izquierda
-    contenedorProductosNew.scrollBy({ left: -anchoProductoNew * 3, behavior: 'smooth' });
+    contenedorProductosNew.scrollBy({ left: -anchoProductoNew * 4, behavior: 'smooth' });
   });
 
   flechaDerechaNew.addEventListener('click', function() {
     // Desplaza el contenedor hacia la derecha
-    contenedorProductosNew.scrollBy({ left: anchoProductoNew * 3, behavior: 'smooth' });
+    contenedorProductosNew.scrollBy({ left: anchoProductoNew * 4, behavior: 'smooth' });
   });
 });
 

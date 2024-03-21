@@ -99,4 +99,4 @@ class ListaDeseos(models.Model):
     producto = models.ManyToManyField(Producto)
 
     def __str__(self):
-        return self.producto.nombre
+        return self.producto

@@ -18,8 +18,14 @@
     {% endfor %}
   </ul>
 
-  <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="addToWishlist('{{ producto.id }}')">
-    <i class="far fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón vacío -->
-  </button>
+  {% if producto in wishlist %}
+    <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="removeFromWishlist('{{ producto.id }}')">
+      <i class="fas fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón lleno -->
+    </button>
+  {% else %}
+    <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="addToWishlist('{{ producto.id }}')">
+      <i class="far fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón vacío -->
+    </button>
+  {% endif %}
 </div>
 {% endblock %}
