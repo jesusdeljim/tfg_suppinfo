@@ -1462,12 +1462,26 @@
 
 
 .product-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-main-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+}
+.product-detailed-image {
+  width: 50%;
+  height: 50%;
 }
 
 .product-title {

@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block encabezado %}
+  <h1>SuppInfo</h1>
+{% endblock %}
+
+{% block contenido %}
+  <h2>Conversación con {{ conversation.participants.all|user_list }}</h2>
+  
+  <!-- Lista de mensajes -->
+  <ul>
+    {% for message in messages %}
+      <li>
+        {% if message.sender == usuario %}
+          Tú: {{ message.content }}
+        {% else %}
+          {{ message.sender.username }}: {{ message.content }}
+        {% endif %}
+        {% if message.is_read %}
+          <span style="color: green;">(Leído)</span>
+        {% else %}
+          <span style="color: red;">(No leído)</span>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No hay mensajes en esta conversación</li>
+    {% endfor %}
+  </ul>
+  
+  <!-- Formulario para enviar un nuevo mensaje -->
+  <h3>Enviar mensaje</h3>
+  <form method="post">
+    {% csrf_token %}
+    <textarea name="content" rows="4" cols="50"></textarea><br>
+    <button type="submit">Enviar</button>
+  </form>
+  
+{% endblock %}

@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0002_alter_producto_rating'),
+        ("main", "0002_alter_producto_rating"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='categoria',
-            name='slug',
+            model_name="categoria",
+            name="slug",
             field=models.SlugField(blank=True),
         ),
         migrations.AddField(
-            model_name='subcategoria',
-            name='slug',
+            model_name="subcategoria",
+            name="slug",
             field=models.SlugField(blank=True),
         ),
     ]

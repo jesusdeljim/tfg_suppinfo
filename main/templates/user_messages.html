@@ -8,5 +8,30 @@
 
 {% block contenido %}
   <h2>Mensajes de usuario</h2>
-  <p>En esta sección podrás encontrar los mensajes de otros usuarios</p>
+  
+  <!-- Lista de conversaciones -->
+  <h3>Conversaciones existentes</h3>
+  <ul>
+    {% for conversation in conversations %}
+      <li>
+        <a href="{% url 'view_conversation' conversation.id %}">Conversación con {{ conversation.participants.all|user_list }}</a>
+        <!-- Agregar botón o enlace para eliminar la conversación -->
+        <form action="{% url 'delete_conversation' conversation.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta conversación?')">Eliminar conversación</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No hay conversaciones</li>
+    {% endfor %}
+  </ul>
+  
+  <!-- Formulario para iniciar una nueva conversación -->
+  <h3>Iniciar nueva conversación</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar mensaje</button>
+  </form>
+  
 {% endblock %}

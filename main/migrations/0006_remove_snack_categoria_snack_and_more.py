@@ -6,33 +6,33 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0005_usuario_profile_image'),
+        ("main", "0005_usuario_profile_image"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='snack',
-            name='categoria_snack',
+            model_name="snack",
+            name="categoria_snack",
         ),
         migrations.RemoveField(
-            model_name='snack',
-            name='producto_ptr',
+            model_name="snack",
+            name="producto_ptr",
         ),
         migrations.RemoveField(
-            model_name='vitamina',
-            name='categoria_vitamina',
+            model_name="vitamina",
+            name="categoria_vitamina",
         ),
         migrations.RemoveField(
-            model_name='vitamina',
-            name='producto_ptr',
+            model_name="vitamina",
+            name="producto_ptr",
         ),
         migrations.DeleteModel(
-            name='Proteina',
+            name="Proteina",
         ),
         migrations.DeleteModel(
-            name='Snack',
+            name="Snack",
         ),
         migrations.DeleteModel(
-            name='Vitamina',
+            name="Vitamina",
         ),
     ]

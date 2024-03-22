@@ -3,29 +3,42 @@
 
 {% block contenido %}
 <div class="product-page">
-  <h1 class="product-title">{{ producto.nombre }}</h1>
-  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="product-image">
-  <p class="product-stock">Stock disponible: {{ producto.stock }}</p>
-  <p class="product-price">Precio: <span class="price">{{ producto.precio }}€</span></p>
-  <p class="product-description-title">Descripción: </p>
-  <p class="product-description">{{ descripcion }}</p>
-  <p class="product-reviews-title">Reviews:</p>
-  <ul class="product-reviews">
-    {% for review in reviews %}
-      <li class="product-review">{{ review }}</li>
-    {% empty %}
-      <li class="product-review">No hay reseñas disponibles.</li>
-    {% endfor %}
-  </ul>
+  <div class="product-main-container">
+    <div class="product-image-container">
+      <img src="{{ producto_imagen }}" alt="{{ producto.nombre }}" class="product-detailed-image">
+    </div>
+    <div class="product-info-container">
+      <h1 class="product-title">{{ producto.nombre }}</h1>
+      {% if producto in wishlist %}
+        <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="removeFromWishlist('{{ producto.id }}')">
+          <i class="fas fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón lleno -->
+        </button>
+      {% else %}
+        <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="addToWishlist('{{ producto.id }}')">
+          <i class="far fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón vacío -->
+        </button>
+      {% endif %}
+      {% if producto.stock %}
+        <p class="product-stock">En Stock</p>
+      {% else %}
+        <p class="product-stock">Sin Stock</p>
+      {% endif %}
+      <p class="product-price">Precio: <span class="price">{{ producto.precio }}€</span></p>
+    </div>
+  </div>
+  <div class="product-main-container">
+    <p class="product-description-title">Descripción: </p>
+    <p class="product-description">{{ descripcion }}</p>
+    <p class="product-reviews-title">Reviews:</p>
+    <ul class="product-reviews">
+      {% for review in reviews %}
+        <li class="product-review">{{ review }}</li>
+      {% empty %}
+        <li class="product-review">No hay reseñas disponibles.</li>
+      {% endfor %}
+    </ul>
+  </div>
 
-  {% if producto in wishlist %}
-    <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="removeFromWishlist('{{ producto.id }}')">
-      <i class="fas fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón lleno -->
-    </button>
-  {% else %}
-    <button class="wishlist-btn" id="wishlist-btn-{{ producto.id }}" onclick="addToWishlist('{{ producto.id }}')">
-      <i class="far fa-heart" id="wishlist-icon-{{ producto.id }}"></i> <!-- Corazón vacío -->
-    </button>
-  {% endif %}
+  
 </div>
 {% endblock %}
